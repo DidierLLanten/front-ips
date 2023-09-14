@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { PrimeNGModule } from "./prime-ng/prime-ng.module";
 @NgModule({
   declarations: [
     AppComponent
@@ -12,7 +12,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PrimeNGModule
   ],
   providers: [],
   bootstrap: [AppComponent]
