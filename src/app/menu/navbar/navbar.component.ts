@@ -7,42 +7,37 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  itemsMenu: MenuItem[] | undefined;
-  activeItem: MenuItem | undefined;
-
   itemsBar: MenuItem[] | undefined;
 
   ngOnInit() {
-    this.itemsMenu = [
-      { label: 'Home', icon: 'pi pi-fw pi-home' },
-      { label: 'Calendar', icon: 'pi pi-fw pi-calendar' },
-      { label: 'Edit', icon: 'pi pi-fw pi-pencil' },
-      { label: 'Documentation', icon: 'pi pi-fw pi-file' },
-      { label: 'Settings', icon: 'pi pi-fw pi-cog' },
-    ];
-
-    this.activeItem = this.itemsMenu[0];
-
     this.itemsBar = [
       {
         label: 'Doctores',
         icon: 'pi pi-fw pi-shield',
+        routerLink: 'doctores',
       },
       {
         label: 'Encargados',
         icon: 'pi pi-fw pi-building',
+        routerLink: 'encargados',
       },
       {
         label: 'Pacientes',
         icon: 'pi pi-fw pi-users',
+        routerLink: 'pacientes',
       },
       {
         label: 'Citas',
         icon: 'pi pi-fw pi-calendar',
+        routerLink: 'citas',
+      },
+      {
+        label: 'Perfil',
+        icon: 'pi pi-fw pi-user',
         items: [
           {
             label: 'Edit',
-            icon: 'pi pi-fw pi-pencil',
+            icon: 'pi pi-fw pi-user-edit',
             items: [
               {
                 label: 'Save',
@@ -53,26 +48,6 @@ export class NavbarComponent implements OnInit {
                 icon: 'pi pi-fw pi-calendar-minus',
               },
             ],
-          },
-          {
-            label: 'Archieve',
-            icon: 'pi pi-fw pi-calendar-times',
-            items: [
-              {
-                label: 'Remove',
-                icon: 'pi pi-fw pi-calendar-minus',
-              },
-            ],
-          },
-        ],
-      },
-      {
-        label: 'Perfil',
-        icon: 'pi pi-fw pi-user',
-        items: [
-          {
-            label: 'Edit',
-            icon: 'pi pi-fw pi-user-edit',
           },
           {
             label: 'History',
