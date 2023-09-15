@@ -1,0 +1,14 @@
+<div class="card">
+  <p-menubar [model]="itemsBar" [routerLinkActive]="'/citas'">
+
+    <ng-template pTemplate="start" class="wid-80">      
+        <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" routerLink=""/>
+    </ng-template>
+
+    <ng-template pTemplate="end" class="wid-20" >
+      <!-- <p-speedDial direction="down" [style]="{position:'relative'}" [showIcon]="'pi pi-fw pi-user'" [rotateAnimation]="false"></p-speedDial> -->
+      <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+    </ng-template>
+
+  </p-menubar>
+</div>
