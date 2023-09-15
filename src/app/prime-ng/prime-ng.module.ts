@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
+
+import { MenubarModule } from 'primeng/menubar';
+import { AvatarModule } from 'primeng/avatar';
+import { SpeedDialModule } from 'primeng/speeddial';
 
 @NgModule({
   declarations: [],
   imports: [CommonModule],
-  exports: [
-    ToolbarModule,
-    ButtonModule,    
+  exports: [       
+    MenubarModule,
+    AvatarModule,    
+    SpeedDialModule,     
   ],
 })
 export class PrimeNGModule {}
