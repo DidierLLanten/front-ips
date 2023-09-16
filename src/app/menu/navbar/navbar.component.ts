@@ -31,34 +31,6 @@ export class NavbarComponent implements OnInit {
         icon: 'pi pi-fw pi-calendar',
         routerLink: 'citas',
       },
-      {
-        label: 'Perfil',
-        icon: 'pi pi-fw pi-user',
-        items: [
-          {
-            label: 'Edit',
-            icon: 'pi pi-fw pi-user-edit',
-            items: [
-              {
-                label: 'Save',
-                icon: 'pi pi-fw pi-calendar-plus',
-              },
-              {
-                label: 'Delete',
-                icon: 'pi pi-fw pi-calendar-minus',
-              },
-            ],
-          },
-          {
-            label: 'History',
-            icon: 'pi pi-fw pi-history',
-          },
-          {
-            label: 'Logout',
-            icon: 'pi pi-fw pi-sign-out',
-          },
-        ],
-      },
     ];
   }
 }
