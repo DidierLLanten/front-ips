@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { Encargado } from '../encargadoDTO'
-import { EncargadosService } from '../encargados.service';
+import { Usuario } from 'src/app/modelos/usuario';
 
 @Component({
   selector: 'app-indice-encargados',
@@ -12,36 +11,30 @@ import { EncargadosService } from '../encargados.service';
 export class IndiceEncargadosComponent implements OnInit {
   productDialog: boolean = false;
 
-  products!: Encargado[];
+  usuarios!: Usuario[];
 
-  product!: Encargado;
+  usuario!: Usuario;
 
   delete: string = "Eliminar";
 
-  selectedProducts!: Encargado[] | null;
+  selectedProducts!: Usuario[] | null;
 
   submitted: boolean = false;
 
   statuses!: any[];
 
   constructor(
-    private productService: EncargadosService,
+    /*private productService: EncargadosService,*/
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
-    this.productService.getProducts().then((data) => (this.products = data));
-
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' },
-    ];
+    //this.productService.getProducts().then((data) => (this.usuarios = data));
   }
 
   openNew() {
-    this.product = {};
+    this.usuario = {};
     this.submitted = false;
     this.productDialog = true;
   }
@@ -52,8 +45,8 @@ export class IndiceEncargadosComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter(
-          (val) => !this.selectedProducts?.includes(val)
+        this.usuarios = this.usuarios.filter(
+          (val) => !this.selectedProducts?.includes(this.usuario)
         );
         this.selectedProducts = null;
         this.messageService.add({
@@ -66,19 +59,19 @@ export class IndiceEncargadosComponent implements OnInit {
     });
   }
 
-  editProduct(product: Encargado) {
-    this.product = { ...product };
+  editProduct(usuario: Usuario) {
+    this.usuario = { ...usuario };
     this.productDialog = true;
   }
 
-  deleteProduct(product: Encargado) {
+  deleteProduct(usuario: Usuario) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + product.name + '?',
+      message: 'Are you sure you want to delete ' + usuario.codigo_persona?.nombre + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter((val) => val.id !== product.id);
-        this.product = {};
+        this.usuarios = this.usuarios.filter((val) => val.id_usuario !== usuario.id_usuario);
+        this.usuario = {};
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -97,9 +90,9 @@ export class IndiceEncargadosComponent implements OnInit {
   saveProduct() {
     this.submitted = true;
 
-    if (this.product.name?.trim()) {
-      if (this.product.id) {
-        this.products[this.findIndexById(this.product.id)] = this.product;
+    if (this.usuario.codigo_persona?.nombre?.trim()) {
+      if (this.usuario.id_usuario) {
+        this.usuarios[this.findIndexById(this.usuario.id_usuario)] = this.usuario;
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -107,9 +100,8 @@ export class IndiceEncargadosComponent implements OnInit {
           life: 3000,
         });
       } else {
-        this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
-        this.products.push(this.product);
+        this.usuario.codigo_persona.codigo =  this.createId();
+        this.usuarios.push(this.usuario);
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -118,16 +110,16 @@ export class IndiceEncargadosComponent implements OnInit {
         });
       }
 
-      this.products = [...this.products];
+      this.usuarios = [...this.usuarios];
       this.productDialog = false;
-      this.product = {};
+      this.usuario = {};
     }
   }
 
-  findIndexById(id: string): number {
+  findIndexById(id: number): number {
     let index = -1;
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id === id) {
+    for (let i = 0; i < this.usuarios.length; i++) {
+      if (this.usuarios[i].codigo_persona?.codigo === id) {
         index = i;
         break;
       }
@@ -136,26 +128,13 @@ export class IndiceEncargadosComponent implements OnInit {
     return index;
   }
 
-  createId(): string {
-    let id = '';
+  createId(): number {
+    let id = 0;
     var chars =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (var i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
+      id += Math.floor(Math.random() * chars.length);
     }
     return id;
-  }
-
-  getSeverity(status: string) {
-    switch (status) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warning';
-      case 'OUTOFSTOCK':
-        return 'danger';
-      default:
-        return 'info';
-    }
   }
 }
