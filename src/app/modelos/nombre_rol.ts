@@ -1,4 +1,4 @@
 export class Nombre_rol{
-    id?: number;
-    nombre?: string;
+    id: number;
+    nombre: string;
 }
