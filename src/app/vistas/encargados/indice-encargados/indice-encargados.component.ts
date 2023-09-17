@@ -16,6 +16,8 @@ export class IndiceEncargadosComponent implements OnInit {
 
   product!: Encargado;
 
+  delete: string = "Eliminar";
+
   selectedProducts!: Encargado[] | null;
 
   submitted: boolean = false;
