@@ -66,7 +66,7 @@ export class IndiceEncargadosComponent implements OnInit {
   }
 
   openNew() {
-    this.usuario;
+    this.usuario = new Usuario();
     this.submitted = false;
     this.productDialog = true;
     this.disabledType = false;
