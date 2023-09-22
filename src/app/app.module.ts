@@ -2,6 +2,18 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessagesModule } from 'primeng/messages';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { FormsModule } from '@angular/forms';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PrimeNGModule } from "./prime-ng/prime-ng.module";
@@ -23,7 +35,18 @@ import { IndiceCitasComponent } from './vistas/citas/indice-citas/indice-citas.c
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    PrimeNGModule
+    PrimeNGModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    DialogModule,
+    DropdownModule,
+    RadioButtonModule,
+    InputNumberModule,
+    ConfirmDialogModule,
+    MessagesModule,
+    ConfirmPopupModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

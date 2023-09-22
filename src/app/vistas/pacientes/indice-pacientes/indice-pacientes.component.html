@@ -1,1 +1,135 @@
-<p>indice-pacientes works!</p>
+<div class="card">
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="openNew()"></button>
+            <!--<button pButton pRipple [label]="delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>-->
+        </ng-template>
+
+    </p-toolbar>
+
+    <p-table #dt [value]="pacientes" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['codigo', 'nombre', 'apellido', 'documento']" [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[2,5,10,20]">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Gestionar pacientes</h5>
+                <!--<span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                    </span>-->
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <!--<th style="width: 4rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>-->
+                <th pSortableColumn="codigo" style="min-width:5rem">codigo <p-sortIcon field="codigo"></p-sortIcon></th>
+                <th pSortableColumn="nombre" style="min-width:10rem">Nombre <p-sortIcon field="nombre"></p-sortIcon>
+                </th>
+                <th pSortableColumn="apellido" style="min-width:10rem">Apellido <p-sortIcon
+                        field="apellido"></p-sortIcon></th>
+                <th pSortableColumn="documento" style="min-width:5rem">Numero documento <p-sortIcon
+                        field="documento"></p-sortIcon></th>
+                <th pSortableColumn="telefono" style="min-width:10rem">Telefono <p-sortIcon
+                        field="telefono"></p-sortIcon></th>
+                <th pSortableColumn="correo" style="min-width:10rem">Correo <p-sortIcon 
+                    field="correo"></p-sortIcon>
+                </th>
+                <th pSortableColumn="eps" style="min-width:10rem">EPS 
+                    <p-sortIcon field="eps"></p-sortIcon>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-paciente>
+            <tr>
+                <!--<td>
+                        <p-tableCheckbox [value]="usuario"></p-tableCheckbox>
+                    </td>-->
+                <td>{{ paciente.idPaciente }}</td>
+                <td>{{ paciente.persona.nombre }}</td>
+                <td>{{ paciente.persona.apellido }}</td>
+                <td>{{ paciente.persona.numero_documento }}</td>
+                <td>{{ paciente.persona.telefono }}</td>
+                <td>{{ paciente.persona.correo }}</td>
+                <td>{{ paciente.eps.nombre}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success custom-margin"
+                        (click)="editarPaciente(paciente)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="eliminarPaciente(paciente)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">En total hay {{ pacientes ? pacientes.length : 0
+                }} pacientes.</div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Detalles de pacientes" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Nombre</label>
+            <input type="text" pInputText id="name" form="nombre" [(ngModel)]="paciente.persona.nombre" required
+                autofocus />
+            <small class="p-error" *ngIf="submitted && !paciente.persona.nombre">El nombre es requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Apellido</label>
+            <input type="text" pInputText id="apellido" [(ngModel)]="paciente.persona.apellido" required autofocus />
+            <small class="p-error" *ngIf="submitted && !paciente.persona.apellido">El apellido es requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Tipo de identificacion</label>
+            <p-dropdown [options]="tipos_identificacion" [(ngModel)]="typeSelected" optionLabel="tipo" [disabled]="disabledType"></p-dropdown>
+            <small class="p-error" *ngIf="submitted && !paciente.persona.tipo_identificacion">El tipo de identificacion
+                es requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Numero documento</label>
+            <input type="number" pInputText id="documento" [(ngModel)]="paciente.persona.numero_documento" required
+                autofocus />
+            <small class="p-error" *ngIf="submitted && !paciente.persona.numero_documento">El numero del documento es
+                requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Telefono</label>
+            <input type="number" pInputText id="telefono" [(ngModel)]="paciente.persona.telefono" required autofocus />
+            <small class="p-error" *ngIf="submitted && !paciente.persona.telefono">El numero de telefono es
+                requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Correo</label>
+            <input type="text" pInputText id="correo" [(ngModel)]="paciente.persona.correo" required autofocus />
+            <small class="p-error" *ngIf="submitted && !paciente.persona.correo">El correo es requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">EPS</label>
+            <p-dropdown [options]="lista_eps" [(ngModel)]="typeSelected2" optionLabel="nombre" [disabled]="disabledType"></p-dropdown>
+            <small class="p-error" *ngIf="submitted && !paciente.eps">La EPS
+                es requerida</small>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
+            (click)="guardarPaciente()"></button>
+    </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

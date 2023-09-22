@@ -1,1 +1,129 @@
-<p>indice-doctores works!</p>
+<div class="card">
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="openNew()"></button>
+        </ng-template>
+
+    </p-toolbar>
+
+    <p-table #dt [value]="medicos" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['codigo', 'nombre', 'apellido', 'documento']" [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[2,5,10,20]">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Gestionar Medicos</h5>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="codigo" style="min-width:5rem">codigo <p-sortIcon field="codigo"></p-sortIcon></th>
+                <th pSortableColumn="nombre" style="min-width:10rem">Nombre <p-sortIcon field="nombre"></p-sortIcon>
+                </th>
+                <th pSortableColumn="apellido" style="min-width:10rem">Apellido <p-sortIcon
+                        field="apellido"></p-sortIcon></th>
+                <th pSortableColumn="documento" style="min-width:5rem">Numero documento <p-sortIcon
+                        field="documento"></p-sortIcon></th>
+                <th pSortableColumn="telefono" style="min-width:10rem">Telefono <p-sortIcon
+                        field="telefono"></p-sortIcon></th>
+                <th pSortableColumn="especialidad" style="min-width:10rem">Especialidad <p-sortIcon field="especialidad"></p-sortIcon>
+                </th>
+                <th pSortableColumn="tarjetaProfesional" style="min-width:10rem">Tarjeta Profesional <p-sortIcon field="tarjetaProfesional"></p-sortIcon>
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-medico>
+            <tr>
+                <td>{{ medico.idMedico }}</td>
+                <td>{{ medico.persona.nombre }}</td>
+                <td>{{ medico.persona.apellido }}</td>
+                <td>{{ medico.persona.numero_documento }}</td>
+                <td>{{ medico.persona.telefono }}</td>
+                <td>{{ medico.especialidadMedico.nombre}}</td>
+                <td>{{ medico.tarjetaProfesional}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success custom-margin"
+                        (click)="editarMedico(medico)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="eliminarMedico(medico)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">En total hay {{ medicos ? medicos.length : 0
+                }} medicos.</div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Detalles de medicos" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Nombre</label>
+            <input type="text" pInputText id="name" form="nombre" [(ngModel)]="medico.persona.nombre" required
+                autofocus />
+            <small class="p-error" *ngIf="submitted && !medico.persona.nombre">El nombre es requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Apellido</label>
+            <input type="text" pInputText id="apellido" [(ngModel)]="medico.persona.apellido" required autofocus />
+            <small class="p-error" *ngIf="submitted && !medico.persona.apellido">El apellido es requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Especialidad</label>
+            <p-dropdown [options]="especialidades_medicos" [(ngModel)]="especialidadSelected" optionLabel="nombre" [disabled]="disabledType"></p-dropdown>
+            <small class="p-error" *ngIf="submitted && !medico.especialidadMedico">La especialidad es requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Tipo de identificacion</label>
+            <p-dropdown [options]="tipos_identificacion" [(ngModel)]="typeSelected" optionLabel="tipo" [disabled]="disabledType"></p-dropdown>
+            <small class="p-error" *ngIf="submitted && !medico.persona.tipo_identificacion">El tipo de identificacion
+                es requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Numero documento</label>
+            <input type="number" pInputText id="documento" [(ngModel)]="medico.persona.numero_documento" required
+                autofocus />
+            <small class="p-error" *ngIf="submitted && !medico.persona.numero_documento">El numero del documento es
+                requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Telefono</label>
+            <input type="number" pInputText id="telefono" [(ngModel)]="medico.persona.telefono" required autofocus />
+            <small class="p-error" *ngIf="submitted && !medico.persona.telefono">El numero de telefono es
+                requerido</small>
+        </div>
+
+        <div class="field">
+            <label for="name">Correo</label>
+            <input type="text" pInputText id="correo" [(ngModel)]="medico.persona.correo" required autofocus />
+            <small class="p-error" *ngIf="submitted && !medico.persona.correo">El correo es requerido</small>
+        </div>
+
+
+        <div class="field">
+            <label for="name">Tarjeta Profesional</label>
+            <input type="text" pInputText id="tarjetaProfesional" [(ngModel)]="medico.tarjetaProfesional" required autofocus />
+            <small class="p-error" *ngIf="submitted && !medico.tarjetaProfesional">La tarjeta profesional es requerida</small>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
+            (click)="guardarMedico()"></button>
+    </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
