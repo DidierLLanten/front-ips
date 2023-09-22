@@ -9,6 +9,10 @@
     ".";
 }
 
+.custom-margin{
+  margin-right: 20px;
+}
+
 .titulo{
   margin-top: 20px;
   text-align: center;    

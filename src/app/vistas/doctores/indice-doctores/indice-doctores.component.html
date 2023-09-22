@@ -2,7 +2,7 @@
     <p-toast></p-toast>
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
                 (click)="openNew()"></button>
         </ng-template>
 
@@ -46,7 +46,7 @@
                 <td>{{ medico.especialidadMedico.nombre}}</td>
                 <td>{{ medico.tarjetaProfesional}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success custom-margin"
                         (click)="editarMedico(medico)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
                         (click)="eliminarMedico(medico)"></button>
@@ -119,8 +119,8 @@
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
             (click)="guardarMedico()"></button>
     </ng-template>
 
