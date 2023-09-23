@@ -17,6 +17,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [],
@@ -37,6 +38,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     RadioButtonModule,
     InputNumberModule,
     InputTextModule,
+    CardModule
   ],
 })
 export class PrimeNGModule {}
