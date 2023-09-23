@@ -1,0 +1,44 @@
+<div class="flex-container">
+  <div class="flex-items">
+    <span class="p-float-label margin-cedula" *ngIf="rol == 'admin'">
+      <input pInputText id="inputCedula" [(ngModel)]="cedula" />
+      <label htmlFor="inputCedula">Cedula</label>
+    </span>
+    <p-dropdown
+      placeholder="Especialidad"
+      [options]="especialidades"
+      [(ngModel)]="especialidadSeleccionada"
+      optionLabel="nombre"
+      (onChange)="filtrarPorEspecialidad()"
+      [style]="{ width: '208px' }"
+    ></p-dropdown>
+  </div>
+
+  <div class="flex-items" *ngIf="rol == 'admin'">
+    <p-button
+      label="Buscar"
+      styleClass="p-button-raised"
+      icon="pi pi-search"
+      (onClick)="searchUserByCedula()"
+    ></p-button>
+  </div>
+
+  <div class="flex-items margin-card" *ngIf="rol == 'admin' && pacienteAux">
+    <div class="card flex justify-content-center">
+      <p-card
+        header="{{
+          pacienteAux.persona.nombre + ' ' + pacienteAux.persona.apellido
+        }}"
+        subheader=" {{ pacienteAux.persona.correo }}"
+        [style]="{ width: '360px' }"
+      >
+        <p>
+          {{ pacienteAux.persona.tipo_identificacion.tipo }}:
+          {{ pacienteAux.persona.numero_documento }}
+          <br />
+          Telefono: {{ pacienteAux.persona.telefono }}
+        </p>
+      </p-card>
+    </div>
+  </div>
+</div>
