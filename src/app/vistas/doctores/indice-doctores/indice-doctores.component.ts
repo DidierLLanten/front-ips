@@ -12,10 +12,9 @@ import { TipoIdentificacionService } from 'src/app/services/tipo_identificacion.
   selector: 'app-indice-doctores',
   templateUrl: './indice-doctores.component.html',
   styleUrls: ['./indice-doctores.component.css'],
-  providers: [MessageService, ConfirmationService]
+  providers: [MessageService, ConfirmationService],
 })
-export class IndiceDoctoresComponent implements OnInit{
-
+export class IndiceDoctoresComponent implements OnInit {
   productDialog: boolean = false;
 
   medicos: Medico[] = [];
@@ -36,13 +35,16 @@ export class IndiceDoctoresComponent implements OnInit{
 
   especialidadSelected: Especialidad_medicos;
 
-  delete: string = "Eliminar";
+  delete: string = 'Eliminar';
 
   selectedProducts!: Medico[] | null;
 
   submitted: boolean = false;
 
   statuses!: any[];
+
+  editar: boolean = false;
+  medicoEditado: Medico;
 
   constructor(
     private medicoService: MedicoService,
@@ -58,70 +60,104 @@ export class IndiceDoctoresComponent implements OnInit{
     this.obtenerTiposIdentificacion();
   }
 
-  obtenerEspecialidades(){
-    this.especialidadService.obtenerListaEspecialidad().subscribe(dato=>{
+  obtenerEspecialidades() {
+    this.especialidadService.obtenerListaEspecialidad().subscribe((dato) => {
       this.especialidades_medicos = dato;
-      console.log(this.especialidades_medicos);
     });
   }
 
-  obtenerTiposIdentificacion(){
-    this.tipos_identificacionService.obtenerListaTiposIdentificacion().subscribe(dato=>{
-      this.tipos_identificacion = dato;
-      this.tipos_identificacion = this.tipos_identificacion.filter((tipo) => tipo.codigo != 2);
-    });
+  obtenerTiposIdentificacion() {
+    this.tipos_identificacionService
+      .obtenerListaTiposIdentificacion()
+      .subscribe((dato) => {
+        this.tipos_identificacion = dato;
+        this.tipos_identificacion = this.tipos_identificacion.filter(
+          (tipo) => tipo.codigo != 2
+        );
+      });
   }
 
-  obtenerMedicos(){
-    this.medicoService.obtenerListaMedico().subscribe(dato=>{
+  obtenerMedicos() {
+    this.medicoService.obtenerListaMedico().subscribe((dato) => {
       this.medicos = dato;
-      console.log(this.medicos);
     });
   }
 
   openNew() {
+    this.editar = false;
     this.medico = new Medico();
     this.submitted = false;
     this.productDialog = true;
     this.disabledType = false;
   }
 
+  verificarCampos(): boolean {
+    if (
+      this.medico.persona.nombre &&
+      this.medico.persona.apellido &&
+      this.medico.persona.numero_documento &&
+      this.medico.persona.telefono &&
+      this.medico.persona.correo &&
+      this.medico.tarjetaProfesional
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   guardarMedico() {
     this.submitted = true;
-    if (this.medico.persona.nombre.trim()) {
-      if (this.medico.idMedico) {
-        this.medicos[this.findIndexById(this.medico.idMedico)] = this.medico;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Exitoso',
-          detail: 'Medico creado',
-          life: 1000,
-        });
-      } else {
-        this.medico.especialidadMedico = this.especialidadSelected;
-        this.medico.persona.tipo_identificacion = this.typeSelected;
-        this.medicoService.createMedico(this.medico).subscribe(dato => {
-          this.messageService.add({
-          severity: 'success',
-          summary: 'Exitoso',
-          detail: 'Medico creado',
-          life: 1000,
-        });
-        this.obtenerMedicos();
-        this.medico = new Medico();
-        })        
+    if (this.editar) {
+      this.medico = this.medicoEditado;
+      const validarCampos = this.verificarCampos();
+      if (validarCampos) {
+        this.medicoService
+          .actualizarMedico(this.medico.idMedico, this.medico)
+          .subscribe((dato) => {
+            this.obtenerMedicos();
+          });
+        this.editar = false;
+        this.productDialog = false;
       }
-      this.productDialog = false;
-      this.medico;
+    } else {
+      const validarCampos = this.verificarCampos();
+      if (validarCampos) {
+        if (this.medico.persona.nombre.trim()) {
+          if (this.medico.idMedico) {
+            this.medicos[this.findIndexById(this.medico.idMedico)] =
+              this.medico;
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Exitoso',
+              detail: 'Medico creado',
+              life: 1000,
+            });
+          } else {
+            this.medico.especialidadMedico = this.especialidadSelected;
+            this.medico.persona.tipo_identificacion = this.typeSelected;
+            this.medicoService.createMedico(this.medico).subscribe((dato) => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Exitoso',
+                detail: 'Medico creado',
+                life: 1000,
+              });
+              this.obtenerMedicos();
+              this.medico = new Medico();
+            });
+          }
+          this.medico;
+        }
+        this.productDialog = false;
+      }
     }
   }
 
   editarMedico(medico: Medico) {
+    this.medico = medico;
+    this.medicoEditado = medico;
     this.disabledType = true;
-    this.medico = {...medico};
-    this.medicoService.actualizarMedico(this.medico.idMedico, this.medico).subscribe(dato => {
-      this.obtenerMedicos();
-    })    
+    this.editar = true;
     this.productDialog = true;
   }
 
@@ -131,7 +167,7 @@ export class IndiceDoctoresComponent implements OnInit{
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.medicoService.eliminarMedico(medico.idMedico).subscribe(dato => {
+        this.medicoService.eliminarMedico(medico.idMedico).subscribe((dato) => {
           this.messageService.add({
             severity: 'success',
             summary: 'Exitoso',
@@ -139,7 +175,7 @@ export class IndiceDoctoresComponent implements OnInit{
             life: 1000,
           });
           this.obtenerMedicos();
-        })        
+        });
       },
     });
   }
@@ -148,7 +184,7 @@ export class IndiceDoctoresComponent implements OnInit{
     this.productDialog = false;
     this.submitted = false;
     this.medico = new Medico();
-  }  
+  }
 
   findIndexById(id: number): number {
     let index = -1;

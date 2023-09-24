@@ -1,35 +1,37 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Paciente } from '../modelos/paciente';
 
 @Injectable({
-    providedIn: 'root'
-  })
+  providedIn: 'root',
+})
+export class PacienteService {
+  private baseUrl = 'http://localhost:8070/api/v1/paciente';
 
-export class PacienteService{
+  constructor(private httpClient: HttpClient) {}
 
-    private baseUrl="http://localhost:8070/api/v1/paciente";
+  createPatient(paciente: Paciente): Observable<any> {
+    return this.httpClient.post(`${this.baseUrl}`, paciente);
+  }
 
-    constructor(private httpClient:HttpClient) { }
+  obtenerListaPacientes(): Observable<Paciente[]> {
+    return this.httpClient.get<Paciente[]>(`${this.baseUrl}`);
+  }
 
-    createPatient(paciente:Paciente):Observable<any>{
-        return this.httpClient.post(`${this.baseUrl}`,paciente)
-    }
+  actualizarPaciente(id: number, paciente: Paciente): Observable<Object> {
+    return this.httpClient.put(`${this.baseUrl}/${id}`, paciente);
+  }
 
-    obtenerListaPacientes():Observable<Paciente[]>{
-        return this.httpClient.get<Paciente[]>(`${this.baseUrl}`)
-    }
-    
-    actualizarPaciente(id:number, paciente:Paciente):Observable<Object>{
-        return this.httpClient.put(`${this.baseUrl}/${id}`,paciente)
-    }
-    
-    eliminarPaciente(id:number):Observable<Object>{
-        return this.httpClient.delete(`${this.baseUrl}/${id}`)
-    }
-    
-    obtenerPacientePorId(id:number):Observable<Paciente>{
-        return this.httpClient.get<Paciente>(`${this.baseUrl}/${id}`)
-    }
+  eliminarPaciente(id: number): Observable<Object> {
+    return this.httpClient.delete(`${this.baseUrl}/${id}`);
+  }
+
+  obtenerPacientePorId(id: number): Observable<Paciente> {
+    return this.httpClient.get<Paciente>(`${this.baseUrl}/${id}`);
+  }
+
+  obtenerPacientePorCedula(cedula: string): Observable<Paciente> {
+    return this.httpClient.get<Paciente>(`${this.baseUrl}/documento/${cedula}`);
+  }
 }

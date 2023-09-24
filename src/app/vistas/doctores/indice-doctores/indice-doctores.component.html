@@ -90,7 +90,7 @@
 
         <div class="field">
             <label for="name">Numero documento</label>
-            <input type="number" pInputText id="documento" [(ngModel)]="medico.persona.numero_documento" required
+            <input [disabled]='editar' type="number" pInputText id="documento" [(ngModel)]="medico.persona.numero_documento" required
                 autofocus />
             <small class="p-error" *ngIf="submitted && !medico.persona.numero_documento">El numero del documento es
                 requerido</small>
@@ -105,7 +105,7 @@
 
         <div class="field">
             <label for="name">Correo</label>
-            <input type="text" pInputText id="correo" [(ngModel)]="medico.persona.correo" required autofocus />
+            <input type="email" pInputText id="correo" [(ngModel)]="medico.persona.correo" required autofocus />
             <small class="p-error" *ngIf="submitted && !medico.persona.correo">El correo es requerido</small>
         </div>
 
