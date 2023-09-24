@@ -1,7 +1,7 @@
 <div class="flex-container">
   <div class="flex-items">
     <span class="p-float-label margin-cedula" *ngIf="rol == 'admin'">
-      <input pInputText id="inputCedula" [(ngModel)]="cedula" />
+      <p-inputNumber type="number" id="inputCedula" [(ngModel)]="cedula" [min]="0" [maxlength]="11"> </p-inputNumber>
       <label htmlFor="inputCedula">Cedula</label>
     </span>
     <p-dropdown
@@ -19,7 +19,7 @@
       label="Buscar"
       styleClass="p-button-raised"
       icon="pi pi-search"
-      (onClick)="searchUserByCedula()"
+      (onClick)="buscarPacientePorCedula()"
     ></p-button>
   </div>
 
