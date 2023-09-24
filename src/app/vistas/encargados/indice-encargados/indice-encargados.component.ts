@@ -14,7 +14,6 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   providers: [MessageService, ConfirmationService],
 })
 export class IndiceEncargadosComponent implements OnInit {
-
   productDialog: boolean = false;
 
   usuarios: Usuario[] = [];
@@ -31,13 +30,16 @@ export class IndiceEncargadosComponent implements OnInit {
 
   usuario: Usuario = new Usuario();
 
-  delete: string = "Eliminar";
+  delete: string = 'Eliminar';
 
   selectedProducts!: Usuario[] | null;
 
   submitted: boolean = false;
 
   statuses!: any[];
+
+  editar: boolean = false;
+  usuarioEditado: Usuario;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -51,64 +53,101 @@ export class IndiceEncargadosComponent implements OnInit {
     this.obtenerTiposIdentificacion();
   }
 
-  obtenerTiposIdentificacion(){
-    this.tipos_identificacionService.obtenerListaTiposIdentificacion().subscribe(dato=>{
-      this.tipos_identificacion = dato;
-      this.tipos_identificacion = this.tipos_identificacion.filter((tipo) => tipo.codigo != 2);
-    });
+  obtenerTiposIdentificacion() {
+    this.tipos_identificacionService
+      .obtenerListaTiposIdentificacion()
+      .subscribe((dato) => {
+        this.tipos_identificacion = dato;
+        this.tipos_identificacion = this.tipos_identificacion.filter(
+          (tipo) => tipo.codigo != 2
+        );
+      });
   }
 
-  obtenerUsuarios(){
-    this.usuarioService.obtenerListaUsuarios().subscribe(dato=>{
+  obtenerUsuarios() {
+    this.usuarioService.obtenerListaUsuarios().subscribe((dato) => {
       this.usuarios = dato;
-      this.usuarios = this.usuarios.filter((usuario) => usuario.rol.codigo == 2);
+      this.usuarios = this.usuarios.filter(
+        (usuario) => usuario.rol.codigo == 2
+      );
     });
   }
 
   openNew() {
+    this.editar = false;
     this.usuario = new Usuario();
     this.submitted = false;
     this.productDialog = true;
     this.disabledType = false;
   }
 
+  verificarCampos(): boolean {
+    if (
+      this.usuario.persona.nombre &&
+      this.usuario.persona.apellido &&
+      this.usuario.persona.numero_documento &&
+      this.usuario.persona.telefono &&
+      this.usuario.persona.correo
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   guardarUsuario() {
     this.submitted = true;
-    if (this.usuario.persona.nombre?.trim()) {
-      if (this.usuario.idUsuario) {
-        this.usuarios[this.findIndexById(this.usuario.idUsuario)] = this.usuario;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Exitoso',
-          detail: 'Encargado creado',
-          life: 1000,
-        });
-      } else {
-        this.rol.codigo = 2;
-        this.usuario.rol = this.rol;
-        this.usuario.persona.tipo_identificacion = this.typeSelected;
-        this.usuarioService.createUser(this.usuario).subscribe(dato => {
-          this.messageService.add({
-          severity: 'success',
-          summary: 'Exitoso',
-          detail: 'Encargado creado',
-          life: 1000,
-        });
-        this.obtenerUsuarios();
-        this.usuario = new Usuario();
-        })        
+    if (this.editar) {
+      this.usuario = this.usuarioEditado;
+      const validarCampos = this.verificarCampos();
+      if (validarCampos) {
+        this.usuarioService
+          .actualizarUsuarios(this.usuario.idUsuario, this.usuario)
+          .subscribe((dato) => {
+            this.obtenerUsuarios();
+          });
+        this.editar = false;
+        this.productDialog = false;
       }
-      this.productDialog = false;
-      this.usuario;
+    } else {
+      const validarCampos = this.verificarCampos();
+      if (validarCampos) {
+        if (this.usuario.persona.nombre?.trim()) {
+          if (this.usuario.idUsuario) {
+            this.usuarios[this.findIndexById(this.usuario.idUsuario)] =
+              this.usuario;
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Exitoso',
+              detail: 'Encargado creado',
+              life: 1000,
+            });
+          } else {
+            this.rol.codigo = 2;
+            this.usuario.rol = this.rol;
+            this.usuario.persona.tipo_identificacion = this.typeSelected;
+            this.usuarioService.createUser(this.usuario).subscribe((dato) => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Exitoso',
+                detail: 'Encargado creado',
+                life: 1000,
+              });
+              this.obtenerUsuarios();
+              this.usuario = new Usuario();
+            });
+          }
+          this.usuario;
+        }
+        this.productDialog = false;
+      }
     }
   }
 
   editarUsuario(usuario: Usuario) {
+    this.usuario = usuario;
+    this.usuarioEditado = usuario;
+    this.editar = true;
     this.disabledType = true;
-    this.usuario = {...usuario};
-    this.usuarioService.actualizarUsuarios(this.usuario.idUsuario, this.usuario).subscribe(dato => {
-      this.obtenerUsuarios();
-    })    
     this.productDialog = true;
   }
 
@@ -118,44 +157,26 @@ export class IndiceEncargadosComponent implements OnInit {
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.usuarioService.eliminarUsuario(usuario.idUsuario).subscribe(dato => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Exitoso',
-            detail: 'Encargado eliminado',
-            life: 1000,
+        this.usuarioService
+          .eliminarUsuario(usuario.idUsuario)
+          .subscribe((dato) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Exitoso',
+              detail: 'Encargado eliminado',
+              life: 1000,
+            });
+            this.obtenerUsuarios();
           });
-          this.obtenerUsuarios();
-        })        
       },
     });
   }
-
-  /*deleteSelectedProducts() {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.usuarios = this.usuarios.filter(
-          (val) => !this.selectedProducts?.includes(this.usuario)
-        );
-        this.selectedProducts = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Products Deleted',
-          life: 3000,
-        });
-      },
-    });
-  }*/  
 
   hideDialog() {
     this.productDialog = false;
     this.submitted = false;
     this.usuario = new Usuario();
-  }  
+  }
 
   findIndexById(id: number): number {
     let index = -1;
