@@ -16,8 +16,8 @@ p {
   font-size: 28px;
   font-weight: bold;
 }
-.boton-agendar{
-    background-color: #3fde05;
+.boton-agendar {
+  background-color: #3fde05;
 }
 
 .botones {
@@ -27,6 +27,7 @@ p {
 .boton-confirmar {
   margin-right: 20px;
 }
-hr{
-    border:3px solid black;
+
+hr {
+  border: 3px solid black;
 }
