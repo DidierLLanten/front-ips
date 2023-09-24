@@ -3,9 +3,9 @@ import { Medico } from "./medico";
 import { Paciente } from "./paciente";
 
 export class Cita{
-    codigo?: number;
-    id_paciente?: Paciente = new Paciente();
-    id_medico?: Medico = new Medico();
-    fecha?: Date;
-    id_estado_cita?: Estado_cita = new Estado_cita();
+    codigo: number;
+    paciente: Paciente = new Paciente();
+    medico: Medico = new Medico();
+    fecha: Date = new Date();
+    estadoCita: Estado_cita = new Estado_cita();
 }
