@@ -75,7 +75,6 @@ export class IndiceDoctoresComponent implements OnInit{
   obtenerMedicos(){
     this.medicoService.obtenerListaMedico().subscribe(dato=>{
       this.medicos = dato;
-      console.log(this.medicos);
     });
   }
 

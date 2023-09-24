@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { Cita } from 'src/app/modelos/cita';
+import { CitaService } from 'src/app/services/cita.service';
 
 @Component({
   selector: 'app-tabla-citas',
@@ -8,59 +10,49 @@ import { MessageService } from 'primeng/api';
   providers: [MessageService],
 })
 export class TablaCitasComponent implements OnInit {
-  agendas: any[];
+
+  citaSeleccionada: Cita;
+
+  citas: Cita[];
 
   nombreMedico: string;
+
+  idEspecialidad: number = 3;
 
   cita: any;
 
   visible: boolean = false;
 
   constructor(
-    //private agendaService: AgendaService,
+    private citaService: CitaService,
     private messageService: MessageService
   ) {}
 
   ngOnInit() {
-    this.agendas = [
-      {
-        fecha: '2023-09-23 12:30',
-        nombreDoctor: 'Luis',
-        nombrePersona: 'Pedro',
-      },
-      {
-        fecha: '2023-09-23 2:30',
-        nombreDoctor: 'Didier',
-        nombrePersona: 'otavio',
-      },
-      {
-        fecha: '2023-09-23 11:30',
-        nombreDoctor: 'Camilo',
-        nombrePersona: 'Ernesto',
-      },
-    ];
-    this.cita = {
-      fecha: '2023-09-23 12:30',
-      nombreDoctor: 'Luis',
-      nombrePersona: 'Pedro',
-    };
-    /*this.agendaService.getProductsMini().then(dato => {
-      this.agendas = data;
-    });*/
-  }
-  showDialog() {
-    this.visible = true;
+
   }
 
-  selectAgenda(agenda: any) {
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Agenda Selected',
-      detail: agenda.nombre,
-    });
+  showDialog(cita: Cita) {
+    this.visible = true;
+    this.citaSeleccionada = cita;
+  }
+
+  confirmarCita(){
+    this.citaService.actualizarEstadoCita(this.citaSeleccionada.codigo, 3).subscribe(dato =>{
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Exitoso',
+        detail: 'Cita confirmada',
+        life: 1000,
+      });
+    })
+    this.visible = false;
   }
 
   buscarMedico(){
-    console.log(this.nombreMedico);
+    this.citaService.obtenerPorMedico(this.idEspecialidad, this.nombreMedico).subscribe(dato =>{
+      this.citas = dato;
+      console.log(this.citas);
+    })
   }
 }
