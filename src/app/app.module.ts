@@ -22,7 +22,11 @@ import { IndicePacientesComponent } from './vistas/pacientes/indice-pacientes/in
 import { IndiceDoctoresComponent } from './vistas/doctores/indice-doctores/indice-doctores.component';
 import { IndiceEncargadosComponent } from './vistas/encargados/indice-encargados/indice-encargados.component';
 import { IndiceCitasComponent } from './vistas/citas/indice-citas/indice-citas.component';
+
 import { TablaCitasComponent } from './vistas/tabla-citas/tabla-citas.component';
+
+import { EncabezadoCitasComponent } from './vistas/citas/encabezado-citas/encabezado-citas.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +35,11 @@ import { TablaCitasComponent } from './vistas/tabla-citas/tabla-citas.component'
     IndiceDoctoresComponent,
     IndiceEncargadosComponent,
     IndiceCitasComponent,
+
     TablaCitasComponent
+
+    EncabezadoCitasComponent
+
   ],
   imports: [
     BrowserModule,
