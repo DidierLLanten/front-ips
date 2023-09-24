@@ -15,8 +15,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-
+import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessagesModule } from 'primeng/messages';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 
 @NgModule({
@@ -38,7 +41,18 @@ import { CardModule } from 'primeng/card';
     RadioButtonModule,
     InputNumberModule,
     InputTextModule,
-    CardModule
+    CardModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    DialogModule,
+    DropdownModule,
+    RadioButtonModule,
+    InputNumberModule,
+    ConfirmDialogModule,
+    MessagesModule,
+    ConfirmPopupModule,
+    FormsModule,
   ],
 })
 export class PrimeNGModule {}
