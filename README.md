@@ -1,27 +1,45 @@
-# FrontIps
+# FrontIps - Sistema de Gestión de Citas para IPS
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+Este proyecto fue generado con Angular CLI versión 16.0.0 y utiliza las bibliotecas PrimeNG y CSS para crear una aplicación de gestión de citas para una Institución Prestadora de Servicios de Salud (IPS).
 
-## Development server
+## Desarrollo Local
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Para ejecutar la aplicación en un servidor de desarrollo local, sigue estos pasos:
 
-## Code scaffolding
+1. Ejecuta ng serve para iniciar el servidor de desarrollo.
+2. Abre tu navegador web y navega a http://localhost:4200/.
+3. La aplicación se recargará automáticamente si realizas cambios en los archivos fuente.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Generación de Código
+Puedes generar varios elementos de código utilizando Angular CLI. Aquí tienes algunos ejemplos de comandos útiles:
 
-## Build
+- Para generar un nuevo componente: ng generate component component-name.
+- Para generar otros elementos como directivas, pipes, servicios, clases, guards, interfaces, enums o módulos: ng generate directive|pipe|service|class|guard|interface|enum|module.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Construcción de la Aplicación
+Para construir la aplicación para su implementación en un servidor de producción, ejecuta el siguiente comando:
 
-## Running unit tests
+<code>ng build</code>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Los archivos de construcción se guardarán en el directorio dist/.
 
-## Running end-to-end tests
+## Ejecución de Pruebas Unitarias
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Puedes ejecutar pruebas unitarias utilizando Karma. Ejecuta el siguiente comando para iniciar las pruebas unitarias:
 
-## Further help
+<code>ng test</code>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Esto ejecutará las pruebas y proporcionará información sobre la cobertura de código.
+
+## Ejecución de Pruebas End-to-End
+Para ejecutar pruebas end-to-end (E2E) utilizando una plataforma de tu elección, primero debes agregar una biblioteca que implemente capacidades de pruebas E2E. Luego, ejecuta el siguiente comando:
+
+<code>ng e2e</code>
+
+Esto ejecutará las pruebas E2E y te permitirá validar la funcionalidad de extremo a extremo de la aplicación.
+
+## Ayuda Adicional
+
+Si necesitas más ayuda sobre el uso de Angular CLI o la estructura de la aplicación, puedes ejecutar el siguiente comando:
+
+<code>ng help</code>
