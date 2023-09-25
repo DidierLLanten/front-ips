@@ -38,7 +38,7 @@
             (click)="showDialog(cita)"
           ></button>
         </td>
-        <td>{{ cita.fecha }}</td>
+        <td>{{ cita.fecha | date: 'dd/MM/YYYY HH:mm'}}</td>
         <td>{{ cita.medico.persona.nombre }}</td>
       </tr>
     </ng-template>
@@ -64,7 +64,7 @@
   <br />
   <p *ngIf="visible">
     Sr(a). <strong>{{ paciente.persona.nombre | uppercase }}</strong> su cita será
-    asiganda para el dia <strong>{{ citaSeleccionada.fecha }}</strong> con el
+    asiganda para el dia <strong>{{ citaSeleccionada.fecha | date: 'dd/MM/YYYY HH:mm' }}</strong> con el
     Dr(a). <strong>{{ citaSeleccionada.medico.persona.nombre | uppercase }}</strong
     >.
   </p>
