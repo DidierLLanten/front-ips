@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Cita } from 'src/app/modelos/cita';
 import { CitaService } from 'src/app/services/cita.service';
+import { EncabezadoCitasComponent } from '../encabezado-citas/encabezado-citas.component';
 
 @Component({
   selector: 'app-tabla-citas',
@@ -9,15 +10,19 @@ import { CitaService } from 'src/app/services/cita.service';
   styleUrls: ['./tabla-citas.component.css'],
   providers: [MessageService],
 })
-export class TablaCitasComponent implements OnInit {
+export class TablaCitasComponent implements OnInit, OnChanges {
+  
+  @ViewChild("encabezado")
+  public encabezado:EncabezadoCitasComponent;
+  
+  @Input()
+  idEspecialidad: number;
 
   citaSeleccionada: Cita;
 
   citas: Cita[];
 
   nombreMedico: string;
-
-  idEspecialidad: number = 3;
 
   cita: any;
 
@@ -28,8 +33,12 @@ export class TablaCitasComponent implements OnInit {
     private messageService: MessageService
   ) {}
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void {
+    this.cargarTablaPorEspecialidades();
+  }
 
+  ngOnInit() {
+    
   }
 
   showDialog(cita: Cita) {
@@ -38,7 +47,7 @@ export class TablaCitasComponent implements OnInit {
   }
 
   confirmarCita(){
-    this.citaService.actualizarEstadoCita(this.citaSeleccionada.codigo, 3).subscribe(dato =>{
+    this.citaService.actualizarEstadoCita(this.citaSeleccionada.codigo, this.idEspecialidad).subscribe(dato =>{
       this.messageService.add({
         severity: 'success',
         summary: 'Exitoso',
@@ -50,9 +59,18 @@ export class TablaCitasComponent implements OnInit {
   }
 
   buscarMedico(){
-    this.citaService.obtenerPorMedico(this.idEspecialidad, this.nombreMedico).subscribe(dato =>{
+    if(this.nombreMedico != "" && this.nombreMedico != undefined){
+      this.citaService.obtenerPorMedico(this.idEspecialidad, this.nombreMedico).subscribe(dato =>{
+        this.citas = dato;
+      })
+    }else{
+      this.cargarTablaPorEspecialidades();
+    }
+  }
+
+  cargarTablaPorEspecialidades(){
+    this.citaService.obtenerPorEspecialidad(this.idEspecialidad).subscribe(dato =>{
       this.citas = dato;
-      console.log(this.citas);
     })
   }
 }

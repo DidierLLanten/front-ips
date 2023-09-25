@@ -25,4 +25,8 @@ export class CitaService{
         data.append("idEstadoCita", idEstadoCita);
         return this.httpClient.put(`${this.baseUrl}`,data);
     }
+
+    obtenerPorEspecialidad(idEspecialidad: number):Observable<Cita[]>{
+        return this.httpClient.get<Cita[]>(`${this.baseUrl}/cita_especialidad/${idEspecialidad}`);
+    }
 }

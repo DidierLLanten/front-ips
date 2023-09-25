@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class IndiceCitasComponent {
 
+  idEspecialidad: number;
+
+  validacion: boolean;
+
+  recibirIdEspecialidad(idEspecialidad: number){
+    this.idEspecialidad = idEspecialidad;
+  }
 }
