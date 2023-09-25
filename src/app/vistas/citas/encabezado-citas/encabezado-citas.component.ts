@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Especialidad_medicos } from 'src/app/modelos/especialidades_medico';
 import { Paciente } from 'src/app/modelos/paciente';
 import { EspecialidadService } from 'src/app/services/especialidad_medico.service';
@@ -15,12 +15,15 @@ export class EncabezadoCitasComponent implements OnInit {
     private pacienteService: PacienteService
   ) {}
 
+  @Output()
+  public filtrar = new EventEmitter<number>;
+
   @Input()
   rol: string;
 
   cedula: string;
   especialidades: Especialidad_medicos[] | undefined;
-  especialidadSeleccionada: Especialidad_medicos | undefined;
+  especialidadSeleccionada: Especialidad_medicos;
 
   pacienteAux: Paciente;
 
@@ -43,6 +46,6 @@ export class EncabezadoCitasComponent implements OnInit {
   }
 
   filtrarPorEspecialidad() {
-    console.log('Especialidad: ', this.especialidadSeleccionada);
+    this.filtrar.emit(this.especialidadSeleccionada?.id);
   }
 }

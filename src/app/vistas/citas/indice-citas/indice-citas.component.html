@@ -1,3 +1,3 @@
-<app-encabezado-citas [rol]="'admin'"></app-encabezado-citas>
+<app-encabezado-citas [rol]="'admin'" (filtrar)="recibirIdEspecialidad($event)"></app-encabezado-citas>
 <hr>
-<app-tabla-citas></app-tabla-citas>
+<app-tabla-citas #encabezado *ngIf="idEspecialidad" [idEspecialidad]="idEspecialidad"></app-tabla-citas>
