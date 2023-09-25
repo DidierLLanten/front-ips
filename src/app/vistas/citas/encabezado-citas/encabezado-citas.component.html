@@ -5,6 +5,7 @@
       <label htmlFor="inputCedula">Cedula</label>
     </span>
     <p-dropdown
+      *ngIf="pacienteAux"
       placeholder="Especialidad"
       [options]="especialidades"
       [(ngModel)]="especialidadSeleccionada"

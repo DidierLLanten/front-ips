@@ -29,4 +29,12 @@ export class CitaService{
     obtenerPorEspecialidad(idEspecialidad: number):Observable<Cita[]>{
         return this.httpClient.get<Cita[]>(`${this.baseUrl}/cita_especialidad/${idEspecialidad}`);
     }
+
+    actualizarPacienteCita(idCita: number, idPaciente: number){
+        const data = new FormData();
+
+        // @ts-ignore
+        data.append("idPaciente", idPaciente);
+        return this.httpClient.put(`${this.baseUrl}/${idCita}`,data);
+    }
 }

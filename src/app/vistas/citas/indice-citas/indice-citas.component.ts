@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Paciente } from 'src/app/modelos/paciente';
 
 @Component({
   selector: 'app-indice-citas',
@@ -11,7 +12,13 @@ export class IndiceCitasComponent {
 
   validacion: boolean;
 
+  paciente: Paciente;
+
   recibirIdEspecialidad(idEspecialidad: number){
     this.idEspecialidad = idEspecialidad;
+  }
+
+  recibirPaciente(paciente: Paciente){
+    this.paciente = paciente;
   }
 }
