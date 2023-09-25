@@ -18,6 +18,9 @@ export class EncabezadoCitasComponent implements OnInit {
   @Output()
   public filtrar = new EventEmitter<number>;
 
+  @Output()
+  public paciente = new EventEmitter<Paciente>;
+
   @Input()
   rol: string;
 
@@ -36,6 +39,7 @@ export class EncabezadoCitasComponent implements OnInit {
       .obtenerPacientePorCedula(this.cedula)
       .subscribe((pacienteBuscado) => {
         this.pacienteAux = pacienteBuscado;
+        this.enviarPersona();
       });
   }
 
@@ -47,5 +51,10 @@ export class EncabezadoCitasComponent implements OnInit {
 
   filtrarPorEspecialidad() {
     this.filtrar.emit(this.especialidadSeleccionada?.id);
+  }
+
+  enviarPersona(){
+    console.log("Paciente Aux", this.pacienteAux);
+    this.paciente.emit(this.pacienteAux);
   }
 }

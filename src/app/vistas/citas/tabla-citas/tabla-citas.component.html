@@ -63,7 +63,7 @@
   </div>
   <br />
   <p *ngIf="visible">
-    Sr(a). <strong>nombre del paciente<!--{{ cita.nombrePersona | uppercase }}--></strong> su cita será
+    Sr(a). <strong>{{ paciente.persona.nombre | uppercase }}</strong> su cita será
     asiganda para el dia <strong>{{ citaSeleccionada.fecha }}</strong> con el
     Dr(a). <strong>{{ citaSeleccionada.medico.persona.nombre | uppercase }}</strong
     >.

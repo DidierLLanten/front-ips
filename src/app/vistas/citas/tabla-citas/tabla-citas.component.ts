@@ -3,6 +3,7 @@ import { MessageService } from 'primeng/api';
 import { Cita } from 'src/app/modelos/cita';
 import { CitaService } from 'src/app/services/cita.service';
 import { EncabezadoCitasComponent } from '../encabezado-citas/encabezado-citas.component';
+import { Paciente } from 'src/app/modelos/paciente';
 
 @Component({
   selector: 'app-tabla-citas',
@@ -17,6 +18,9 @@ export class TablaCitasComponent implements OnInit, OnChanges {
   
   @Input()
   idEspecialidad: number;
+
+  @Input()
+  paciente: Paciente;
 
   citaSeleccionada: Cita;
 
@@ -42,18 +46,22 @@ export class TablaCitasComponent implements OnInit, OnChanges {
   }
 
   showDialog(cita: Cita) {
+    console.log(this.paciente);
     this.visible = true;
     this.citaSeleccionada = cita;
   }
 
-  confirmarCita(){
+  confirmarCita(){    
     this.citaService.actualizarEstadoCita(this.citaSeleccionada.codigo, this.idEspecialidad).subscribe(dato =>{
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Exitoso',
-        detail: 'Cita confirmada',
-        life: 1000,
-      });
+      this.citaService.actualizarPacienteCita(this.citaSeleccionada.codigo, this.paciente.idPaciente).subscribe(dato => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Exitoso',
+          detail: 'Cita confirmada',
+          life: 1000,
+        });
+        this.cargarTablaPorEspecialidades();
+      })      
     })
     this.visible = false;
   }
