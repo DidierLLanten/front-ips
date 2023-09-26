@@ -12,6 +12,9 @@ import { IndiceEncargadosComponent } from './vistas/encargados/indice-encargados
 import { IndiceCitasComponent } from './vistas/citas/indice-citas/indice-citas.component';
 import { EncabezadoCitasComponent } from './vistas/citas/encabezado-citas/encabezado-citas.component';
 import { TablaCitasComponent } from './vistas/citas/tabla-citas/tabla-citas.component';
+import { EncabezadoCrearCitasComponent } from './vistas/citas/encabezado-crear-citas/encabezado-crear-citas.component';
+import { CrearCitasComponent } from './vistas/citas/crear-citas/crear-citas.component';
+import { TablaCrearCitasComponent } from './vistas/citas/tabla-crear-citas/tabla-crear-citas.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { TablaCitasComponent } from './vistas/citas/tabla-citas/tabla-citas.comp
     IndiceCitasComponent,
     TablaCitasComponent,
     EncabezadoCitasComponent,
+    EncabezadoCrearCitasComponent,
+    CrearCitasComponent,
+    TablaCrearCitasComponent,
   ],
   imports: [
     BrowserModule,
