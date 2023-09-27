@@ -21,6 +21,7 @@ import { MessagesModule } from 'primeng/messages';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [],
@@ -53,6 +54,7 @@ import { CardModule } from 'primeng/card';
     MessagesModule,
     ConfirmPopupModule,
     FormsModule,
+    CalendarModule
   ],
 })
 export class PrimeNGModule {}

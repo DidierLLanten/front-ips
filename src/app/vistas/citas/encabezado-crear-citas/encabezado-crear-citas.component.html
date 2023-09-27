@@ -1,1 +1,104 @@
-<p>encabezado-crear-citas works!</p>
+<div class="card flex-container">
+  <span class="p-float-label margin-custom">
+    <p-dropdown
+      [options]="especialidades"
+      [(ngModel)]="especialidadSeleccionada"
+      placeholder="Especialidad"
+      optionLabel="nombre"
+      inputId="float-label"
+      (onChange)="filtrarPorEspecialidad()"
+    ></p-dropdown>
+    <label for="float-label">Especialidad</label>
+  </span>
+
+  <span
+    class="p-float-label margin-custom"
+    *ngIf="medicosEspecialistasOriginal"
+  >
+    <p-dropdown
+      [options]="medicosEspecialistasOriginal"
+      [(ngModel)]="medicoSeleccionado"
+      placeholder="Doctor"
+      optionLabel="nombreCompleto"
+      inputId="float-label"
+    ></p-dropdown>
+    <label for="float-label">Doctor</label>
+  </span>
+
+  <p-calendar
+    *ngIf="medicosEspecialistasOriginal"
+    [(ngModel)]="fechaSeleccionada"
+    [showIcon]="true"
+    placeholder="Fecha de citas"
+    [minDate]="fechaActual"
+    class="margin-custom"
+  ></p-calendar>
+
+  <div class="flex-items margin-custom">
+    <p-button
+      label="Buscar"
+      styleClass="p-button-raised"
+      icon="pi pi-search"
+      (onClick)="enviarMedicoFecha()"
+      [disabled]="!fechaSeleccionada || !medicoSeleccionado"
+    ></p-button>
+  </div>
+</div>
+
+<h2 *ngIf="medicoSeleccionado">Informacion Doctor</h2>
+<div class="container-info-doctor" *ngIf="medicoSeleccionado">
+  <div
+    class="card flex-inline flex flex-row justify-content-center flex-wrap gap-2 p-fluid"
+    style="padding: 20px"
+  >
+    <div class="flex flex-row gap-3">
+      <label htmlFor="numeroDocumento">Cédula</label>
+      <input
+        id="numeroDocumento"
+        type="text"
+        pInputText
+        [disabled]="true"
+        value="{{ medicoSeleccionado.persona.numero_documento }}"
+        class="opacidad-texto"
+      />
+    </div>
+    <div>
+      <label htmlFor="nombre">Nombre</label>
+      <input
+        id="nombre"
+        type="text"
+        pInputText
+        [disabled]="true"
+        value="{{
+          medicoSeleccionado.persona.nombre +
+            ' ' +
+            medicoSeleccionado.persona.apellido
+        }}"
+        class="opacidad-texto"
+      />
+    </div>
+
+    <div>
+      <label htmlFor="telefono">Teléfono</label>
+      <input
+        id="telefono"
+        type="text"
+        pInputText
+        [disabled]="true"
+        value="{{ medicoSeleccionado.persona.telefono }}"
+        class="opacidad-texto"
+      />
+    </div>
+    <div>
+      <label htmlFor="correo">Correo</label>
+      <input
+        id="correo"
+        type="text"
+        pInputText
+        [disabled]="true"
+        value="{{ medicoSeleccionado.persona.correo }}"
+        class="opacidad-texto"
+      />
+    </div>
+  </div>
+</div>
