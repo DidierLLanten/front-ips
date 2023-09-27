@@ -16,7 +16,7 @@ export class EncabezadoCrearCitasComponent {
   ) {}
 
   @Output()
-  public enviar = new EventEmitter<object[]>();
+  public doctorFecha = new EventEmitter<object[]>();
 
   ngOnInit() {
     this.cargarEspecialidades();
@@ -48,7 +48,7 @@ export class EncabezadoCrearCitasComponent {
         this.medicosEspecialistasOriginal = medicos;
         this.medicosEspecialistasOriginal = medicos.map((medico) => ({
           ...medico,
-          nombreCompleto: medico.persona.apellido + ' ' + medico.persona.nombre,
+          apellidoNombre: medico.persona.apellido + ' ' + medico.persona.nombre,
         }));
       });
   }
@@ -59,6 +59,6 @@ export class EncabezadoCrearCitasComponent {
       this.fechaSeleccionada,
     ];
 
-    this.enviar.emit(medicoFecha);
+    this.doctorFecha.emit(medicoFecha);
   }
 }

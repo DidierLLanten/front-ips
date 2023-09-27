@@ -1,2 +1,2 @@
-<app-encabezado-crear-citas></app-encabezado-crear-citas>
-<app-tabla-crear-citas></app-tabla-crear-citas>
+<app-encabezado-crear-citas (doctorFecha)="recibirDoctorFecha($event)"></app-encabezado-crear-citas>
+<app-tabla-crear-citas *ngIf="doctorFecha" [doctorFecha]="doctorFecha"></app-tabla-crear-citas>
