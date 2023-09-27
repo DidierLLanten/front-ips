@@ -12,6 +12,9 @@ export class MedicoService{
 
     constructor(private httpClient:HttpClient) { }
 
+    obtenerMedicosPorIdEspecialidad(id: number):Observable<Medico[]>{
+        return this.httpClient.get<Medico[]>(`${this.baseUrl}/especialistas/${id}`)
+    }
     createMedico(medico:Medico):Observable<any>{
         return this.httpClient.post(`${this.baseUrl}`,medico)
     }
@@ -31,4 +34,6 @@ export class MedicoService{
     obtenerMedicoPorId(id:number):Observable<Medico>{
         return this.httpClient.get<Medico>(`${this.baseUrl}/${id}`)
     }
+
+
 }
