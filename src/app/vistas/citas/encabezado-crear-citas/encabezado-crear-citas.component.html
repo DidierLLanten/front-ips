@@ -16,11 +16,12 @@
     *ngIf="medicosEspecialistasOriginal"
   >
     <p-dropdown
-      [options]="medicosEspecialistasOriginal"
-      [(ngModel)]="medicoSeleccionado"
+      [options]="medicosEspecialistasOriginal"      
       placeholder="Doctor"
       optionLabel="apellidoNombre"
       inputId="float-label"
+      (onChange)="onMedicoSeleccionadoChange($event)"
+      [showClear]="true"
     ></p-dropdown>
     <label for="float-label">Doctor</label>
   </span>
@@ -39,14 +40,14 @@
       label="Buscar"
       styleClass="p-button-raised"
       icon="pi pi-search"
-      (onClick)="enviarMedicoFecha()"
+      (onClick)="enviarMedicoFechaCitas()"
       [disabled]="!fechaSeleccionada || !medicoSeleccionado"
     ></p-button>
-  </div>
+  </div>  
 </div>
 
-<h2 *ngIf="medicoSeleccionado">Informacion Doctor</h2>
-<div class="container-info-doctor" *ngIf="medicoSeleccionado">
+<h2 *ngIf="medicoSeleccionado?.idMedico">Informacion Doctor</h2>
+<div class="container-info-doctor" *ngIf="medicoSeleccionado?.idMedico">
   <div
     class="card flex-inline flex flex-row justify-content-center flex-wrap gap-2 p-fluid"
     style="padding: 20px"

@@ -37,4 +37,12 @@ export class CitaService{
         data.append("idPaciente", idPaciente);
         return this.httpClient.put(`${this.baseUrl}/${idCita}`,data);
     }
+
+    crearCitaDoctor(datosCita: object): Observable<any> {        
+        return this.httpClient.post(`${this.baseUrl}`, datosCita);
+    }
+
+    obtenerCitasPorDoctorFecha(idMedico: number, fecha: string):Observable<Cita[]>{
+        return this.httpClient.get<Cita[]>(`${this.baseUrl}/medico/${idMedico}?fecha=${fecha}`);
+    }
 }

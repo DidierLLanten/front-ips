@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Cita } from 'src/app/modelos/cita';
 
 @Component({
   selector: 'app-crear-citas',
@@ -6,9 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./crear-citas.component.css'],
 })
 export class CrearCitasComponent {
-  doctorFecha: object;
+  doctorFecha: any[];
+  citas: Cita[];
 
-  recibirDoctorFecha(doctorFecha: object) {
+  recibirDoctorFecha(doctorFecha: any[]) {
     this.doctorFecha = doctorFecha;
+  }
+
+  recibirCitas(citas: Cita[]) {
+    this.citas = citas;
   }
 }
