@@ -16,6 +16,13 @@ import { EncabezadoCrearCitasComponent } from './vistas/citas/encabezado-crear-c
 import { CrearCitasComponent } from './vistas/citas/crear-citas/crear-citas.component';
 import { TablaCrearCitasComponent } from './vistas/citas/tabla-crear-citas/tabla-crear-citas.component';
 
+import { LOCALE_ID } from '@angular/core';
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs, 'es-ES');
+
+import { DatePipe } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +43,7 @@ import { TablaCrearCitasComponent } from './vistas/citas/tabla-crear-citas/tabla
     BrowserAnimationsModule,
     PrimeNGModule,
   ],
-  providers: [],
+  providers: [DatePipe, { provide: LOCALE_ID, useValue: 'es-ES' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
