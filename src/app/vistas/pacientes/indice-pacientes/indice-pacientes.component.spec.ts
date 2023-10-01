@@ -210,74 +210,71 @@ describe('IndicePacientesComponent', () => {
     expect(mockPacienteService.actualizarPaciente).toHaveBeenCalled();
     expect(component.productDialog).toBeFalse();
     expect(component.editar).toBeFalse();
- });
+  });
 
- it('should call editar paciente dialog',()=>{
-    const paciente:any = {
-        idPaciente:1,
-        persona:personas[2],
-        eps:{
-           id:1,
-           nombre:"COLSANITAS",
-           nit:"15256466564" 
-        }     
-     }
-    component.editarPaciente(paciente);
-    expect(component.paciente).toEqual(paciente);
-    expect(component.pacienteEditado).toEqual(paciente);
-    expect(component.editar).toBeTrue();
-    expect(component.disabledType).toBeTrue();
-    expect(component.productDialog).toBeTrue();      
- });
-
- it('should eliminar paciente',()=>{
-    const paciente:any = {
-        idPaciente:1,
-        persona:personas[2],
-        eps:{
-           id:1,
-           nombre:"COLSANITAS",
-           nit:"15256466564" 
-        }     
-     }
-    spyOn(mockPacienteService, 'eliminarPaciente').and.returnValue(of(paciente)); 
-    component.eliminarPaciente(paciente);      
- });
-
- it('should hide dialog',()=>{
-    component.hideDialog();
-    expect(component.productDialog).toBeFalse();
-    expect(component.submitted).toBeFalse();
-    expect(component.paciente).toEqual(new Paciente());
- });
-
- it('should find index by id', () =>{
-    const mockPacientes =[
-        {
+  it('should call editar paciente dialog',()=>{
+      const paciente:any = {
           idPaciente:1,
-          persona:personas[0],
+          persona:personas[2],
           eps:{
-              id:1,
-              nombre:"COLSANITAS",
-              nit:"15256466564" 
-          }
-        },
-        {
-          idPaciente:2,
-          persona:personas[1],
+            id:1,
+            nombre:"COLSANITAS",
+            nit:"15256466564" 
+          }     
+      }
+      component.editarPaciente(paciente);
+      expect(component.paciente).toEqual(paciente);
+      expect(component.pacienteEditado).toEqual(paciente);
+      expect(component.editar).toBeTrue();
+      expect(component.disabledType).toBeTrue();
+      expect(component.productDialog).toBeTrue();      
+  });
+
+  it('should eliminar paciente',()=>{
+      const paciente:any = {
+          idPaciente:1,
+          persona:personas[2],
           eps:{
-              id:2,
-              nombre:"COLSALUD",
-              nit:"56565466546" 
+            id:1,
+            nombre:"COLSANITAS",
+            nit:"15256466564" 
+          }     
+      }
+      spyOn(mockPacienteService, 'eliminarPaciente').and.returnValue(of(paciente)); 
+      component.eliminarPaciente(paciente);      
+  });
+
+  it('should hide dialog',()=>{
+      component.hideDialog();
+      expect(component.productDialog).toBeFalse();
+      expect(component.submitted).toBeFalse();
+      expect(component.paciente).toEqual(new Paciente());
+  });
+
+  it('should find index by id', () =>{
+      const mockPacientes =[
+          {
+            idPaciente:1,
+            persona:personas[0],
+            eps:{
+                id:1,
+                nombre:"COLSANITAS",
+                nit:"15256466564" 
+            }
+          },
+          {
+            idPaciente:2,
+            persona:personas[1],
+            eps:{
+                id:2,
+                nombre:"COLSALUD",
+                nit:"56565466546" 
+            }
           }
-        }
-      ]
-      component.pacientes = mockPacientes;
-      component.findIndexById(2);
-      expect(component.findIndexById(2)).toEqual(1);
+        ]
+        component.pacientes = mockPacientes;
+        component.findIndexById(2);
+        expect(component.findIndexById(2)).toEqual(1);
 
- });
-
-
-
+  });
 });
