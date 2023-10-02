@@ -30,8 +30,10 @@ export class NavbarComponent implements OnInit {
         label: 'Citas',
         icon: 'pi pi-fw pi-calendar',
         items: [
-          { label: 'Crear', icon: 'pi pi-calendar-plus',  routerLink: 'crearCita',},
-          { label: 'Agendar', icon: 'pi pi-book', routerLink: 'agendarCita',},
+          { label: 'Crear', icon: 'pi pi-calendar-plus',  routerLink: 'crear-cita',},
+          { label: 'Agendar', icon: 'pi pi-book', routerLink: 'agendar-cita',},
+          { label: 'Detalle', icon: 'pi pi-search', routerLink: 'detalle-cita',},
+          { label: 'Historial', icon: 'pi pi-history', routerLink: '*',},
         ],
       },
     ];

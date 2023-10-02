@@ -5,10 +5,12 @@ import { IndiceDoctoresComponent } from './vistas/doctores/indice-doctores/indic
 import { IndiceEncargadosComponent } from './vistas/encargados/indice-encargados/indice-encargados.component';
 import { IndicePacientesComponent } from './vistas/pacientes/indice-pacientes/indice-pacientes.component';
 import { CrearCitasComponent } from './vistas/citas/crear-citas/crear-citas.component';
+import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.component';
 
 const routes: Routes = [
-  { path: 'crearCita', component: CrearCitasComponent },
-  { path: 'agendarCita', component: IndiceCitasComponent },
+  { path: 'crear-cita', component: CrearCitasComponent },
+  { path: 'agendar-cita', component: IndiceCitasComponent },
+  { path: 'detalle-cita', component: DetalleCitaComponent },
 
   { path: 'doctores', component: IndiceDoctoresComponent },
 

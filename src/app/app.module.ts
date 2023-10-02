@@ -22,6 +22,7 @@ import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs, 'es-ES');
 
 import { DatePipe } from '@angular/common';
+import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { DatePipe } from '@angular/common';
     EncabezadoCrearCitasComponent,
     CrearCitasComponent,
     TablaCrearCitasComponent,
+    DetalleCitaComponent,
   ],
   imports: [
     BrowserModule,
