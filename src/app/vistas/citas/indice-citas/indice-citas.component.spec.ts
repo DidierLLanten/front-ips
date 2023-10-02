@@ -5,7 +5,7 @@ import { PrimeNGModule } from 'src/app/prime-ng/prime-ng.module';
 import { TablaCitasComponent } from '../tabla-citas/tabla-citas.component';
 import { EncabezadoCitasComponent } from '../encabezado-citas/encabezado-citas.component';
 
-describe('EncabezadoCitasComponent', () => {
+describe('IndiceCitasComponent', () => {
     let component: IndiceCitasComponent;
     let fixture: ComponentFixture<IndiceCitasComponent>;
 
