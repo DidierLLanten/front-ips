@@ -8,7 +8,7 @@
     ]
   },
   "include": [
-    "src/app/vistas/pacientes/indice-pacientes/**/*.spec.ts",
+    "src/**/*.spec.ts",
     "src/**/*.d.ts"
   ]
 }
