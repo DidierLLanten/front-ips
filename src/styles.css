@@ -3,5 +3,35 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 body {
-    font-family: var(--font-family);
+  font-family: var(--font-family);
+}
+
+.color-texto .p-menuitem-text {
+  color: white !important;
+}
+.color-icono .pi {
+  color: white !important;
+}
+
+.color-icono:hover .p-menuitem-content {
+  background-color: #3e78cf !important;
+}
+
+.color-icono:active .p-menuitem-content {
+  background-color: black !important;
+}
+
+.color-icono:not(:hover) .p-menuitem-content {
+  background-color: #5391ec !important;
+}
+
+.color-texto-calendar .p-menuitem-text {
+  color: white !important;
+}
+.color-icono-calendar .pi {
+  color: white !important;
+}
+
+.p-menubar .p-submenu-list {
+  background-color: #5391ec !important;
 }
