@@ -1,0 +1,34 @@
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: normal;
+  align-content: normal;
+  margin: 1%;
+  margin-top: 3%;
+  padding-top: 13px;
+  padding-bottom: 8px;
+}
+
+.margin-custom {
+  margin: 15px 0px 15px 20px;
+}
+
+.flex-inline {
+  display: inline-flex;
+}
+
+.container-info-doctor {
+  display: flex;
+  justify-content: center;
+  margin: 1%;
+}
+
+h2 {
+  text-align: center;
+}
+
+.opacidad-texto {
+  opacity: 1;
+}

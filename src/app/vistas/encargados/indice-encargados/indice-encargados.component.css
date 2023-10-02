@@ -1,0 +1,19 @@
+.container {  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.6fr 1.9fr;
+  grid-auto-columns: 1fr;
+  gap: 20px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "."
+    ".";
+}
+
+.custom-margin{
+  margin-right: 20px;
+}
+
+.titulo{
+  margin-top: 20px;
+  text-align: center;    
+}

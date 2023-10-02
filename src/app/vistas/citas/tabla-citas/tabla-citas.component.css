@@ -1,0 +1,33 @@
+.header-dialog {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.filtro {
+  margin: 1% 1% 1% 0%;
+}
+
+p {
+  font-size: 24px;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+.boton-agendar {
+  background-color: #3fde05;
+}
+
+.botones {
+  text-align: center;
+}
+
+.boton-confirmar {
+  margin-right: 20px;
+}
+
+hr {
+  border: 3px solid black;
+}

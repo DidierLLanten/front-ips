@@ -1,0 +1,138 @@
+<p-toast></p-toast>
+
+<p-table
+  [value]="citas"
+  [scrollable]="true"
+  scrollHeight="400px"
+  [resizableColumns]="true"
+  styleClass="p-datatable-gridlines"
+  [tableStyle]="{ 'min-width': '50rem' }"
+>
+  <ng-template pTemplate="caption">
+    {{ fecha | date : "EEEE d 'de' MMMM 'del' y" }}
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="fecha" style="width: 20%">
+        Hora <p-sortIcon field="fecha"></p-sortIcon>
+      </th>
+      <th pSortableColumn="estadoCita.nombre" style="width: 20%">
+        Estado <p-sortIcon field="estadoCita.nombre"></p-sortIcon>
+      </th>
+      <th pSortableColumn="paciente.persona.nombre" style="width: 20%">
+        Paciente <p-sortIcon field="paciente.persona.nombre"></p-sortIcon>
+      </th>
+      <!-- <th pResizableColumn>Paciente</th> -->
+      <!-- <th pResizableColumn>Medico</th> -->
+      <th pSortableColumn="paciente.persona.telefono" style="width: 20%">
+        Telefono <p-sortIcon field="paciente.persona.telefono"></p-sortIcon>
+      </th>
+      <th
+        pResizableColumn
+        pSortableColumn="paciente.persona.correo"
+        style="width: 20%"
+      >
+        Correo <p-sortIcon field="paciente.persona.correo"></p-sortIcon>
+      </th>
+      <th pSortableColumn="paciente.eps.nombre" style="width: 20%">
+        EPS <p-sortIcon field="paciente.eps.nombre"></p-sortIcon>
+      </th>
+
+      <th pResizableColumn>Acciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-citas>
+    <tr>
+      <!-- <td>8:00 - 8:20</td> -->
+      <td>{{ citas.fecha | date : "HH:mm" }}</td>
+      <td>
+        <p-tag
+          [value]="citas.estadoCita.nombre"
+          [severity]="getColorTagEstado(citas.estadoCita.nombre)"
+        ></p-tag>
+      </td>
+      <td>
+        {{
+          (citas.paciente?.persona.nombre || "Ninguno") +
+            " " +
+            (citas.paciente?.persona.apellido || "")
+        }}
+      </td>
+
+      <td>{{ citas.paciente?.persona.telefono || "Ninguno" }}</td>
+      <td>{{ citas.paciente?.persona.correo || "Ninguno" }}</td>
+      <td>{{ citas.paciente?.eps.nombre || "Ninguno" }}</td>
+
+      <td>
+        <button
+          *ngIf="!citas.codigo"
+          pButton
+          pRipple
+          icon="pi pi-plus"
+          class="p-button-rounded p-button-success mr-2"
+          (click)="mostrarModalConfirmacion(citas)"
+        ></button>
+        <button
+          *ngIf="citas.codigo"
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-danger"
+          (click)="eliminarCita(citas)"
+        ></button>
+      </td>
+      <!-- <td>{{ citas.medico.persona.nombre }} {{ citas.medico.persona.apellido }}</td> -->
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- <td>{{ cita.fecha | date:'dd/MM/yyyy' }}</td> -->
+<!-- <td>{{ cita.fecha | date:'HH:mm' }}</td> -->
+
+<p-dialog
+  header="Header"
+  [(visible)]="mostrarConfirmacion"
+  [modal]="true"
+  [style]="{ width: '40rw', height: 'auto' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="header-dialog">
+      <h3 class="text-xl font-bold">Crear cita</h3>
+    </div>
+  </ng-template>
+  <div class="titulo">
+    <p>¿Está seguro que desea crear esta cita?</p>
+  </div>
+  <br />
+  <p *ngIf="mostrarConfirmacion">
+    <!-- Sr(a). <strong>{{ paciente.persona.nombre | uppercase }}</strong> su cita será -->
+    Para el dia
+    <strong>{{
+      citaSeleccionada.fecha | date : "EEEE d 'de' MMMM 'del' y 'a las' HH:mm"
+    }}</strong>
+    con el Dr(a).
+    <strong
+      >{{ medico.persona.nombre + " " | uppercase }}
+      {{ medico.persona.apellido | uppercase }}</strong
+    >.
+  </p>
+  <div class="botones">
+    <p-button
+      label="Cancelar"
+      icon="pi pi-times"
+      styleClass="p-button-danger"
+      [style]="{ margin: '0 20px 0 0' }"
+      (click)="mostrarConfirmacion = false"
+    ></p-button>
+
+    <p-button
+      label="Crear"
+      icon="pi pi-check"
+      class="boton-confirmar"
+      styleClass="p-button-success"
+      (onClick)="crearCita(citaSeleccionada.fecha)"
+    ></p-button>
+  </div>
+</p-dialog>
