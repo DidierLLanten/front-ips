@@ -1,0 +1,17 @@
+.alerta-roja {
+  margin: 20px;
+  background-color: red; /* Fondo rojo */
+  color: white; /* Texto blanco */
+  padding: 10px; /* Espaciado interno para mayor claridad */
+  border: 1px solid darkred; /* Borde rojo oscuro opcional */
+}
+
+.input{
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top:20px ;
+}
+
+.remover{
+  margin-left: 20px;
+}

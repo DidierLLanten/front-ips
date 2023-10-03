@@ -45,4 +45,8 @@ export class CitaService{
     obtenerCitasPorDoctorFecha(idMedico: number, fecha: string):Observable<Cita[]>{
         return this.httpClient.get<Cita[]>(`${this.baseUrl}/medico/${idMedico}?fecha=${fecha}`);
     }
+
+    obtenerCitas():Observable<Cita[]>{
+        return this.httpClient.get<Cita[]>(`${this.baseUrl}`);
+    }
 }

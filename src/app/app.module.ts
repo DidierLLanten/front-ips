@@ -23,6 +23,8 @@ registerLocaleData(localeEs, 'es-ES');
 
 import { DatePipe } from '@angular/common';
 import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.component';
+import { HistorialComponent } from './vistas/citas/historial/historial.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,12 +40,15 @@ import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.c
     CrearCitasComponent,
     TablaCrearCitasComponent,
     DetalleCitaComponent,
+    HistorialComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     PrimeNGModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [DatePipe, { provide: LOCALE_ID, useValue: 'es-ES' }],
   bootstrap: [AppComponent],

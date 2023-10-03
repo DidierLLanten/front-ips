@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Historial',
             icon: 'pi pi-history',
-            routerLink: '*',
+            routerLink: 'historial',
             styleClass: 'color-texto color-icono',
           },
         ],

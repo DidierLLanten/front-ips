@@ -6,6 +6,7 @@ import { IndiceEncargadosComponent } from './vistas/encargados/indice-encargados
 import { IndicePacientesComponent } from './vistas/pacientes/indice-pacientes/indice-pacientes.component';
 import { CrearCitasComponent } from './vistas/citas/crear-citas/crear-citas.component';
 import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.component';
+import { HistorialComponent } from './vistas/citas/historial/historial.component';
 
 const routes: Routes = [
   { path: 'crear-cita', component: CrearCitasComponent },
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'encargados', component: IndiceEncargadosComponent },
 
   { path: 'pacientes', component: IndicePacientesComponent },
+
+  { path: 'historial', component: HistorialComponent },
 
   { path: '**', redirectTo: '' },
 ];

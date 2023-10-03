@@ -1,0 +1,42 @@
+<div class="flex justify-content-between pb-4 pt-5">
+    <form [formGroup]="formGroup">
+    <p-dropdown [(ngModel)]="selectedMedico" class="input" formControlName="medico" [options]="medicos" placeholder="Seleccione un medico" optionLabel="persona.nombre"></p-dropdown>
+
+    <p-calendar formControlName="fecha"  placeholder="Seleccione una fecha" [(ngModel)]="selectedDate"></p-calendar>
+</form>
+    
+    <div *ngIf="mostrarAlerta" class="alerta-roja">
+        Para realizar este filtro se necesita seleccionar un medico y una fecha.
+    </div>
+    
+    <div class="input">
+        <p-button (click)="filtrarCitas()" label="Filtrar"></p-button>
+        <p-button *ngIf="filtrado" (click)="obtenerCitas()" class="remover" label="Remover filtro" styleClass="p-button-success"></p-button>
+    </div>
+
+</div>
+<p-table [value]="citas" [paginator]="true" [rows]="10" [totalRecords]="citas.length" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="caption"> Historial de citas </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Fecha</th>
+            <th>Paciente</th>
+            <th>Medico</th>
+            <th>Estado</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-cita>
+        <tr>
+            <td>{{ cita.fecha | date: 'dd/MM/YYYY HH:mm' }}</td>
+            <td>{{ cita.paciente!=null?cita.paciente.persona.nombre:'No asignada'}} {{cita.paciente!=null? cita.paciente.persona.apellido:''}}</td>
+            <td>{{ cita.medico.persona.nombre }} {{cita.medico.persona.apellido}}</td>
+            <td>
+                <p-tag
+                  [value]="cita.estadoCita.nombre"
+                  [severity]="getColorTagEstado(cita.estadoCita.nombre)"
+                ></p-tag>
+              </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary"> En este historial se ven todas las citas que han sido creadas </ng-template>
+</p-table>
