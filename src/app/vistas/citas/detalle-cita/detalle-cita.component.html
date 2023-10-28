@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <div
   class="card flex-row justify-content-center flex-wrap p-fluid"
   style="margin: 50px; padding: 20px"
@@ -28,168 +30,177 @@
   </div>
 </div>
 
-<div class="card" style="margin: 50px; padding: 20px" *ngIf="citaEncontrada">
-  <div class="container-info-cita">
-    <div
-      class="card centrar-fecha flex-inline"
-      style="padding: 20px"
-      *ngIf="citaEncontrada"
-    >
-      <div>
-        <h4 style="display: inline">Fecha: </h4>
-        <label>
-          {{ citaEncontrada.fecha | date : "EEEE d 'de' MMMM 'del' y" }}</label
-        >
-      </div>
-      <div>
-        <h4 style="display: inline">Estado: </h4>
-        <p-tag
-          [value]="citaEncontrada.estadoCita.nombre"
-          [severity]="getColorTagEstado(citaEncontrada.estadoCita.nombre)"
-        ></p-tag>
-      </div>
+<div
+  *ngIf="citasEncontradas"
+  class="card container-info-paciente"
+  style="margin: 50px; padding: 20px"
+>
+  <h3 *ngIf="citasEncontradas">Paciente</h3>
+  <div
+    class="card flex flex-row justify-content-center flex-wrap gap-2 p-fluid"
+    style="padding: 20px"
+    *ngIf="citasEncontradas[0]"
+  >
+    <div class="flex flex-row gap-3">
+      <label htmlFor="numeroDocumento">{{
+        citasEncontradas[0].paciente.persona.tipo_identificacion.tipo
+      }}</label>
+      <input
+        id="numeroDocumento"
+        type="text"
+        pInputText
+        [disabled]="true"
+        value="{{ citasEncontradas[0].paciente.persona.numero_documento }}"
+        class="opacidad-texto"
+      />
     </div>
-  </div>
-
-  <div class="container-info-paciente" *ngIf="citaEncontrada">
-    <h3>Paciente</h3>
-    <div
-      class="card flex flex-row justify-content-center flex-wrap gap-2 p-fluid"
-      style="padding: 20px"
-    >
-      <div class="flex flex-row gap-3">
-        <label htmlFor="numeroDocumento">{{
-          citaEncontrada.paciente.persona.tipo_identificacion.tipo
-        }}</label>
-        <input
-          id="numeroDocumento"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{ citaEncontrada.paciente.persona.numero_documento }}"
-          class="opacidad-texto"
-        />
-      </div>
-      <div>
-        <label htmlFor="nombre">Nombre</label>
-        <input
-          id="nombre"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{
-            citaEncontrada.paciente.persona.nombre +
-              ' ' +
-              citaEncontrada.paciente.persona.apellido
-          }}"
-          class="opacidad-texto"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="telefono">Teléfono</label>
-        <input
-          id="telefono"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{ citaEncontrada.paciente.persona.telefono }}"
-          class="opacidad-texto"
-        />
-      </div>
-      <div>
-        <label htmlFor="correo">Correo</label>
-        <input
-          id="correo"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{ citaEncontrada.paciente.persona.correo }}"
-          class="opacidad-texto"
-        />
-      </div>
-      <div>
-        <label htmlFor="eps">EPS</label>
-        <input
-          id="eps"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{ citaEncontrada.paciente.eps?.nombre }}"
-          class="opacidad-texto"
-        />
-      </div>
+    <div>
+      <label htmlFor="nombre">Nombre</label>
+      <input
+        id="nombre"
+        type="text"
+        pInputText
+        [disabled]="true"
+        value="{{
+          citasEncontradas[0].paciente.persona.nombre +
+            ' ' +
+            citasEncontradas[0].paciente.persona.apellido
+        }}"
+        class="opacidad-texto"
+      />
     </div>
-  </div>
 
-  <div class="container-info-doctor" *ngIf="citaEncontrada">
-    <h3>Doctor</h3>
-    <div
-      class="card flex flex-row justify-content-center flex-wrap gap-2 p-fluid"
-      style="padding: 20px"
-    >
-      <div class="flex flex-row gap-3">
-        <label htmlFor="numeroDocumento">{{
-          citaEncontrada.medico.persona.tipo_identificacion.tipo
-        }}</label>
-        <input
-          id="numeroDocumento"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{ citaEncontrada.medico.persona.numero_documento }}"
-          class="opacidad-texto"
-        />
-      </div>
-      <div>
-        <label htmlFor="nombre">Nombre</label>
-        <input
-          id="nombre"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{
-            citaEncontrada.medico.persona.nombre +
-              ' ' +
-              citaEncontrada.medico.persona.apellido
-          }}"
-          class="opacidad-texto"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="telefono">Teléfono</label>
-        <input
-          id="telefono"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{ citaEncontrada.medico.persona.telefono }}"
-          class="opacidad-texto"
-        />
-      </div>
-      <div>
-        <label htmlFor="correo">Correo</label>
-        <input
-          id="correo"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{ citaEncontrada.medico.persona.correo }}"
-          class="opacidad-texto"
-        />
-      </div>
-      <div>
-        <label htmlFor="eps">Especialidad</label>
-        <input
-          id="eps"
-          type="text"
-          pInputText
-          [disabled]="true"
-          value="{{ citaEncontrada.medico.especialidadMedico.nombre }}"
-          class="opacidad-texto"
-        />
-      </div>
+    <div>
+      <label htmlFor="telefono">Teléfono</label>
+      <input
+        id="telefono"
+        type="text"
+        pInputText
+        [disabled]="true"
+        value="{{ citasEncontradas[0].paciente.persona.telefono }}"
+        class="opacidad-texto"
+      />
+    </div>
+    <div>
+      <label htmlFor="correo">Correo</label>
+      <input
+        id="correo"
+        type="text"
+        pInputText
+        [disabled]="true"
+        value="{{ citasEncontradas[0].paciente.persona.correo }}"
+        class="opacidad-texto"
+      />
+    </div>
+    <div>
+      <label htmlFor="eps">EPS</label>
+      <input
+        id="eps"
+        type="text"
+        pInputText
+        [disabled]="true"
+        value="{{ citasEncontradas[0].paciente.eps?.nombre }}"
+        class="opacidad-texto"
+      />
     </div>
   </div>
 </div>
+
+<ng-container *ngFor="let consu of citasEncontradas">
+  <div class="card" style="margin: 50px; padding: 20px" *ngIf="citasEncontradas">
+    <div class="container-info-cita">
+      <div
+        class="card centrar-fecha flex-inline"
+        style="padding: 20px"
+        *ngIf="citasEncontradas"
+      >
+        <div class="mayuscula">
+          <h5 style="display: inline">Fecha: </h5>
+          <label>{{ consu.fecha | date : "EEEE d 'de'" }}&nbsp;</label>
+          <label> {{ consu.fecha | date : "MMMM 'del' y." }}</label>
+        </div>
+        <div>
+          <h5 style="display: inline">Hora: </h5>
+          <label> {{ consu.fecha | date : "h:mm a" }}</label>
+          
+        </div>
+        <div>
+          <h5 style="display: inline">Estado: </h5>
+          <p-tag
+            [value]="consu.estadoCita.nombre"
+            [severity]="getColorTagEstado(consu.estadoCita.nombre)"
+          ></p-tag>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-info-doctor" *ngIf="consu">
+      <h3>Doctor</h3>
+      <div
+        class="card flex flex-row justify-content-center flex-wrap gap-2 p-fluid"
+        style="padding: 20px"
+      >
+        <div class="flex flex-row gap-3">
+          <label htmlFor="numeroDocumento">{{
+            consu.medico.persona.tipo_identificacion.tipo
+          }}</label>
+          <input
+            id="numeroDocumento"
+            type="text"
+            pInputText
+            [disabled]="true"
+            value="{{ consu.medico.persona.numero_documento }}"
+            class="opacidad-texto"
+          />
+        </div>
+        <div>
+          <label htmlFor="nombre">Nombre</label>
+          <input
+            id="nombre"
+            type="text"
+            pInputText
+            [disabled]="true"
+            value="{{
+              consu.medico.persona.nombre + ' ' + consu.medico.persona.apellido
+            }}"
+            class="opacidad-texto"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="telefono">Teléfono</label>
+          <input
+            id="telefono"
+            type="text"
+            pInputText
+            [disabled]="true"
+            value="{{ consu.medico.persona.telefono }}"
+            class="opacidad-texto"
+          />
+        </div>
+        <div>
+          <label htmlFor="correo">Correo</label>
+          <input
+            id="correo"
+            type="text"
+            pInputText
+            [disabled]="true"
+            value="{{ consu.medico.persona.correo }}"
+            class="opacidad-texto"
+          />
+        </div>
+        <div>
+          <label htmlFor="eps">Especialidad</label>
+          <input
+            id="eps"
+            type="text"
+            pInputText
+            [disabled]="true"
+            value="{{ consu.medico.especialidadMedico.nombre }}"
+            class="opacidad-texto"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
