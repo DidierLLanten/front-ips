@@ -1,7 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Cita } from 'src/app/modelos/cita';
 import { Medico } from 'src/app/modelos/medico';
-import { Paciente } from 'src/app/modelos/paciente';
 import { CitaService } from 'src/app/services/cita.service';
 import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
@@ -34,6 +33,14 @@ export class TablaCrearCitasComponent {
 
   medicoAux: Medico = new Medico();
 
+  estadosCita = {
+    POR_AGENDAR: 1,
+    DISPONIBLE: 2,
+    ASIGNADA: 3,
+    CONFIRMADA: 4,
+    CANCELADA: 5,
+  };
+
   ngOnChanges(changes: SimpleChanges): void {
     this.medico = this.doctorFecha[0];
     this.fecha = this.doctorFecha[1];
@@ -54,7 +61,7 @@ export class TablaCrearCitasComponent {
         this.citasActualizadas = this.generarCitasFaltantes(this.citas);
         this.ordenarCitasPorHora(this.citasActualizadas);
         this.citas = this.citasActualizadas;
-      });
+      });    
   }
 
   // Función para generar citas faltantes en un rango de tiempo
@@ -89,12 +96,12 @@ export class TablaCrearCitasComponent {
       //agregarCita al arreglo de citas
       if (!citaExistente) {
         citasManana.push({
-          paciente: new Paciente(),
+          paciente: null,
           medico: this.medico,
           fecha: fechaCita,
           estadoCita: {
-            id: 1,
-            nombre: 'DISPONIBLE',
+            id: this.estadosCita.POR_AGENDAR,
+            nombre: 'POR AGENDAR',
           },
         });
       }
@@ -111,7 +118,7 @@ export class TablaCrearCitasComponent {
       fechaCita.setHours(Math.floor(hora / 60), hora % 60, 0, 0);
 
       const citaExistente = citas.find((cita) => {
-        // cita.fecha = new Date(cita.fecha);
+        cita.fecha = new Date(cita.fecha);
         const horaCitaExistente = cita.fecha.getHours();
         const minutoCitaExistente = cita.fecha.getMinutes();
         return (
@@ -124,12 +131,12 @@ export class TablaCrearCitasComponent {
       if (!citaExistente) {
         citasTarde.push({
           // codigo: citasTarde.length + 1, // Puedes ajustar la lógica para asignar códigos únicos
-          paciente: new Paciente(),
+          paciente: null,
           medico: this.medico,
           fecha: fechaCita,
           estadoCita: {
-            id: 1,
-            nombre: 'DISPONIBLE',
+            id: this.estadosCita.POR_AGENDAR,
+            nombre: 'POR AGENDAR',
           },
         });
       }
@@ -170,6 +177,8 @@ export class TablaCrearCitasComponent {
 
   getColorTagEstado(estado: string): string {
     switch (estado) {
+      case 'POR AGENDAR':
+        return 'info';
       case 'DISPONIBLE':
         return 'success';
       case 'CANCELADA':
@@ -200,7 +209,8 @@ export class TablaCrearCitasComponent {
       },
       fecha: fechaFormateada,
       estadoCita: {
-        id: 1,
+        id: this.estadosCita.DISPONIBLE,
+        nombre: 'DISPONIBLE',
       },
     };
 
@@ -214,6 +224,31 @@ export class TablaCrearCitasComponent {
       });
       this.mostrarConfirmacion = false;
     });
+  }
+
+  crearCitasDelDia() {
+    for (let index = 0; index < this.citasActualizadas.length; index++) {
+      const cita = this.citasActualizadas[index];
+      if (cita.estadoCita.id === this.estadosCita.POR_AGENDAR) {
+        const fechaFormateada = this.datePipe.transform(
+          cita.fecha,
+          'yyyy-MM-ddTHH:mm:ss'
+        );
+        cita.fecha = fechaFormateada;
+        cita.estadoCita = {
+          id: 2,
+          nombre: 'DISPONIBLE',
+        };
+        this.citaService.crearCitaDoctor(cita).subscribe((dato) => {});
+      }
+    }
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Exitoso',
+      detail: 'Todas las citas del dia han sido creadas',
+      life: 3000,
+    });
+    this.listarCitasPorFecha();
   }
 
   eliminarCita(cita: Cita) {

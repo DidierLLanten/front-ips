@@ -17,10 +17,17 @@ export class DetalleCitaComponent {
 
   citasEncontradas: Cita[] | undefined;
   cedula: string;
+  estadosCita = {
+    POR_AGENDAR: 1,
+    DISPONIBLE: 2,
+    ASIGNADA: 3,
+    CONFIRMADA: 4,
+    CANCELADA: 5,
+  };
 
   buscarCitaPorCedula() {
     this.citaService
-      .obtenerCitasPorCedulaYIdEstadoCita(this.cedula, 3)
+      .obtenerCitasPorCedulaYIdEstadoCita(this.cedula, this.estadosCita.ASIGNADA)
       .subscribe((dato) => {
         if (dato.length == 0) {
           this.citasEncontradas = undefined;

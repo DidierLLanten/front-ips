@@ -25,6 +25,8 @@ import { DatePipe } from '@angular/common';
 import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.component';
 import { HistorialComponent } from './vistas/citas/historial/historial.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AutorizadoComponent } from './seguridad/autorizado/autorizado.component';
+import { LoginComponent } from './seguridad/login/login.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TablaCrearCitasComponent,
     DetalleCitaComponent,
     HistorialComponent,
+    AutorizadoComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

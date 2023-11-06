@@ -1,0 +1,10 @@
+.alineacion-login {
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-inline: 15%;
+  margin-top: 3%;
+  padding-top: 13px;
+  padding-bottom: 8px;
+  /* height: 80vh; */
+}
