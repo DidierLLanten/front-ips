@@ -7,6 +7,7 @@ import { IndicePacientesComponent } from './vistas/pacientes/indice-pacientes/in
 import { CrearCitasComponent } from './vistas/citas/crear-citas/crear-citas.component';
 import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.component';
 import { HistorialComponent } from './vistas/citas/historial/historial.component';
+import { LoginComponent } from './seguridad/login/login.component';
 
 const routes: Routes = [
   { path: 'crear-cita', component: CrearCitasComponent },
@@ -21,7 +22,9 @@ const routes: Routes = [
 
   { path: 'historial', component: HistorialComponent },
 
-  { path: '**', redirectTo: '' },
+  { path: 'login', component: LoginComponent },
+
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({

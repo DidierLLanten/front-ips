@@ -26,6 +26,7 @@ import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.c
 import { HistorialComponent } from './vistas/citas/historial/historial.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutorizadoComponent } from './seguridad/autorizado/autorizado.component';
+import { LoginComponent } from './seguridad/login/login.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AutorizadoComponent } from './seguridad/autorizado/autorizado.component
     DetalleCitaComponent,
     HistorialComponent,
     AutorizadoComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
