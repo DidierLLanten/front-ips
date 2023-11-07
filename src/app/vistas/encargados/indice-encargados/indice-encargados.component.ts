@@ -6,6 +6,7 @@ import { Tipos_identificacion } from 'src/app/modelos/tipo_identeficacion';
 import { Usuario } from 'src/app/modelos/usuario';
 import { TipoIdentificacionService } from 'src/app/services/tipo_identificacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-indice-encargados',
@@ -65,11 +66,32 @@ export class IndiceEncargadosComponent implements OnInit {
   }
 
   obtenerUsuarios() {
-    this.usuarioService.obtenerListaUsuarios().subscribe((dato) => {
-      this.usuarios = dato;
-      this.usuarios = this.usuarios.filter(
-        (usuario) => usuario.rol.codigo == 2
-      );
+    let timerInterval: any;
+    Swal.fire({
+      title: 'Por favor espere mientras\n' + 'cargamos a los encargados',
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup()!.querySelector('b');
+        timerInterval = setInterval(() => {
+          timer!.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+        this.usuarioService.obtenerListaUsuarios().subscribe((dato) => {
+          this.usuarios = dato;
+          this.usuarios = this.usuarios.filter(
+            (usuario) => usuario.rol.codigo == 2
+          );
+        });
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer');
+      }
     });
   }
 

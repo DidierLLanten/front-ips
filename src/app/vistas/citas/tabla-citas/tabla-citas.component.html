@@ -18,7 +18,8 @@
 
 <div class="card">
   <p-toast></p-toast>
-  <p-table [value]="citas" [tableStyle]="{ 'min-width': '50rem' }">
+  <p-table [value]="citas" [tableStyle]="{ 'min-width': '50rem' }" [rows]="10" [paginator]="true"
+  [rowsPerPageOptions]="[10, 25, 50]">
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 5rem">Agenda</th>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Cita } from 'src/app/modelos/cita';
 import { CitaService } from 'src/app/services/cita.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalle-cita',
@@ -26,21 +27,45 @@ export class DetalleCitaComponent {
   };
 
   buscarCitaPorCedula() {
-    this.citaService
-      .obtenerCitasPorCedulaYIdEstadoCita(this.cedula, this.estadosCita.ASIGNADA)
-      .subscribe((dato) => {
-        if (dato.length == 0) {
-          this.citasEncontradas = undefined;
-          this.messageService.add({
-            severity: 'info',
-            summary: 'No encontrada',
-            detail: 'El paciente no tiene citas asignadas',
-            life: 3000,
+    let timerInterval: any;
+    Swal.fire({
+      title: 'Por favor espere mientras\n' + 'cargamos los detalles\n'+ 'de la cita',
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup()!.querySelector('b');
+        timerInterval = setInterval(() => {
+          timer!.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+        this.citaService
+          .obtenerCitasPorCedulaYIdEstadoCita(
+            this.cedula,
+            this.estadosCita.ASIGNADA
+          )
+          .subscribe((dato) => {
+            if (dato.length == 0) {
+              this.citasEncontradas = undefined;
+              this.messageService.add({
+                severity: 'info',
+                summary: 'No encontrada',
+                detail: 'El paciente no tiene citas asignadas',
+                life: 3000,
+              });
+            } else {
+              this.citasEncontradas = dato;
+            }
           });
-        } else {
-          this.citasEncontradas = dato;
-        }
-      });
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer');
+      }
+    });
   }
 
   getColorTagEstado(estado: string | undefined): string {

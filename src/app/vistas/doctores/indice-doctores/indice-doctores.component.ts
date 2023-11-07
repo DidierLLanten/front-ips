@@ -7,6 +7,7 @@ import { Tipos_identificacion } from 'src/app/modelos/tipo_identeficacion';
 import { EspecialidadService } from 'src/app/services/especialidad_medico.service';
 import { MedicoService } from 'src/app/services/medico.service';
 import { TipoIdentificacionService } from 'src/app/services/tipo_identificacion.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-indice-doctores',
@@ -78,8 +79,30 @@ export class IndiceDoctoresComponent implements OnInit {
   }
 
   obtenerMedicos() {
-    this.medicoService.obtenerListaMedico().subscribe((dato) => {
-      this.medicos = dato;
+    let timerInterval: any;
+    Swal.fire({
+      title: 'Por favor espere mientras\n'+
+              'cargamos a los doctores',
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup()!.querySelector('b');
+        timerInterval = setInterval(() => {
+          timer!.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+        this.medicoService.obtenerListaMedico().subscribe((dato) => {
+          this.medicos = dato;
+        });
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer');
+      }
     });
   }
 

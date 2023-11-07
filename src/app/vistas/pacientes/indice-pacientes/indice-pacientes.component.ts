@@ -6,6 +6,7 @@ import { Tipos_identificacion } from 'src/app/modelos/tipo_identeficacion';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { TipoIdentificacionService } from 'src/app/services/tipo_identificacion.service';
 import { EPSService } from 'src/app/services/eps.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-indice-pacientes',
@@ -70,8 +71,29 @@ export class IndicePacientesComponent implements OnInit {
   }
 
   obtenerPacientes() {
-    this.pacienteService.obtenerListaPacientes().subscribe((dato) => {
-      this.pacientes = dato;
+    let timerInterval: any;
+    Swal.fire({
+      title: 'Por favor espere mientras\n' + 'cargamos a los pacientes',
+      timer: 13000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup()!.querySelector('b');
+        timerInterval = setInterval(() => {
+          timer!.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+        this.pacienteService.obtenerListaPacientes().subscribe((dato) => {
+          this.pacientes = dato;
+        });
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer');
+      }
     });
   }
 
