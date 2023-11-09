@@ -50,7 +50,7 @@ export class HistorialComponent implements OnInit {
       this.mostrarAlerta= false;
       this.filtrado = true;
       const dateIsoString = this.selectedDate.toISOString().split('T')[0];
-      this.citaService.obtenerCitasPorDoctorFecha(this.selectedMedico.idMedico, dateIsoString)
+      this.citaService.obtenerCitasPorDoctorFecha(this.selectedMedico.id, dateIsoString)
       .subscribe((response)=>{
         this.citas = response;
       });

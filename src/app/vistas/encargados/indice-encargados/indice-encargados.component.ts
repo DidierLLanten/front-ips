@@ -75,13 +75,15 @@ export class IndiceEncargadosComponent implements OnInit {
         Swal.showLoading();
         const timer = Swal.getPopup()!.querySelector('b');
         timerInterval = setInterval(() => {
-          timer!.textContent = `${Swal.getTimerLeft()}`;
+          if (timer) {
+            timer.textContent = `${Swal.getTimerLeft()}`;
+          }
         }, 100);
         this.usuarioService.obtenerListaUsuarios().subscribe((dato) => {
           this.usuarios = dato;
           this.usuarios = this.usuarios.filter(
-            (usuario) => usuario.rol.codigo == 2
-          );
+	  	(trabajador) => trabajador.persona.rol.nombreRol.rol === 'ENCARGADO'
+      		);
         });
       },
       willClose: () => {
@@ -107,7 +109,7 @@ export class IndiceEncargadosComponent implements OnInit {
     if (
       this.usuario.persona.nombre &&
       this.usuario.persona.apellido &&
-      this.usuario.persona.numero_documento &&
+      this.usuario.persona.numeroDocumento &&
       this.usuario.persona.telefono &&
       this.usuario.persona.correo
     ) {
@@ -123,7 +125,7 @@ export class IndiceEncargadosComponent implements OnInit {
       const validarCampos = this.verificarCampos();
       if (validarCampos) {
         this.usuarioService
-          .actualizarUsuarios(this.usuario.idUsuario, this.usuario)
+          .actualizarUsuarios(this.usuario.id, this.usuario)
           .subscribe((dato) => {
             this.obtenerUsuarios();
           });
@@ -134,8 +136,8 @@ export class IndiceEncargadosComponent implements OnInit {
       const validarCampos = this.verificarCampos();
       if (validarCampos) {
         if (this.usuario.persona.nombre?.trim()) {
-          if (this.usuario.idUsuario) {
-            this.usuarios[this.findIndexById(this.usuario.idUsuario)] =
+          if (this.usuario.id) {
+            this.usuarios[this.findIndexById(this.usuario.id)] =
               this.usuario;
             this.messageService.add({
               severity: 'success',
@@ -145,8 +147,8 @@ export class IndiceEncargadosComponent implements OnInit {
             });
           } else {
             this.rol.codigo = 2;
-            this.usuario.rol = this.rol;
-            this.usuario.persona.tipo_identificacion = this.typeSelected;
+            this.usuario.persona.rol = this.rol;
+            this.usuario.persona.tipoIdentificacion = this.typeSelected;
             this.usuarioService.createUser(this.usuario).subscribe((dato) => {
               this.messageService.add({
                 severity: 'success',
@@ -180,7 +182,7 @@ export class IndiceEncargadosComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.usuarioService
-          .eliminarUsuario(usuario.idUsuario)
+          .eliminarUsuario(usuario.id)
           .subscribe((dato) => {
             this.messageService.add({
               severity: 'success',
@@ -203,7 +205,7 @@ export class IndiceEncargadosComponent implements OnInit {
   findIndexById(id: number): number {
     let index = -1;
     for (let i = 0; i < this.usuarios.length; i++) {
-      if (this.usuarios[i].idUsuario === id) {
+      if (this.usuarios[i].id === id) {
         index = i;
         break;
       }

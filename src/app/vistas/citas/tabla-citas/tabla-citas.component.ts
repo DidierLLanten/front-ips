@@ -63,7 +63,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
         this.citaService
           .actualizarPacienteCita(
             this.citaSeleccionada.codigo,
-            this.paciente.idPaciente
+            this.paciente.id
           )
           .subscribe((dato) => {
             this.messageService.add({

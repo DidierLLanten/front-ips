@@ -9,7 +9,7 @@
       placeholder="Especialidad"
       [options]="especialidades"
       [(ngModel)]="especialidadSeleccionada"
-      optionLabel="nombre"
+      optionLabel="especialidad"
       (onChange)="filtrarPorEspecialidad()"
       [style]="{ width: '208px' }"
     ></p-dropdown>
@@ -34,8 +34,8 @@
         [style]="{ width: '360px' }"
       >
         <p>
-          {{ pacienteAux.persona.tipo_identificacion.tipo }}:
-          {{ pacienteAux.persona.numero_documento }}
+          {{ pacienteAux.persona.tipoIdentificacion.tipo }}:
+          {{ pacienteAux.persona.numeroDocumento }}
           <br />
           Telefono: {{ pacienteAux.persona.telefono }}
         </p>

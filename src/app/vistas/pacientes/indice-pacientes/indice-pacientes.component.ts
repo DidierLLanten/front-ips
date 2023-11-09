@@ -80,7 +80,9 @@ export class IndicePacientesComponent implements OnInit {
         Swal.showLoading();
         const timer = Swal.getPopup()!.querySelector('b');
         timerInterval = setInterval(() => {
-          timer!.textContent = `${Swal.getTimerLeft()}`;
+          if (timer) {
+            timer.textContent = `${Swal.getTimerLeft()}`;
+          }
         }, 100);
         this.pacienteService.obtenerListaPacientes().subscribe((dato) => {
           this.pacientes = dato;
@@ -109,7 +111,7 @@ export class IndicePacientesComponent implements OnInit {
     if (
       this.paciente.persona.nombre &&
       this.paciente.persona.apellido &&
-      this.paciente.persona.numero_documento &&
+      this.paciente.persona.numeroDocumento &&
       this.paciente.persona.telefono &&
       this.paciente.persona.correo &&
       this.paciente.eps
@@ -127,7 +129,7 @@ export class IndicePacientesComponent implements OnInit {
       const validarCampos = this.verificarCampos();
       if (validarCampos) {
         this.pacienteService
-          .actualizarPaciente(this.paciente.idPaciente, this.paciente)
+          .actualizarPaciente(this.paciente.id, this.paciente)
           .subscribe((dato) => {
             this.obtenerPacientes();
           });
@@ -138,8 +140,8 @@ export class IndicePacientesComponent implements OnInit {
       const validarCampos = this.verificarCampos();
       if (validarCampos) {
         if (this.paciente.persona.nombre?.trim()) {
-          if (this.paciente.idPaciente) {
-            this.pacientes[this.findIndexById(this.paciente.idPaciente)] =
+          if (this.paciente.id) {
+            this.pacientes[this.findIndexById(this.paciente.id)] =
               this.paciente;
             this.messageService.add({
               severity: 'success',
@@ -148,7 +150,7 @@ export class IndicePacientesComponent implements OnInit {
               life: 1000,
             });
           } else {
-            this.paciente.persona.tipo_identificacion = this.typeSelected;
+            this.paciente.persona.tipoIdentificacion = this.typeSelected;
             this.paciente.eps = this.typeSelected2 = this.typeSelected2;
             this.pacienteService
               .createPatient(this.paciente)
@@ -185,7 +187,7 @@ export class IndicePacientesComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.pacienteService
-          .eliminarPaciente(paciente.idPaciente)
+          .eliminarPaciente(paciente.id)
           .subscribe((dato) => {
             this.messageService.add({
               severity: 'success',
@@ -208,7 +210,7 @@ export class IndicePacientesComponent implements OnInit {
   findIndexById(id: number): number {
     let index = -1;
     for (let i = 0; i < this.pacientes.length; i++) {
-      if (this.pacientes[i].idPaciente === id) {
+      if (this.pacientes[i].id === id) {
         index = i;
         break;
       }

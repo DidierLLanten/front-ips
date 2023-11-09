@@ -47,10 +47,10 @@
                 <!--<td>
                         <p-tableCheckbox [value]="usuario"></p-tableCheckbox>
                     </td>-->
-                <td>{{ usuario.idUsuario }}</td>
+                <td>{{ usuario.id }}</td>
                 <td>{{ usuario.persona.nombre }}</td>
                 <td>{{ usuario.persona.apellido }}</td>
-                <td>{{ usuario.persona.numero_documento }}</td>
+                <td>{{ usuario.persona.numeroDocumento }}</td>
                 <td>{{ usuario.persona.telefono }}</td>
                 <td>{{ usuario.persona.correo }}</td>
                 <td>
@@ -86,15 +86,15 @@
         <div class="field">
             <label for="name">Tipo de identificacion</label>
             <p-dropdown [options]="tipos_identificacion" [(ngModel)]="typeSelected" optionLabel="tipo" [disabled]="disabledType"></p-dropdown>
-            <small class="p-error" *ngIf="submitted && !usuario.persona.tipo_identificacion">El tipo de identificacion
+            <small class="p-error" *ngIf="submitted && !usuario.persona.tipoIdentificacion">El tipo de identificacion
                 es requerido</small>
         </div>
 
         <div class="field">
             <label for="name">Numero documento</label>
-            <input [disabled]='editar' type="number" pInputText id="documento" [(ngModel)]="usuario.persona.numero_documento" required
+            <input [disabled]='editar' type="number" pInputText id="documento" [(ngModel)]="usuario.persona.numeroDocumento" required
                 autofocus />
-            <small class="p-error" *ngIf="submitted && !usuario.persona.numero_documento">El numero del documento es
+            <small class="p-error" *ngIf="submitted && !usuario.persona.numeroDocumento">El numero del documento es
                 requerido</small>
         </div>
 
