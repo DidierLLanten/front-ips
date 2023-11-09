@@ -53,7 +53,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
 
   confirmarCita(){    
     this.citaService.actualizarEstadoCita(this.citaSeleccionada.codigo, this.idEspecialidad).subscribe(dato =>{
-      this.citaService.actualizarPacienteCita(this.citaSeleccionada.codigo, this.paciente.idPaciente).subscribe(dato => {
+      this.citaService.actualizarPacienteCita(this.citaSeleccionada.codigo, this.paciente.id).subscribe(dato => {
         this.messageService.add({
           severity: 'success',
           summary: 'Exitoso',
@@ -77,7 +77,9 @@ export class TablaCitasComponent implements OnInit, OnChanges {
   }
 
   cargarTablaPorEspecialidades(){
+    console.log('IDespecialidad: ', this.idEspecialidad)
     this.citaService.obtenerPorEspecialidad(this.idEspecialidad).subscribe(dato =>{
+      console.log("Dato: " + dato);
       this.citas = dato;
     })
   }

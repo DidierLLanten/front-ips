@@ -95,7 +95,7 @@ export class IndiceDoctoresComponent implements OnInit {
     if (
       this.medico.persona.nombre &&
       this.medico.persona.apellido &&
-      this.medico.persona.numero_documento &&
+      this.medico.persona.numeroDocumento &&
       this.medico.persona.telefono &&
       this.medico.persona.correo &&
       this.medico.tarjetaProfesional
@@ -112,7 +112,7 @@ export class IndiceDoctoresComponent implements OnInit {
       const validarCampos = this.verificarCampos();
       if (validarCampos) {
         this.medicoService
-          .actualizarMedico(this.medico.idMedico, this.medico)
+          .actualizarMedico(this.medico.id, this.medico)
           .subscribe((dato) => {
             this.obtenerMedicos();
           });
@@ -123,8 +123,8 @@ export class IndiceDoctoresComponent implements OnInit {
       const validarCampos = this.verificarCampos();
       if (validarCampos) {
         if (this.medico.persona.nombre.trim()) {
-          if (this.medico.idMedico) {
-            this.medicos[this.findIndexById(this.medico.idMedico)] =
+          if (this.medico.id) {
+            this.medicos[this.findIndexById(this.medico.id)] =
               this.medico;
             this.messageService.add({
               severity: 'success',
@@ -133,8 +133,8 @@ export class IndiceDoctoresComponent implements OnInit {
               life: 1000,
             });
           } else {
-            this.medico.especialidadMedico = this.especialidadSelected;
-            this.medico.persona.tipo_identificacion = this.typeSelected;
+            this.medico.especialidad = this.especialidadSelected;
+            this.medico.persona.tipoIdentificacion = this.typeSelected;
             this.medicoService.createMedico(this.medico).subscribe((dato) => {
               this.messageService.add({
                 severity: 'success',
@@ -167,7 +167,7 @@ export class IndiceDoctoresComponent implements OnInit {
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.medicoService.eliminarMedico(medico.idMedico).subscribe((dato) => {
+        this.medicoService.eliminarMedico(medico.id).subscribe((dato) => {
           this.messageService.add({
             severity: 'success',
             summary: 'Exitoso',
@@ -189,7 +189,7 @@ export class IndiceDoctoresComponent implements OnInit {
   findIndexById(id: number): number {
     let index = -1;
     for (let i = 0; i < this.medicos.length; i++) {
-      if (this.medicos[i].idMedico === id) {
+      if (this.medicos[i].id === id) {
         index = i;
         break;
       }

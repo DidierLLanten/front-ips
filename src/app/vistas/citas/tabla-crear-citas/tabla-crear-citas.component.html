@@ -22,8 +22,8 @@ styleClass="p-button-success mb-3"
       <th pSortableColumn="fecha" style="width: 20%">
         Hora <p-sortIcon field="fecha"></p-sortIcon>
       </th>
-      <th pSortableColumn="estadoCita.nombre" style="width: 20%">
-        Estado <p-sortIcon field="estadoCita.nombre"></p-sortIcon>
+      <th pSortableColumn="estadoCita.estado" style="width: 20%">
+        Estado <p-sortIcon field="estadoCita.estado"></p-sortIcon>
       </th>
       <th pSortableColumn="paciente.persona.nombre" style="width: 20%">
         Paciente <p-sortIcon field="paciente.persona.nombre"></p-sortIcon>
@@ -53,8 +53,8 @@ styleClass="p-button-success mb-3"
       <td>{{ citas.fecha | date : "HH:mm" }}</td>
       <td>
         <p-tag
-          [value]="citas.estadoCita.nombre"
-          [severity]="getColorTagEstado(citas.estadoCita.nombre)"
+          [value]="citas.estadoCita.estado"
+          [severity]="getColorTagEstado(citas.estadoCita.estado)"
         ></p-tag>
       </td>
       <td>
@@ -71,7 +71,7 @@ styleClass="p-button-success mb-3"
 
       <td>
         <button
-          *ngIf="!citas.codigo"
+          *ngIf="!citas.id"
           pButton
           pRipple
           icon="pi pi-plus"
@@ -79,7 +79,7 @@ styleClass="p-button-success mb-3"
           (click)="mostrarModalConfirmacion(citas)"
         ></button>
         <button
-          *ngIf="citas.codigo"
+          *ngIf="citas.id"
           pButton
           pRipple
           icon="pi pi-trash"

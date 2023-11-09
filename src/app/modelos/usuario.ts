@@ -1,8 +1,7 @@
 import { Persona } from "./persona";
-import { Rol } from "./rol";
 
 export class Usuario{
-    idUsuario: number;
+    id: number;
+    cuentaBancaria: string;
     persona: Persona = new Persona();
-    rol: Rol = new Rol();
 }

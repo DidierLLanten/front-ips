@@ -55,7 +55,7 @@ export class TablaCrearCitasComponent {
     const dateIsoString = this.fecha.toISOString().split('T')[0];
 
     this.citaService
-      .obtenerCitasPorDoctorFecha(this.medico.idMedico, dateIsoString)
+      .obtenerCitasPorDoctorFecha(this.medico.id, dateIsoString)
       .subscribe((dato) => {
         this.citas = dato;
         this.citasActualizadas = this.generarCitasFaltantes(this.citas);
@@ -101,7 +101,7 @@ export class TablaCrearCitasComponent {
           fecha: fechaCita,
           estadoCita: {
             id: this.estadosCita.POR_AGENDAR,
-            nombre: 'POR AGENDAR',
+            estado: 'POR AGENDAR',
           },
         });
       }
@@ -136,7 +136,7 @@ export class TablaCrearCitasComponent {
           fecha: fechaCita,
           estadoCita: {
             id: this.estadosCita.POR_AGENDAR,
-            nombre: 'POR AGENDAR',
+            estado: 'POR AGENDAR',
           },
         });
       }
@@ -205,12 +205,12 @@ export class TablaCrearCitasComponent {
 
     const datosCita = {
       medico: {
-        idMedico: this.doctorFecha[0].idMedico,
+        id: this.doctorFecha[0].id,
       },
       fecha: fechaFormateada,
       estadoCita: {
         id: this.estadosCita.DISPONIBLE,
-        nombre: 'DISPONIBLE',
+        estado: 'DISPONIBLE',
       },
     };
 
@@ -230,16 +230,28 @@ export class TablaCrearCitasComponent {
     for (let index = 0; index < this.citasActualizadas.length; index++) {
       const cita = this.citasActualizadas[index];
       if (cita.estadoCita.id === this.estadosCita.POR_AGENDAR) {
+
         const fechaFormateada = this.datePipe.transform(
           cita.fecha,
           'yyyy-MM-ddTHH:mm:ss'
         );
-        cita.fecha = fechaFormateada;
-        cita.estadoCita = {
-          id: 2,
-          nombre: 'DISPONIBLE',
+        // cita.fecha = fechaFormateada;
+        // cita.estadoCita = {
+        //   id: 2,
+        //   estado: 'DISPONIBLE',
+        // };
+        const datosCita = {
+          medico: {
+            id: this.doctorFecha[0].id,
+          },
+          fecha: fechaFormateada,
+          estadoCita: {
+            id: this.estadosCita.DISPONIBLE,
+            estado: 'DISPONIBLE',
+          },
         };
-        this.citaService.crearCitaDoctor(cita).subscribe((dato) => {});
+
+        this.citaService.crearCitaDoctor(datosCita).subscribe((dato) => {});
       }
     }
     this.messageService.add({

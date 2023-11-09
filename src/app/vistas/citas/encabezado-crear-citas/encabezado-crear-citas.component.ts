@@ -69,7 +69,7 @@ export class EncabezadoCrearCitasComponent {
       const dateIsoString = this.fechaSeleccionada.toISOString().split('T')[0];
       this.citaService
         .obtenerCitasPorDoctorFecha(
-          this.medicoSeleccionado.idMedico,
+          this.medicoSeleccionado.id,
           dateIsoString
         )
         .subscribe((dato) => {

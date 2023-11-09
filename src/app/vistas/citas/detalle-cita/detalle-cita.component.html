@@ -43,14 +43,14 @@
   >
     <div class="flex flex-row gap-3">
       <label htmlFor="numeroDocumento">{{
-        citasEncontradas[0].paciente.persona.tipo_identificacion.tipo
+        citasEncontradas[0].paciente.persona.tipoIdentificacion.tipo
       }}</label>
       <input
         id="numeroDocumento"
         type="text"
         pInputText
         [disabled]="true"
-        value="{{ citasEncontradas[0].paciente.persona.numero_documento }}"
+        value="{{ citasEncontradas[0].paciente.persona.numeroDocumento }}"
         class="opacidad-texto"
       />
     </div>
@@ -142,14 +142,14 @@
       >
         <div class="flex flex-row gap-3">
           <label htmlFor="numeroDocumento">{{
-            consu.medico.persona.tipo_identificacion.tipo
+            consu.medico.persona.tipoIdentificacion.tipo
           }}</label>
           <input
             id="numeroDocumento"
             type="text"
             pInputText
             [disabled]="true"
-            value="{{ consu.medico.persona.numero_documento }}"
+            value="{{ consu.medico.persona.numeroDocumento }}"
             class="opacidad-texto"
           />
         </div>
@@ -196,7 +196,7 @@
             type="text"
             pInputText
             [disabled]="true"
-            value="{{ consu.medico.especialidadMedico.nombre }}"
+            value="{{ consu.medico.especialidad.nombre }}"
             class="opacidad-texto"
           />
         </div>

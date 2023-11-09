@@ -4,7 +4,7 @@
       [options]="especialidades"
       [(ngModel)]="especialidadSeleccionada"
       placeholder="Especialidad"
-      optionLabel="nombre"
+      optionLabel="especialidad"
       inputId="float-label"
       (onChange)="filtrarPorEspecialidad()"
     ></p-dropdown>
@@ -46,8 +46,8 @@
   </div>  
 </div>
 
-<h2 *ngIf="medicoSeleccionado?.idMedico">Informacion Doctor</h2>
-<div class="container-info-doctor" *ngIf="medicoSeleccionado?.idMedico">
+<h2 *ngIf="medicoSeleccionado?.id">Informacion Doctor</h2>
+<div class="container-info-doctor" *ngIf="medicoSeleccionado?.id">
   <div
     class="card flex-inline flex flex-row justify-content-center flex-wrap gap-2 p-fluid"
     style="padding: 20px"
@@ -59,7 +59,7 @@
         type="text"
         pInputText
         [disabled]="true"
-        value="{{ medicoSeleccionado.persona.numero_documento }}"
+        value="{{ medicoSeleccionado.persona.numeroDocumento }}"
         class="opacidad-texto"
       />
     </div>

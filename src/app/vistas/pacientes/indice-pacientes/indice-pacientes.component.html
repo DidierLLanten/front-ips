@@ -50,13 +50,13 @@
                 <!--<td>
                         <p-tableCheckbox [value]="usuario"></p-tableCheckbox>
                     </td>-->
-                <td>{{ paciente.idPaciente }}</td>
+                <td>{{ paciente.id }}</td>
                 <td>{{ paciente.persona.nombre }}</td>
                 <td>{{ paciente.persona.apellido }}</td>
-                <td>{{ paciente.persona.numero_documento }}</td>
+                <td>{{ paciente.persona.numeroDocumento }}</td>
                 <td>{{ paciente.persona.telefono }}</td>
                 <td>{{ paciente.persona.correo }}</td>
-                <td>{{ paciente.eps.nombre}}</td>
+                <td>{{ paciente.eps.eps}}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success custom-margin"
                         (click)="editarPaciente(paciente)"></button>
@@ -90,15 +90,15 @@
         <div class="field">
             <label for="name">Tipo de identificacion</label>
             <p-dropdown [options]="tipos_identificacion" [(ngModel)]="typeSelected" optionLabel="tipo" [disabled]="disabledType"></p-dropdown>
-            <small class="p-error" *ngIf="submitted && !paciente.persona.tipo_identificacion">El tipo de identificacion
+            <small class="p-error" *ngIf="submitted && !paciente.persona.tipoIdentificacion">El tipo de identificacion
                 es requerido</small>
         </div>
 
         <div class="field">
             <label for="name">Numero documento</label>
-            <input [disabled]='editar' type="number" pInputText id="documento" [(ngModel)]="paciente.persona.numero_documento" required
+            <input [disabled]='editar' type="number" pInputText id="documento" [(ngModel)]="paciente.persona.numeroDocumento" required
                 autofocus />
-            <small class="p-error" *ngIf="submitted && !paciente.persona.numero_documento">El numero del documento es
+            <small class="p-error" *ngIf="submitted && !paciente.persona.numeroDocumento">El numero del documento es
                 requerido</small>
         </div>
 
@@ -117,7 +117,7 @@
 
         <div class="field">
             <label for="name">EPS</label>
-            <p-dropdown [options]="lista_eps" [(ngModel)]="typeSelected2" optionLabel="nombre" [disabled]="disabledType"></p-dropdown>
+            <p-dropdown [options]="lista_eps" [(ngModel)]="typeSelected2" optionLabel="eps" [disabled]="disabledType"></p-dropdown>
             <small class="p-error" *ngIf="submitted && !paciente.eps">La EPS
                 es requerida</small>
         </div>
