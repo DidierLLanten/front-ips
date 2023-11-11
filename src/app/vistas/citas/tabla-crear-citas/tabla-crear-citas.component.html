@@ -28,8 +28,6 @@ styleClass="p-button-success mb-3"
       <th pSortableColumn="paciente.persona.nombre" style="width: 20%">
         Paciente <p-sortIcon field="paciente.persona.nombre"></p-sortIcon>
       </th>
-      <!-- <th pResizableColumn>Paciente</th> -->
-      <!-- <th pResizableColumn>Medico</th> -->
       <th pSortableColumn="paciente.persona.telefono" style="width: 20%">
         Telefono <p-sortIcon field="paciente.persona.telefono"></p-sortIcon>
       </th>
@@ -49,7 +47,6 @@ styleClass="p-button-success mb-3"
   </ng-template>
   <ng-template pTemplate="body" let-citas>
     <tr>
-      <!-- <td>8:00 - 8:20</td> -->
       <td>{{ citas.fecha | date : "HH:mm" }}</td>
       <td>
         <p-tag
@@ -87,13 +84,9 @@ styleClass="p-button-success mb-3"
           (click)="eliminarCita(citas)"
         ></button>
       </td>
-      <!-- <td>{{ citas.medico.persona.nombre }} {{ citas.medico.persona.apellido }}</td> -->
     </tr>
   </ng-template>
 </p-table>
-
-<!-- <td>{{ cita.fecha | date:'dd/MM/yyyy' }}</td> -->
-<!-- <td>{{ cita.fecha | date:'HH:mm' }}</td> -->
 
 <p-dialog
   header="Header"
@@ -113,7 +106,6 @@ styleClass="p-button-success mb-3"
   </div>
   <br />
   <p *ngIf="mostrarConfirmacion">
-    <!-- Sr(a). <strong>{{ paciente.persona.nombre | uppercase }}</strong> su cita será -->
     Para el dia
     <strong>{{
       citaSeleccionada.fecha | date : "EEEE d 'de' MMMM 'del' y 'a las' HH:mm"

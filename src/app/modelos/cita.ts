@@ -3,7 +3,7 @@ import { Medico } from "./medico";
 import { Paciente } from "./paciente";
 
 export class Cita{
-    codigo: number;
+    id: number;
     paciente: Paciente = new Paciente();
     medico: Medico = new Medico();
     fecha: Date = new Date();

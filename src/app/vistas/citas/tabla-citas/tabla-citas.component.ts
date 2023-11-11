@@ -58,11 +58,11 @@ export class TablaCitasComponent implements OnInit, OnChanges {
 
   confirmarCita() {
     this.citaService
-      .actualizarEstadoCita(this.citaSeleccionada.codigo, this.idEspecialidad)
+      .actualizarEstadoCita(this.citaSeleccionada.id, this.idEspecialidad)
       .subscribe((dato) => {
         this.citaService
           .actualizarPacienteCita(
-            this.citaSeleccionada.codigo,
+            this.citaSeleccionada.id,
             this.paciente.id
           )
           .subscribe((dato) => {
@@ -87,9 +87,6 @@ export class TablaCitasComponent implements OnInit, OnChanges {
       didOpen: () => {
         Swal.showLoading();
         const timer = Swal.getPopup()!.querySelector('b');
-        timerInterval = setInterval(() => {
-          timer!.textContent = `${Swal.getTimerLeft()}`;
-        }, 100);
         if (this.nombreMedico != '' && this.nombreMedico != undefined) {
           console.log(this.nombreMedico);
           this.citaService
@@ -122,9 +119,6 @@ export class TablaCitasComponent implements OnInit, OnChanges {
       didOpen: () => {
         Swal.showLoading();
         const timer = Swal.getPopup()!.querySelector('b');
-        timerInterval = setInterval(() => {
-          timer!.textContent = `${Swal.getTimerLeft()}`;
-        }, 100);
         this.citaService
           .obtenerPorEspecialidad(this.idEspecialidad)
           .subscribe((dato) => {
