@@ -13,16 +13,13 @@ export class HistorialCitaService{
 
     constructor(private httpClient:HttpClient) { }
 
-    crearHistorialCita(historialCIta: HistorialCita):Observable<any>{
-        return this.httpClient.post(`${this.baseUrl}`, historialCIta)
+    crearHistorialCita(historialCIta: object):Observable<any>{
+        return this.httpClient.post(`${this.baseUrl}`, historialCIta);
     }
 
-    obtenerListaHistorialCita(numeroDocumento: string | null, idMedico: number | null, cambio: string | null, fecha: string | undefined | null): Observable<HistorialCita[]> {
+    obtenerListaHistorialCita(idMedico: number | null, cambio: string | null, fecha: string | undefined | null): Observable<HistorialCita[]> {
         let params = new HttpParams();
       
-        if(numeroDocumento){
-          params = params.set('numeroDocumento', numeroDocumento);
-        }
         if (idMedico != null) {
           params = params.set('idMedico', idMedico.toString());
         }
