@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { Cita } from 'src/app/modelos/cita';
+import { SeguridadService } from 'src/app/seguridad/seguridad.service';
 import { CitaService } from 'src/app/services/cita.service';
 import Swal from 'sweetalert2';
 
@@ -10,12 +11,22 @@ import Swal from 'sweetalert2';
   styleUrls: ['./detalle-cita.component.css'],
   providers: [MessageService],
 })
-export class DetalleCitaComponent {
+export class DetalleCitaComponent implements OnInit {
   constructor(
     private citaService: CitaService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private seguridadService: SeguridadService,
+    private confirmationService: ConfirmationService
   ) {}
 
+  ngOnInit(): void {
+    this.rol = this.seguridadService.obtenerCampoJWT('rol')
+     if(this.rol == "PACIENTE"){
+       this.cedula = this.seguridadService.obtenerCampoJWT('sub');
+       this.buscarCitaPorCedula();
+     }
+  }
+  rol: string;
   citasEncontradas: Cita[] | undefined;
   cedula: string;
   estadosCita = {
@@ -25,6 +36,33 @@ export class DetalleCitaComponent {
     CONFIRMADA: 4,
     CANCELADA: 5,
   };
+  
+  confirmCancellation(cita:Cita) {
+    this.confirmationService.confirm({
+      message: '¿Deseas cancelar esta cita?',
+      header: 'Cancelar cita',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+          console.log(cita);
+          this.messageService.add({ severity: 'success', summary: 'Cancelada', detail: 'Esta cita se ha cancelado' });
+      },
+    });
+  }
+
+  confirm(cita:Cita) {
+    this.confirmationService.confirm({
+      message: '¿Deseas confirmar esta cita?',
+      header: 'Confirmar cita',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+          console.log(cita);
+          this.messageService.add({ severity: 'success', summary: 'Confirmada', detail: 'La cita de este paciente se ha confirmado' });
+      },
+    });
+  }
+
+
+
 
   buscarCitaPorCedula() {
     let timerInterval: any;

@@ -1,5 +1,5 @@
 export class Eps{
     id: number;
-    nombre: string;
+    eps: string;
     nit: string;
 }

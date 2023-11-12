@@ -15,6 +15,7 @@ export class SeguridadService {
 
   private readonly llaveToken = 'token';
   private readonly llaveExpiracion = 'token-expiracion';
+  private numeroDocumento:string = "hola";
 
   private rolSubject = new BehaviorSubject<string>(this.obtenerRol());
   rolObservable = this.rolSubject.asObservable();
@@ -27,6 +28,10 @@ export class SeguridadService {
     return true;
   }
 
+  obtenerNumeroDocumento():string{
+     return this.numeroDocumento;
+  }
+
   obtenerRol(): string {
     return this.obtenerCampoJWT('rol');
   }
@@ -36,6 +41,8 @@ export class SeguridadService {
       numberDocument: username,
       password: password,
     };
+    this.numeroDocumento = username;
+    console.log(this.numeroDocumento);
     return this.httpClient.post<RespuestaToken>(
       `${this.baseUrl}/login`,
       credenciales
@@ -64,6 +71,9 @@ export class SeguridadService {
     if (campo === 'rol' && token) {
       console.log('Data tokken: ', dataToken[campo][0].authority);
       return dataToken[campo][0].authority;
+    }
+    if(campo === 'sub' && token){
+      return dataToken[campo];
     }
     return '';
   }
