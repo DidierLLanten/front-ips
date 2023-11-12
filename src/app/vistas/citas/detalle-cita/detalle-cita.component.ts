@@ -30,6 +30,7 @@ export class DetalleCitaComponent {
     let timerInterval: any;
     Swal.fire({
       title: 'Por favor espere mientras\n' + 'cargamos los detalles\n'+ 'de la cita',
+      html: 'Tiempo restante: <b></b>',
       timer: 2000,
       timerProgressBar: true,
       didOpen: () => {

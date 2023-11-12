@@ -1,8 +1,10 @@
+<p-toast></p-toast>
+
 <div class="flex-container">
   <div class="flex-items">
     <span class="p-float-label margin-cedula" *ngIf="rol == 'ADMINISTRADOR'">
       <p-inputNumber type="number" id="inputCedula" [(ngModel)]="cedula" [min]="0" [maxlength]="11"> </p-inputNumber>
-      <label htmlFor="inputCedula">Cedula</label>
+      <label htmlFor="inputCedula">Número de documento</label>
     </span>
     <p-dropdown
       *ngIf="pacienteAux"
