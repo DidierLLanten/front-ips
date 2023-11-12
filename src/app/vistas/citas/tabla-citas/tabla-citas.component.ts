@@ -91,10 +91,10 @@ export class TablaCitasComponent implements OnInit, OnChanges {
               detail: 'Cita confirmada',
               life: 1000,
             });
-            this.cargarTablaPorEspecialidades();
           });
       });
     this.visible = false;
+    this.cargarTablaPorEspecialidades();
   }
 
   buscarMedico() {
