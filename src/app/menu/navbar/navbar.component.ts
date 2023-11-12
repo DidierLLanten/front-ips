@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.rolActivo = this.seguridadService.obtenerRol();
 
-    if (this.rolActivo === 'Admin') {
+    if (this.rolActivo === 'ADMINISTRADOR') {
       this.opcionesNavBar = [
         {
           label: 'Doctores',
@@ -68,7 +68,7 @@ export class NavbarComponent implements OnInit {
           ],
         },
       ];
-    } else if (this.rolActivo === 'Encargado') {
+    } else if (this.rolActivo === 'ENCARGADO') {
       this.opcionesNavBar = [
         {
           label: 'Pacientes',
@@ -108,7 +108,7 @@ export class NavbarComponent implements OnInit {
           ],
         },
       ];
-    } else if (this.rolActivo === 'Paciente') {
+    } else if (this.rolActivo === 'PACIENTE') {
       this.opcionesNavBar = [
         {
           label: 'Citas',
@@ -137,5 +137,10 @@ export class NavbarComponent implements OnInit {
         },
       ];
     }
+  }
+
+  cerrarSesion(){
+    this.seguridadService.logout();
+    window.location.href = 'http://localhost:4200/login';
   }
 }

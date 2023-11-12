@@ -1,6 +1,6 @@
 <div class="flex-container">
   <div class="flex-items">
-    <span class="p-float-label margin-cedula" *ngIf="rol == 'admin'">
+    <span class="p-float-label margin-cedula" *ngIf="rol == 'ADMINISTRADOR'">
       <p-inputNumber type="number" id="inputCedula" [(ngModel)]="cedula" [min]="0" [maxlength]="11"> </p-inputNumber>
       <label htmlFor="inputCedula">Cedula</label>
     </span>
@@ -15,7 +15,7 @@
     ></p-dropdown>
   </div>
 
-  <div class="flex-items margin-boton" *ngIf="rol == 'admin'">
+  <div class="flex-items margin-boton" *ngIf="rol == 'ADMINISTRADOR'">
     <p-button
       label="Buscar"
       styleClass="p-button-raised"
@@ -24,7 +24,7 @@
     ></p-button>
   </div>
 
-  <div class="flex-items margin-card" *ngIf="rol == 'admin' && pacienteAux">
+  <div class="flex-items margin-card" *ngIf="rol == 'ADMINISTRADOR' && pacienteAux">
     <div class="card flex justify-content-center">
       <p-card
         header="{{
