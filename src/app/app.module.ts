@@ -27,6 +27,7 @@ import { HistorialComponent } from './vistas/citas/historial/historial.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutorizadoComponent } from './seguridad/autorizado/autorizado.component';
 import { LoginComponent } from './seguridad/login/login.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { LoginComponent } from './seguridad/login/login.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [DatePipe, { provide: LOCALE_ID, useValue: 'es-ES' }],
+  providers: [DatePipe, { provide: LOCALE_ID, useValue: 'es-ES' }, MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

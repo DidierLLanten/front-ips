@@ -24,8 +24,7 @@ export class LoginComponent {
     this.seguridadService.login(this.username, this.password)
       .subscribe((respuesta: RespuestaToken) => {        
         this.seguridadService.guardarToken(respuesta.token);
-        this.router.navigateByUrl('/agendar-cita');
-        window.location.href = 'http://localhost:4200/agendar-cita';
+        this.router.navigateByUrl('/agendar-cita');        
       });
   }
 }

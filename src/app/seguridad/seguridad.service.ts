@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 interface RespuestaToken {
   token: string;  
 }
@@ -15,6 +15,9 @@ export class SeguridadService {
 
   private readonly llaveToken = 'token';
   private readonly llaveExpiracion = 'token-expiracion';
+
+  private rolSubject = new BehaviorSubject<string>(this.obtenerRol());
+  rolObservable = this.rolSubject.asObservable();
 
 
   estaLogueado(): boolean {
@@ -43,10 +46,12 @@ export class SeguridadService {
   logout() {
     localStorage.removeItem(this.llaveToken);
     localStorage.removeItem(this.llaveExpiracion);
+    this.rolSubject.next(this.obtenerRol());    
   }
 
   guardarToken(token: string) {
     localStorage.setItem(this.llaveToken, token);
+     this.rolSubject.next(this.obtenerRol());
   }
 
   obtenerCampoJWT(campo: string): string {

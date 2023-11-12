@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { Cita } from 'src/app/modelos/cita';
 import { Especialidad_medicos } from 'src/app/modelos/especialidades_medico';
 import { Medico } from 'src/app/modelos/medico';
@@ -15,7 +16,8 @@ export class EncabezadoCrearCitasComponent {
   constructor(
     private especialidadService: EspecialidadService,
     private medicoService: MedicoService,
-    private citaService: CitaService
+    private citaService: CitaService,
+    private messageService: MessageService
   ) {}
 
   @Output()
@@ -31,7 +33,7 @@ export class EncabezadoCrearCitasComponent {
   especialidades: Especialidad_medicos[] | undefined;
   especialidadSeleccionada: Especialidad_medicos;
 
-  medicosEspecialistasOriginal: Medico[];
+  medicosEspecialistasOriginal?: Medico[];  
   medicoSeleccionado: Medico;
 
   fechaActual: Date = new Date();
@@ -52,15 +54,26 @@ export class EncabezadoCrearCitasComponent {
     this.doctorFecha.emit();
   }
 
-  cargarMedicosPorEspecialidad() {
+  cargarMedicosPorEspecialidad() {    
     this.medicoService
       .obtenerMedicosPorIdEspecialidad(this.especialidadSeleccionada.id)
-      .subscribe((medicos) => {
-        this.medicosEspecialistasOriginal = medicos;
-        this.medicosEspecialistasOriginal = medicos.map((medico) => ({
-          ...medico,
-          apellidoNombre: medico.persona.apellido + ' ' + medico.persona.nombre,
-        }));
+      .subscribe((medicos) => {        
+        if (!medicos) {
+          this.medicosEspecialistasOriginal = undefined;          
+          this.messageService.add({
+            severity: 'info',
+            summary: 'No disponible',
+            detail: 'No hay medicos de la especialidad '+this.especialidadSeleccionada.especialidad,
+            life: 3000,
+          });
+        } else {
+          this.medicosEspecialistasOriginal = medicos;
+          this.medicosEspecialistasOriginal = medicos.map((medico) => ({
+            ...medico,
+            apellidoNombre:
+              medico.persona.apellido + ' ' + medico.persona.nombre,
+          }));
+        }
       });
   }
 
