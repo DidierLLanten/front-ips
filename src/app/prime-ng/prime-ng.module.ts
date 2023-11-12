@@ -22,10 +22,12 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [],
   imports: [CommonModule],
+  providers: [ConfirmationService],
   exports: [
     MenubarModule,
     AvatarModule,

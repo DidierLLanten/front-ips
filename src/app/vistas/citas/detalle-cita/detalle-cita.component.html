@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 
-<div
+<div *ngIf="this.rol != 'PACIENTE'"
   class="card flex-row justify-content-center flex-wrap p-fluid"
   style="margin: 50px; padding: 20px"
 >
@@ -40,7 +40,8 @@
     class="card flex flex-row justify-content-center flex-wrap gap-2 p-fluid"
     style="padding: 20px"
     *ngIf="citasEncontradas[0]"
-  >
+  > 
+
     <div class="flex flex-row gap-3">
       <label htmlFor="numeroDocumento">{{
         citasEncontradas[0].paciente.persona.tipoIdentificacion.tipo
@@ -99,7 +100,7 @@
         type="text"
         pInputText
         [disabled]="true"
-        value="{{ citasEncontradas[0].paciente.eps?.nombre }}"
+        value="{{ citasEncontradas[0].paciente.eps?.eps }}"
         class="opacidad-texto"
       />
     </div>
@@ -127,8 +128,8 @@
         <div>
           <h5 style="display: inline">Estado: </h5>
           <p-tag
-            [value]="consu.estadoCita.nombre"
-            [severity]="getColorTagEstado(consu.estadoCita.nombre)"
+            [value]="consu.estadoCita.estado"
+            [severity]="getColorTagEstado(consu.estadoCita.estado)"
           ></p-tag>
         </div>
       </div>
@@ -199,6 +200,16 @@
             value="{{ consu.medico.especialidad.especialidad }}"
             class="opacidad-texto"
           />
+        </div>
+      </div>
+      <div >
+        <p-toast></p-toast>
+        <p-confirmDialog [style]="{width: '50vw'}" [rejectLabel]="'No'" [acceptLabel]="'Sí'"></p-confirmDialog>
+        <div *ngIf="rol == 'PACIENTE'" class="boton-derecha">
+          <button pButton pRipple (click)="confirmCancellation(consu)" label="Cancelar" class="p-button-danger"></button>
+        </div>
+        <div *ngIf="rol == 'ENCARGADO' || rol == 'ADMINISTRADOR'"class="boton-derecha">
+          <button pButton pRipple (click)="confirm(consu)" label="Confirmar" class="p-button-success"></button>
         </div>
       </div>
     </div>

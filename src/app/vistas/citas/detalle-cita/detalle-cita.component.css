@@ -6,6 +6,13 @@
   opacity: 1;
 }
 
+.boton-derecha {
+  display: flex;
+  justify-content:flex-end;
+  align-items: center; /* Centra verticalmente los elementos */
+  padding: 10px; /* Agrega espaciado alrededor de los elementos (opcional) */
+}
+
 .centrar-fecha {
   text-align: center;
 }

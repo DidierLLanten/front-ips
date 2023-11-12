@@ -130,13 +130,7 @@ export class NavbarComponent implements OnInit {
                 icon: 'pi pi-search',
                 routerLink: 'detalle-cita',
                 styleClass: 'color-texto color-icono',
-              },
-              {
-                label: 'Historial',
-                icon: 'pi pi-history',
-                routerLink: 'historial',
-                styleClass: 'color-texto color-icono',
-              },
+              }
             ],
           },
         ];
