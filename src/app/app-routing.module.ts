@@ -8,15 +8,16 @@ import { CrearCitasComponent } from './vistas/citas/crear-citas/crear-citas.comp
 import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.component';
 import { HistorialComponent } from './vistas/citas/historial/historial.component';
 import { LoginComponent } from './seguridad/login/login.component';
+import { esAdminGuard } from './es-admin.guard';
 
 const routes: Routes = [
   { path: 'crear-cita', component: CrearCitasComponent },
   { path: 'agendar-cita', component: IndiceCitasComponent },
   { path: 'detalle-cita', component: DetalleCitaComponent },
 
-  { path: 'doctores', component: IndiceDoctoresComponent },
+  { path: 'doctores', component: IndiceDoctoresComponent, canActivate: [esAdminGuard] },
 
-  { path: 'encargados', component: IndiceEncargadosComponent },
+  { path: 'encargados', component: IndiceEncargadosComponent, canActivate: [esAdminGuard] }, 
 
   { path: 'pacientes', component: IndicePacientesComponent },
 
