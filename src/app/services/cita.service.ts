@@ -53,4 +53,8 @@ export class CitaService{
     obtenerCitasPorCedulaYIdEstadoCita(cedula: string, idEstadoCita: number):Observable<Cita[]>{
         return this.httpClient.get<Cita[]>(`${this.baseUrl}/paciente/${cedula}/${idEstadoCita}`);
     }
+
+    obtenerCitasConfirmadasYAssignadasPorCedula(cedula: string):Observable<Cita[]>{
+        return this.httpClient.get<Cita[]>(`${this.baseUrl}/paciente/${cedula}`);
+    }
 }

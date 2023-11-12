@@ -203,15 +203,15 @@
         </div>
       </div>
       <div >
-        <p-toast></p-toast>
-        <p-confirmDialog [style]="{width: '50vw'}" [rejectLabel]="'No'" [acceptLabel]="'Sí'"></p-confirmDialog>
-        <div *ngIf="rol == 'PACIENTE'" class="boton-derecha">
+        <div *ngIf="rol == 'PACIENTE' && consu.estadoCita.estado == 'ASIGNADA'" class="boton-derecha">
           <button pButton pRipple (click)="confirmCancellation(consu)" label="Cancelar" class="p-button-danger"></button>
         </div>
-        <div *ngIf="rol == 'ENCARGADO' || rol == 'ADMINISTRADOR'"class="boton-derecha">
+        <div *ngIf="(rol == 'ENCARGADO' || rol == 'ADMINISTRADOR') && consu.estadoCita.estado == 'ASIGNADA'"class="boton-derecha">
           <button pButton pRipple (click)="confirm(consu)" label="Confirmar" class="p-button-success"></button>
         </div>
       </div>
     </div>
   </div>
 </ng-container>
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}" [rejectLabel]="'No'" [acceptLabel]="'Sí'"></p-confirmDialog>

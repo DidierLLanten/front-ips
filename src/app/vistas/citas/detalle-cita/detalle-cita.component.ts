@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { Cita } from 'src/app/modelos/cita';
+import { Estado_cita } from 'src/app/modelos/estado_cita';
+import { HistorialCita } from 'src/app/modelos/historialCita';
 import { SeguridadService } from 'src/app/seguridad/seguridad.service';
 import { CitaService } from 'src/app/services/cita.service';
+import { HistorialCitaService } from 'src/app/services/historialCita.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +19,8 @@ export class DetalleCitaComponent implements OnInit {
     private citaService: CitaService,
     private messageService: MessageService,
     private seguridadService: SeguridadService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService, 
+    private historialCitaService:HistorialCitaService
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +30,7 @@ export class DetalleCitaComponent implements OnInit {
        this.buscarCitaPorCedula();
      }
   }
+  public historialCita: HistorialCita = new HistorialCita();
   rol: string;
   citasEncontradas: Cita[] | undefined;
   cedula: string;
@@ -43,10 +48,35 @@ export class DetalleCitaComponent implements OnInit {
       header: 'Cancelar cita',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-          console.log(cita);
+          this.cambiarEstadoCita(cita, this.estadosCita.CANCELADA);
           this.messageService.add({ severity: 'success', summary: 'Cancelada', detail: 'Esta cita se ha cancelado' });
       },
     });
+  }
+
+  cambiarEstadoCita(cita:Cita,idEstado:number){
+    this.citaService.actualizarEstadoCita(cita.id, idEstado).subscribe((dato)=>{
+       this.buscarCitaPorCedula();
+       this.crearHistorial(idEstado,cita)
+    });
+  }
+
+  crearHistorial(idEstadoActual:number,cita:Cita){
+    let citaAux = new Cita();
+    let estadoCita = new Estado_cita();
+    citaAux.id = cita.id;
+    estadoCita.id = idEstadoActual;
+    this.historialCita.cambio = 'CAMBIO_ESTADO';
+    this.historialCita.cita = citaAux;
+    this.historialCita.estadoActual = estadoCita;
+    this.historialCita.estadoAnterior = cita.estadoCita;
+    this.historialCita.fechaModificacion = '';
+    this.historialCita.horaModificacion = '';
+    this.historialCitaService
+      .crearHistorialCita(this.historialCita)
+      .subscribe((dato) => {
+        console.log('Me registro el historial', dato);
+      });
   }
 
   confirm(cita:Cita) {
@@ -55,14 +85,11 @@ export class DetalleCitaComponent implements OnInit {
       header: 'Confirmar cita',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-          console.log(cita);
+          this.cambiarEstadoCita(cita, this.estadosCita.CONFIRMADA);
           this.messageService.add({ severity: 'success', summary: 'Confirmada', detail: 'La cita de este paciente se ha confirmado' });
       },
     });
   }
-
-
-
 
   buscarCitaPorCedula() {
     let timerInterval: any;
@@ -78,9 +105,8 @@ export class DetalleCitaComponent implements OnInit {
           timer!.textContent = `${Swal.getTimerLeft()}`;
         }, 100);
         this.citaService
-          .obtenerCitasPorCedulaYIdEstadoCita(
-            this.cedula,
-            this.estadosCita.ASIGNADA
+          .obtenerCitasConfirmadasYAssignadasPorCedula(
+            this.cedula
           )
           .subscribe((dato) => {
             if (dato.length == 0) {
