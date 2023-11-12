@@ -28,6 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutorizadoComponent } from './seguridad/autorizado/autorizado.component';
 import { LoginComponent } from './seguridad/login/login.component';
 import { MessageService } from 'primeng/api';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SeguridadInterceptorService } from './seguridad/seguridad-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -53,9 +55,14 @@ import { MessageService } from 'primeng/api';
     BrowserAnimationsModule,
     PrimeNGModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [DatePipe, { provide: LOCALE_ID, useValue: 'es-ES' }, MessageService],
+  providers: [
+    DatePipe,
+    { provide: LOCALE_ID, useValue: 'es-ES' },
+    MessageService,
+    { provide: HTTP_INTERCEPTORS, useClass: SeguridadInterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
