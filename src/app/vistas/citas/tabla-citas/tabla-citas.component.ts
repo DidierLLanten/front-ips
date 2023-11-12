@@ -91,10 +91,10 @@ export class TablaCitasComponent implements OnInit, OnChanges {
               detail: 'Cita confirmada',
               life: 1000,
             });
+            this.cargarTablaPorEspecialidades();
           });
       });
     this.visible = false;
-    this.cargarTablaPorEspecialidades();
   }
 
   buscarMedico() {
@@ -130,6 +130,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
   }
 
   cargarTablaPorEspecialidades() {
+    console.log("ENTRO");
     let timerInterval: any;
     Swal.fire({
       title: 'Por favor espere mientras\n' + 'cargamos las citas',
@@ -142,6 +143,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
           .obtenerPorEspecialidad(this.idEspecialidad)
           .subscribe((dato) => {
             this.citas = dato;
+            console.log("CITAS QUE TRAE LA HP",this.citas);
           });
       },
       willClose: () => {
