@@ -12,6 +12,9 @@ import { CitaService } from 'src/app/services/cita.service';
 import { EncabezadoCitasComponent } from '../encabezado-citas/encabezado-citas.component';
 import { Paciente } from 'src/app/modelos/paciente';
 import Swal from 'sweetalert2';
+import { HistorialCitaService } from 'src/app/services/historialCita.service';
+import { HistorialCita } from 'src/app/modelos/historialCita';
+import { Estado_cita } from 'src/app/modelos/estado_cita';
 
 @Component({
   selector: 'app-tabla-citas',
@@ -39,9 +42,14 @@ export class TablaCitasComponent implements OnInit, OnChanges {
 
   visible: boolean = false;
 
+  historialCita: HistorialCita = new HistorialCita();
+
+  estadoCita: Estado_cita = new Estado_cita();
+
   constructor(
     private citaService: CitaService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private historialCitaService: HistorialCitaService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -57,15 +65,26 @@ export class TablaCitasComponent implements OnInit, OnChanges {
   }
 
   confirmarCita() {
+    let cita = new Cita();
+    cita.id = this.citaSeleccionada.id;
+    this.estadoCita.id = 3;
+    this.historialCita.cambio = 'CAMBIO_ESTADO';
+    this.historialCita.cita = cita;
+    this.historialCita.estadoActual = this.estadoCita;
+    this.historialCita.estadoAnterior = this.citaSeleccionada.estadoCita;
+    this.historialCita.fechaModificacion = '';
+    this.historialCita.horaModificacion = '';
+    this.historialCitaService
+      .crearHistorialCita(this.historialCita)
+      .subscribe((dato) => {
+        console.log('Me registro el historial', dato);
+      });
     this.citaService
-      .actualizarEstadoCita(this.citaSeleccionada.id, this.idEspecialidad)
+      .actualizarEstadoCita(this.citaSeleccionada.id, 3)
       .subscribe((dato) => {
         this.citaService
-          .actualizarPacienteCita(
-            this.citaSeleccionada.id,
-            this.paciente.id
-          )
-          .subscribe((dato) => {
+          .actualizarPacienteCita(this.citaSeleccionada.id, this.paciente.id)
+          .subscribe((dato2) => {
             this.messageService.add({
               severity: 'success',
               summary: 'Exitoso',

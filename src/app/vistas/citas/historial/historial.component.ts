@@ -21,8 +21,6 @@ import { MedicoService } from 'src/app/services/medico.service';
 })
 export class HistorialComponent implements OnInit {
 
-  public numeroDocumento: string;
-
   public selectedDate: Date | undefined;
   public mostrarAlerta: boolean = false;
 
@@ -62,7 +60,6 @@ export class HistorialComponent implements OnInit {
     this.selectedCambio = null;
 
     this.formGroup = this.fb.group({
-      documento: [''],
       especialidad: ['', [Validators.required]],
       medico: [''],
       fecha: [''],
@@ -107,7 +104,6 @@ export class HistorialComponent implements OnInit {
         this.filtrado = true;
         this.historialCitaService
           .obtenerListaHistorialCita(
-            this.numeroDocumento,
             idMedico,
             this.selectedCambio,
             dateIsoString
@@ -136,9 +132,7 @@ export class HistorialComponent implements OnInit {
       this.selectedCambio != null ||
       this.selectedCambio != undefined ||
       this.selectedDate != null ||
-      this.selectedDate != undefined ||
-      this.numeroDocumento != null ||
-      this.numeroDocumento != undefined
+      this.selectedDate != undefined
     ) {
       return true;
     }
