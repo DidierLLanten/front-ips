@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IndiceCitasComponent } from './vistas/citas/indice-citas/indice-citas.component';
 import { IndiceDoctoresComponent } from './vistas/doctores/indice-doctores/indice-doctores.component';
@@ -9,6 +9,7 @@ import { DetalleCitaComponent } from './vistas/citas/detalle-cita/detalle-cita.c
 import { HistorialComponent } from './vistas/citas/historial/historial.component';
 import { LoginComponent } from './seguridad/login/login.component';
 import { esAdminGuard } from './es-admin.guard';
+import { PerfilComponent } from './vistas/perfil/perfil.component';
 
 const routes: Routes = [
   { path: 'crear-cita', component: CrearCitasComponent },
@@ -20,10 +21,12 @@ const routes: Routes = [
   { path: 'encargados', component: IndiceEncargadosComponent, canActivate: [esAdminGuard] }, 
 
   { path: 'pacientes', component: IndicePacientesComponent },
-
+  
   { path: 'historial', component: HistorialComponent },
-
+  
   { path: 'login', component: LoginComponent },
+  
+  { path: 'perfil', component: PerfilComponent},
 
   { path: '**', redirectTo: 'login' },
 ];
