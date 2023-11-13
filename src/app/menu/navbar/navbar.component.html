@@ -8,19 +8,17 @@
     <app-autorizado>
       <ng-container autorizado class="wid-20">            
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"></a>
+            <p-avatar icon="pi pi-user" styleClass="mr-2" size="large" [style]="{'background-color':'#000000', 'color': '#ffffff'}" 
+            shape="circle" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"></p-avatar>
+
             <ul class="menu dropdown-menu" aria-labelledby="navbarDropdown">
               <div class="card" style="width: 18rem;">
-                <img id="imagen-drop" src="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" class="card-img-top" >
+                <img id="imagen-drop" src="https://cdn-icons-png.flaticon.com/512/6378/6378141.png" class="card-img-top" >
                 <div class="card-body">
                   <h5 class="text-center card-title">Usuario</h5>
                 </div>
               </div>
-              <li><a routerLink="/" class="dropdown-item">Perfil</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a routerLink="/" class="dropdown-item">Edit</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a routerLink="/" class="dropdown-item">History</a></li>
+              <li><a routerLink="perfil" class="dropdown-item">Perfil</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a routerLink="/" type="button" class="dropdown-item" (click)="cerrarSesion()">Cerrar sesión</a></li>
             </ul>
@@ -31,28 +29,5 @@
         Inicia Sesion, NO ESTAS LOGUEADO
       </ng-container>      
     </app-autorizado>
-
-    <!-- Perfil con foto -->
-    <!-- <ng-template pTemplate="end" class="wid-20" >
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"></a>
-        <ul class="menu dropdown-menu" aria-labelledby="navbarDropdown">
-          <div class="card" style="width: 18rem;">
-            <img id="imagen-drop" src="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" class="card-img-top" >
-            <div class="card-body">
-              <h5 class="text-center card-title">Usuario</h5>
-            </div>
-          </div>
-          <li><a routerLink="/" class="dropdown-item">Perfil</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a routerLink="/" class="dropdown-item">Edit</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a routerLink="/" class="dropdown-item">History</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a type="button" class="dropdown-item">Cerrar sesión</a></li>
-        </ul>
-      </li>
-    </ng-template> -->
-
   </p-menubar>
 </div>

@@ -30,6 +30,7 @@ import { LoginComponent } from './seguridad/login/login.component';
 import { MessageService } from 'primeng/api';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SeguridadInterceptorService } from './seguridad/seguridad-interceptor.service';
+import { PerfilComponent } from './vistas/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { SeguridadInterceptorService } from './seguridad/seguridad-interceptor.s
     HistorialComponent,
     AutorizadoComponent,
     LoginComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,
