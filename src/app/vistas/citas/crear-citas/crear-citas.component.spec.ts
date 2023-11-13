@@ -4,6 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { PrimeNGModule } from "src/app/prime-ng/prime-ng.module";
 import { EncabezadoCrearCitasComponent } from "../encabezado-crear-citas/encabezado-crear-citas.component";
 import { TablaCrearCitasComponent } from "../tabla-crear-citas/tabla-crear-citas.component";
+import { MockComponents } from 'ng-mocks';
 
 describe("CrearCitasComponent", () => {
     const personas:any[] = [
@@ -81,10 +82,10 @@ describe("CrearCitasComponent", () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-        declarations: [CrearCitasComponent, EncabezadoCrearCitasComponent, TablaCrearCitasComponent],
+        declarations: [CrearCitasComponent, MockComponents(EncabezadoCrearCitasComponent, TablaCrearCitasComponent)],
         imports: [HttpClientModule, PrimeNGModule],
         }).compileComponents();
-
+         
         fixture = TestBed.createComponent(CrearCitasComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -106,6 +107,4 @@ describe("CrearCitasComponent", () => {
     })
 });
 
-function MockComponents(): any {
-    throw new Error("Function not implemented.");
-}
+

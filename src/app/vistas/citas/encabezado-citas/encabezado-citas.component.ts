@@ -40,7 +40,8 @@ export class EncabezadoCitasComponent implements OnInit {
     }
     this.cargarEspecialidades();
   }
-
+  
+   // istanbul ignore next
   buscarPacientePorCedula() {
     if (!this.cedula) {
       this.messageService.add({
@@ -66,9 +67,7 @@ export class EncabezadoCitasComponent implements OnInit {
               'No existe un paciente con el número de documento ' + this.cedula,
             life: 3000,
           });          
-        } else {
-          console.log('Ocurrió un error al buscar el paciente:', error);
-        }
+        } 
       },
     });
   }

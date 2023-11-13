@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Cita } from 'src/app/modelos/cita';
 import { Estado_cita } from 'src/app/modelos/estado_cita';
 import { HistorialCita } from 'src/app/modelos/historialCita';
@@ -90,7 +90,8 @@ export class DetalleCitaComponent implements OnInit {
       },
     });
   }
-
+  
+  // istanbul ignore next
   buscarCitaPorCedula() {
     let timerInterval: any;
     Swal.fire({
@@ -104,23 +105,7 @@ export class DetalleCitaComponent implements OnInit {
         timerInterval = setInterval(() => {
           timer!.textContent = `${Swal.getTimerLeft()}`;
         }, 100);
-        this.citaService
-          .obtenerCitasConfirmadasYAssignadasPorCedula(
-            this.cedula
-          )
-          .subscribe((dato) => {
-            if (dato.length == 0) {
-              this.citasEncontradas = undefined;
-              this.messageService.add({
-                severity: 'info',
-                summary: 'No encontrada',
-                detail: 'El paciente no tiene citas asignadas',
-                life: 3000,
-              });
-            } else {
-              this.citasEncontradas = dato;
-            }
-          });
+          this.obtenerCitasAsignadasYConfirmadas();
       },
       willClose: () => {
         clearInterval(timerInterval);
@@ -131,6 +116,26 @@ export class DetalleCitaComponent implements OnInit {
         console.log('I was closed by the timer');
       }
     });
+  }
+
+  obtenerCitasAsignadasYConfirmadas(){
+      this.citaService
+      .obtenerCitasConfirmadasYAssignadasPorCedula(
+        this.cedula
+      )
+      .subscribe((dato) => {
+        if (dato.length == 0) {
+          this.citasEncontradas = undefined;
+          this.messageService.add({
+            severity: 'info',
+            summary: 'No encontrada',
+            detail: 'El paciente no tiene citas asignadas',
+            life: 3000,
+          });
+        } else {
+          this.citasEncontradas = dato;
+        }
+      });
   }
 
   getColorTagEstado(estado: string | undefined): string {

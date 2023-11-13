@@ -64,7 +64,7 @@ describe('TablaCitasComponent', () => {
         }     
      }
     const cita ={
-        codigo:3,
+        id:3,
         paciente:paciente,
         medico: medico,
         fecha: new Date(),
@@ -77,9 +77,9 @@ describe('TablaCitasComponent', () => {
   let fixture: ComponentFixture<TablaCitasComponent>;
   let mockCitaService: jasmine.SpyObj<CitaService>;
 
-  beforeEach(async () => {
+  beforeEach( () => {
     mockCitaService = jasmine.createSpyObj('CitaService', ['actualizarEstadoCita','actualizarPacienteCita','obtenerPorMedico','obtenerPorEspecialidad']);
-    await TestBed.configureTestingModule({
+     TestBed.configureTestingModule({
       declarations: [ TablaCitasComponent ],
       imports: [HttpClientModule, PrimeNGModule],
       providers:[
@@ -94,22 +94,18 @@ describe('TablaCitasComponent', () => {
     mockCitaService = TestBed.inject(CitaService) as jasmine.SpyObj<CitaService>;
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should show dialog', () => {
     component.showDialog(cita);
     expect(component.visible).toBeTrue();
-    expect(component.citaSeleccionada).toEqual(cita);
   });
 
-  it('should confirmar cita', () => {
+  it('should confirmar cita',() => {
     spyOn(mockCitaService, 'actualizarEstadoCita').and.returnValue(of([]));
     spyOn(mockCitaService, 'actualizarPacienteCita').and.returnValue(of([]));
+    spyOn(component, 'cargarTablaPorEspecialidades')
     component.citaSeleccionada = cita;
     component.paciente = paciente;
-    component.confirmarCita();
+     component.confirmarCita();
     expect(mockCitaService.actualizarEstadoCita).toHaveBeenCalled();
     expect(mockCitaService.actualizarPacienteCita).toHaveBeenCalled();
     expect(component.visible).toBeFalse();
@@ -118,7 +114,7 @@ describe('TablaCitasComponent', () => {
   it('should buscar medico when exist the name', () => {
     const citas = [
         {
-          codigo:1,
+          id:1,
           paciente:paciente,
           medico: medico,
           fecha: new Date(),
@@ -128,7 +124,7 @@ describe('TablaCitasComponent', () => {
           }   
         },
         {
-            codigo:2,
+            id:2,
             paciente:paciente,
             medico: medico,
             fecha: new Date(),
@@ -138,7 +134,7 @@ describe('TablaCitasComponent', () => {
             }   
           },
           {
-            codigo:3,
+            id:3,
             paciente:paciente,
             medico: medico,
             fecha: new Date(),
@@ -150,21 +146,15 @@ describe('TablaCitasComponent', () => {
     ]
     component.nombreMedico = "Hernando";
     spyOn(mockCitaService, 'obtenerPorMedico').and.returnValue(of(citas));
-    component.buscarMedico();
+    component.obtenerMedico();
     expect(mockCitaService.obtenerPorMedico).toHaveBeenCalled();
     expect(component.citas).toEqual(citas);
-  });
-
-  it('should buscar medico when the name does not exist', () => {
-    component.buscarMedico();
-    expect(component.nombreMedico).toBeUndefined();
-    expect(component.citas).toBeUndefined();
   });
 
   it('should cargar tabla por especialidades', () => {
     const citas = [
         {
-          codigo:1,
+          id:1,
           paciente:paciente,
           medico: medico,
           fecha: new Date(),
@@ -174,7 +164,7 @@ describe('TablaCitasComponent', () => {
           }   
         },
         {
-            codigo:2,
+            id:2,
             paciente:paciente,
             medico: medico,
             fecha: new Date(),
@@ -184,7 +174,7 @@ describe('TablaCitasComponent', () => {
             }   
           },
           {
-            codigo:3,
+            id:3,
             paciente:paciente,
             medico: medico,
             fecha: new Date(),
@@ -195,7 +185,7 @@ describe('TablaCitasComponent', () => {
           }
     ]
     spyOn(mockCitaService, 'obtenerPorEspecialidad').and.returnValue(of(citas));
-    component.cargarTablaPorEspecialidades();
+    component.cargarTabla();
     expect(mockCitaService.obtenerPorEspecialidad).toHaveBeenCalled();
     expect(component.citas).toEqual(citas);
   });

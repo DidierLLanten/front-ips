@@ -108,12 +108,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
         const timer = Swal.getPopup()!.querySelector('b');
         if (this.nombreMedico != '' && this.nombreMedico != undefined) {
           console.log(this.nombreMedico);
-          this.citaService
-            .obtenerPorMedico(this.idEspecialidad, this.nombreMedico)
-            .subscribe((dato) => {
-              this.citas = dato;
-              console.log(this.citas);
-            });
+          this.obtenerMedico();
         } else {
           this.cargarTablaPorEspecialidades();
         }
@@ -129,8 +124,16 @@ export class TablaCitasComponent implements OnInit, OnChanges {
     });
   }
 
+  obtenerMedico(){
+    this.citaService
+            .obtenerPorMedico(this.idEspecialidad, this.nombreMedico)
+            .subscribe((dato) => {
+              this.citas = dato;
+              console.log(this.citas);
+            });
+  }
+
   cargarTablaPorEspecialidades() {
-    console.log("ENTRO");
     let timerInterval: any;
     Swal.fire({
       title: 'Por favor espere mientras\n' + 'cargamos las citas',
@@ -139,12 +142,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
       didOpen: () => {
         Swal.showLoading();
         const timer = Swal.getPopup()!.querySelector('b');
-        this.citaService
-          .obtenerPorEspecialidad(this.idEspecialidad)
-          .subscribe((dato) => {
-            this.citas = dato;
-            console.log("CITAS QUE TRAE LA HP",this.citas);
-          });
+        this.cargarTabla();
       },
       willClose: () => {
         clearInterval(timerInterval);
@@ -154,6 +152,14 @@ export class TablaCitasComponent implements OnInit, OnChanges {
       if (result.dismiss === Swal.DismissReason.timer) {
         console.log('I was closed by the timer');
       }
+    });
+  }
+
+  cargarTabla(){
+    this.citaService
+    .obtenerPorEspecialidad(this.idEspecialidad)
+    .subscribe((dato) => {
+      this.citas = dato;
     });
   }
 }

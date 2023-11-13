@@ -92,9 +92,7 @@ export class IndiceDoctoresComponent implements OnInit {
             timer.textContent = `${Swal.getTimerLeft()}`;
           }
         }, 100);
-        this.medicoService.obtenerListaMedico().subscribe((dato) => {
-          this.medicos = dato;
-        });
+        this.obtenerListaMedicos();
       },
       willClose: () => {
         clearInterval(timerInterval);
@@ -104,6 +102,12 @@ export class IndiceDoctoresComponent implements OnInit {
       if (result.dismiss === Swal.DismissReason.timer) {
         console.log('I was closed by the timer');
       }
+    });
+  }
+
+  obtenerListaMedicos(){
+    this.medicoService.obtenerListaMedico().subscribe((dato) => {
+      this.medicos = dato;
     });
   }
 
@@ -190,7 +194,6 @@ export class IndiceDoctoresComponent implements OnInit {
   }
 
   editarMedico(medico: Medico) {
-    console.log('medico actualizado: ', medico);
     this.medico = medico;
     this.medicoEditado = medico;
     this.disabledType = true;
@@ -204,16 +207,20 @@ export class IndiceDoctoresComponent implements OnInit {
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.medicoService.eliminarMedico(medico.id).subscribe((dato) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Exitoso',
-            detail: 'Medico eliminado',
-            life: 1000,
-          });
-          this.obtenerMedicos();
-        });
+        this.deleteMedico(medico);
       },
+    });
+  }
+
+  deleteMedico(medico:Medico){
+    this.medicoService.eliminarMedico(medico.id).subscribe((dato) => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Exitoso',
+        detail: 'Medico eliminado',
+        life: 1000,
+      });
+      this.obtenerMedicos();
     });
   }
 

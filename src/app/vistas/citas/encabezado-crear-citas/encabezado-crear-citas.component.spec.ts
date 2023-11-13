@@ -8,6 +8,7 @@ import { Medico } from 'src/app/modelos/medico';
 import { MedicoService } from 'src/app/services/medico.service';
 import { CitaService } from 'src/app/services/cita.service';
 import { Cita } from 'src/app/modelos/cita';
+import { MessageService } from 'primeng/api';
 
 describe('EncabezadoCrearCitasComponent', () => {
     const personas:any[] = [
@@ -62,6 +63,7 @@ describe('EncabezadoCrearCitasComponent', () => {
       declarations: [ EncabezadoCrearCitasComponent],
       imports:[HttpClientModule, PrimeNGModule],
       providers: [
+        MessageService,
         {provider:EspecialidadService, useValue:mockEspecialidadesService},
         {provider:MedicoService, useValue: mockMedicoService},
         {provider:CitaService, useValue: mockCitaService}
@@ -85,15 +87,15 @@ describe('EncabezadoCrearCitasComponent', () => {
     const mockEspecialidades= [
         {
           id:1,
-          nombre:"ODONTOLOGIA"
+          especialidad:"ODONTOLOGIA"
         },
         {
            id:2,
-           nombre:"ORTOPEDIA"
+           especialidad:"ORTOPEDIA"
         },
         {
             id:3,
-            nombre:"MEDICINA GENERAL"
+            especialidad:"MEDICINA GENERAL"
         }
     ]
     spyOn(mockEspecialidadesService, 'obtenerListaEspecialidad').and.returnValue(of(mockEspecialidades));
@@ -105,7 +107,7 @@ describe('EncabezadoCrearCitasComponent', () => {
   it('should filtrar por especialidad', () => {
     const especializadSeleccionada= {
         id:1,
-        nombre:"ODONTOLOGIA"
+        especialidad:"ODONTOLOGIA"
     }
     component.especialidadSeleccionada = especializadSeleccionada;
     component.filtrarPorEspecialidad();
@@ -116,29 +118,29 @@ describe('EncabezadoCrearCitasComponent', () => {
   it('should cargar medicos por especialidad', () => {
     const especializadSeleccionada= {
         id:1,
-        nombre:"ODONTOLOGIA"
+        especialidad:"ODONTOLOGIA"
     }
 
     const medicos = [
         {
-            idMedico:1,
+            id:1,
             apellidoNombre:"Llanten Saldariaga Didier Andres",
             persona: personas[1],
-            especialidadMedico: especializadSeleccionada,
+            especialidad: especializadSeleccionada,
             tarjetaProfesional:"46546665641"
         },
         {
-            idMedico:2,
+            id:2,
             apellidoNombre:"Torres Beltran Juan Camilo",
             persona: personas[0],
-            especialidadMedico: especializadSeleccionada,
+            especialidad: especializadSeleccionada,
             tarjetaProfesional:"44556546565"
         },
         {
-            idMedico:3,
+            id:3,
             apellidoNombre:"Piedrahita Gomez Luis Alejandro",
             persona: personas[2],
-            especialidadMedico: especializadSeleccionada,
+            especialidad: especializadSeleccionada,
             tarjetaProfesional:"564654653665"
         }
     ]
@@ -171,7 +173,7 @@ describe('EncabezadoCrearCitasComponent', () => {
      }
     const citas = [
         {
-          codigo:1,
+          id:1,
           paciente:paciente,
           medico: medico,
           fecha: new Date(),
@@ -181,7 +183,7 @@ describe('EncabezadoCrearCitasComponent', () => {
           }   
         },
         {
-            codigo:2,
+            id:2,
             paciente:paciente,
             medico: medico,
             fecha: new Date(),
@@ -191,7 +193,7 @@ describe('EncabezadoCrearCitasComponent', () => {
             }   
           },
           {
-            codigo:3,
+            id:3,
             paciente:paciente,
             medico: medico,
             fecha: new Date(),

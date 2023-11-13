@@ -17,11 +17,11 @@ describe('IndicePacientesComponent', () => {
         codigo: 1,
         nombre: "Juan Camilo",
         apellido: "Torres Beltran",
-        tipo_identificacion:{
+        tipoIdentificacion:{
             codigo: 1,
             tipo: "Cedula de ciudadania"
         },
-        numero_documento:"15184685622",
+        numeroDocumento:"15184685622",
         telefono:"3546654625",
         correo:"camilo@gmail.com"
     },
@@ -29,11 +29,11 @@ describe('IndicePacientesComponent', () => {
         codigo: 2,
         nombre: "Didier Andres",
         apellido: "Llanten Saldariaga",
-        tipo_identificacion:{
+        tipoIdentificacion:{
             codigo: 1,
             tipo: "Cedula de ciudadania"
         },
-        numero_documento:"6546646464",
+        numeroDocumento:"6546646464",
         telefono:"3546166198",
         correo:"didier@gmail.com"
     },
@@ -41,11 +41,11 @@ describe('IndicePacientesComponent', () => {
         codigo: 3,
         nombre: "Luis Alejandro",
         apellido: "Piedrahita Gomez",
-        tipo_identificacion:{
+        tipoIdentificacion:{
             codigo: 1,
             tipo: "Tarjeta de identidad"
         },
-        numero_documento:"94561511665",
+        numeroDocumento:"94561511665",
         telefono:"3848744546",
         correo:"luis@gmail.com"
     }
@@ -85,6 +85,7 @@ describe('IndicePacientesComponent', () => {
   });
 
   it('should create', () => {
+    spyOn(component, 'obtenerPacientes');
     expect(component).toBeTruthy();
   });
 
@@ -106,12 +107,12 @@ describe('IndicePacientesComponent', () => {
     const mockEps =[
       {
         id:1,
-        nombre:"COLSANITAS",
+        eps:"COLSANITAS",
         nit:"15256466564"
       },
       {
         id:2,
-        nombre:"COLSALUD",
+        eps:"COLSALUD",
         nit:"56565466546"
       }
     ]
@@ -126,27 +127,27 @@ describe('IndicePacientesComponent', () => {
   it('should obtener pacientes', () =>{
     const mockPacientes =[
       {
-        idPaciente:1,
+        id:1,
         persona:personas[0],
         eps:{
             id:1,
-            nombre:"COLSANITAS",
+            eps:"COLSANITAS",
             nit:"15256466564" 
         }
       },
       {
-        idPaciente:2,
+        id:2,
         persona:personas[1],
         eps:{
             id:2,
-            nombre:"COLSALUD",
+            eps:"COLSALUD",
             nit:"56565466546" 
         }
       }
     ]
     const spy = spyOn(mockPacienteService, 'obtenerListaPacientes');
     spy.and.returnValue(of(mockPacientes));
-    component.obtenerPacientes();
+    component.obtenerListaPacientes();
     expect(mockPacienteService.obtenerListaPacientes).toHaveBeenCalled();
     expect(component.pacientes).toEqual(mockPacientes);
     expect(component.pacientes.length).toEqual(mockPacientes.length);
@@ -186,6 +187,7 @@ describe('IndicePacientesComponent', () => {
      component.paciente.persona = personas[2];
      spyOn(component, 'verificarCampos').and.returnValue(true);
      spyOn(mockPacienteService, 'createPatient').and.returnValue(of(paciente));
+     spyOn(component, 'obtenerPacientes');
      component.guardarPaciente();
      expect(mockPacienteService.createPatient).toHaveBeenCalled();
      expect(component.productDialog).toBeFalse();
@@ -206,6 +208,7 @@ describe('IndicePacientesComponent', () => {
     component.pacienteEditado= paciente;
     spyOn(component, 'verificarCampos').and.returnValue(true);
     spyOn(mockPacienteService, 'actualizarPaciente').and.returnValue(of(paciente));
+    spyOn(component, 'obtenerPacientes');
     component.guardarPaciente();
     expect(mockPacienteService.actualizarPaciente).toHaveBeenCalled();
     expect(component.productDialog).toBeFalse();
@@ -254,20 +257,20 @@ describe('IndicePacientesComponent', () => {
   it('should find index by id', () =>{
       const mockPacientes =[
           {
-            idPaciente:1,
+            id:1,
             persona:personas[0],
             eps:{
                 id:1,
-                nombre:"COLSANITAS",
+                eps:"COLSANITAS",
                 nit:"15256466564" 
             }
           },
           {
-            idPaciente:2,
+            id:2,
             persona:personas[1],
             eps:{
                 id:2,
-                nombre:"COLSALUD",
+                eps:"COLSALUD",
                 nit:"56565466546" 
             }
           }
