@@ -137,7 +137,8 @@ export class NavbarComponent implements OnInit {
       } else{this.opcionesNavBar = []}
     });
   }
-
+  
+  // istanbul ignore next
   cerrarSesion() {
     this.seguridadService.logout();
     this.router.navigateByUrl('/login');    

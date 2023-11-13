@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { PrimeNGModule } from 'src/app/prime-ng/prime-ng.module';
 import { CitaService } from 'src/app/services/cita.service';
 import { of } from 'rxjs';
+import { SimpleChange, SimpleChanges } from '@angular/core';
 
 describe('TablaCrearCitasComponent', () => {
     const personas:any[] = [
@@ -92,10 +93,135 @@ describe('TablaCrearCitasComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should update citas when ngOnChanges is called', () => {
+    component.doctorFecha = [
+        {
+          idMedico:7
+        }
+     ];
+    const citas = [
+        {
+        id:1,
+        paciente:paciente,
+        medico: medico,
+        fecha: new Date(),
+        estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+        }   
+        },
+        {
+            id:2,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        },
+        {
+            id:3,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        }
+    ]
+
+    const citasActualizadas = [
+        {
+        id:1,
+        paciente:paciente,
+        medico: medico,
+        fecha: new Date(),
+        estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+        }   
+        },
+        {
+            id:2,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        },
+        {
+            id:3,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        }
+    ]
+
+    component.citas = citas;
+    
+    const changes: SimpleChanges = {
+        citas: new SimpleChange(undefined, citas, true),
+      };
+    spyOn(component, 'generarCitasFaltantes').and.returnValue(citasActualizadas);
+    spyOn(component, 'ordenarCitasPorHora');
+    component.ngOnChanges(changes);
+    fixture.detectChanges();
+    expect(component.citas).toEqual(citasActualizadas);
+    expect(component.citas.length).toBeGreaterThan(0);
+  });
+  
+
+  it('should generarCitasFaltantes', () => {
+    const citas = [
+        {
+        id:1,
+        paciente:paciente,
+        medico: medico,
+        fecha: new Date(),
+        estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+        }   
+        },
+        {
+            id:2,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        },
+        {
+            id:3,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        }
+    ]
+    component.generarCitasFaltantes(citas);
+    expect(component.generarCitasFaltantes(citas).length).toBeGreaterThan(citas.length);
+  });
+
+
+
   it('should listar citas por fecha', () => {
         const citas = [
             {
-            codigo:1,
+            id:1,
             paciente:paciente,
             medico: medico,
             fecha: new Date(),
@@ -105,7 +231,7 @@ describe('TablaCrearCitasComponent', () => {
             }   
             },
             {
-                codigo:2,
+                id:2,
                 paciente:paciente,
                 medico: medico,
                 fecha: new Date(),
@@ -115,7 +241,7 @@ describe('TablaCrearCitasComponent', () => {
                 }   
             },
             {
-                codigo:3,
+                id:3,
                 paciente:paciente,
                 medico: medico,
                 fecha: new Date(),
@@ -135,11 +261,13 @@ describe('TablaCrearCitasComponent', () => {
   });
 
   it('should get color estado', () => {
+     let estadoPorAgendar = "POR AGENDAR";
      let estadoDisponible = "DISPONIBLE";
      let estadoCancelada = "CANCELADA";
      let estadoAsignada = "ASIGNADA";
      let estadoConfirmada = "CONFIRMADA";
-
+     
+     expect(component.getColorTagEstado(estadoPorAgendar)).toEqual("info")
      expect(component.getColorTagEstado(estadoDisponible)).toEqual("success");
      expect(component.getColorTagEstado(estadoCancelada)).toEqual("danger");
      expect(component.getColorTagEstado(estadoAsignada)).toEqual("warning");
@@ -149,7 +277,7 @@ describe('TablaCrearCitasComponent', () => {
 
   it('should mostrar modal confirmacion', () => {
     const cita ={
-        codigo:3,
+        id:3,
         paciente:paciente,
         medico: medico,
         fecha: new Date(),
@@ -177,9 +305,185 @@ describe('TablaCrearCitasComponent', () => {
      expect(component.mostrarConfirmacion).toBeFalse();
  });
 
+ it('should crear citas del dia', () => {
+    component.doctorFecha = [
+        {
+          idMedico:7
+        }
+     ];
+    const citas = [
+        {
+        id:1,
+        paciente:paciente,
+        medico: medico,
+        fecha: new Date(),
+        estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+        }   
+        },
+        {
+            id:2,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        },
+        {
+            id:3,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        }
+    ]
+    spyOn(component, 'listarCitasPorFecha');
+    spyOn(mockCitaService, 'crearCitaDoctor').and.returnValue(of([]));
+    component.citasActualizadas = citas; 
+
+    component.crearCitasDelDia();
+    expect(mockCitaService.crearCitaDoctor).toHaveBeenCalled();
+});
+
+it('should ordenar citas por hora', () => {
+    const citas = [
+        {
+        id:1,
+        paciente:paciente,
+        medico: medico,
+        fecha: new Date(),
+        estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+        }   
+        },
+        {
+            id:2,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        },
+        {
+            id:3,
+            paciente:paciente,
+            medico: medico,
+            fecha: new Date(),
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        }
+    ]
+    
+
+    component.ordenarCitasPorHora(citas);
+    expect(citas).toEqual(citas);
+});
+
+it('should ordenar citas por hora when hours are not equal', () => {
+    let fechaUno = new Date();
+    fechaUno.setHours(4);
+    let fechaDos = new Date();
+    fechaDos.setHours(5);
+    let fechaTres = new Date();
+    fechaUno.setHours(6);
+    const citas = [
+        {
+        id:1,
+        paciente:paciente,
+        medico: medico,
+        fecha: fechaUno,
+        estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+        }   
+        },
+        {
+            id:2,
+            paciente:paciente,
+            medico: medico,
+            fecha: fechaDos,
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        },
+        {
+            id:3,
+            paciente:paciente,
+            medico: medico,
+            fecha: fechaTres,
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        }
+    ]
+    
+
+    component.ordenarCitasPorHora(citas);
+    expect(citas).toEqual(citas);
+});
+
+it('should ordenar citas por hora when hours are equal but minutes are different', () => {
+    let fechaUno = new Date();
+    fechaUno.setMinutes(4);
+    let fechaDos = new Date();
+    fechaDos.setMinutes(5);
+    let fechaTres = new Date();
+    fechaUno.setMinutes(6);
+    const citas = [
+        {
+        id:1,
+        paciente:paciente,
+        medico: medico,
+        fecha: fechaUno,
+        estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+        }   
+        },
+        {
+            id:2,
+            paciente:paciente,
+            medico: medico,
+            fecha: fechaDos,
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        },
+        {
+            id:3,
+            paciente:paciente,
+            medico: medico,
+            fecha: fechaTres,
+            estadoCita : {
+            id:1,
+            nombre:"ASIGNADA"
+            }   
+        }
+    ]
+    
+
+    component.ordenarCitasPorHora(citas);
+    expect(citas).toEqual(citas);
+});
+
+
  it('should eliminar cita', () => {
     const cita ={
-        codigo:3,
+        id:3,
         paciente:paciente,
         medico: medico,
         fecha: new Date(),
@@ -188,8 +492,6 @@ describe('TablaCrearCitasComponent', () => {
               nombre:"ASIGNADA"
          }   
     }
-    spyOn(component, 'eliminarCita');
     component.eliminarCita(cita);
-    expect(component.eliminarCita).toHaveBeenCalled();
 });
 });

@@ -14,11 +14,11 @@ describe('IndiceDoctoresComponent', () => {
     let especialidades:any[]=[
         {
             id:1,
-            nombre:"Medico General"
+            especialidad:"Medico General"
         },
         {
             id:2,
-            nombre:"Cardiologo"
+            especialidad:"Cardiologo"
         }
     ]
 
@@ -31,7 +31,7 @@ describe('IndiceDoctoresComponent', () => {
                 codigo: 1,
                 tipo: "Cedula de ciudadania"
             },
-            numero_documento:"15184685622",
+            numeroDocumento:"15184685622",
             telefono:"3546654625",
             correo:"camilo@gmail.com"
         },
@@ -43,7 +43,7 @@ describe('IndiceDoctoresComponent', () => {
                 codigo: 1,
                 tipo: "Cedula de ciudadania"
             },
-            numero_documento:"6546646464",
+            numeroDocumento:"6546646464",
             telefono:"3546166198",
             correo:"didier@gmail.com"
         },
@@ -55,7 +55,7 @@ describe('IndiceDoctoresComponent', () => {
                 codigo: 1,
                 tipo: "Tarjeta de identidad"
             },
-            numero_documento:"94561511665",
+            numeroDocumento:"94561511665",
             telefono:"3848744546",
             correo:"luis@gmail.com"
         }
@@ -63,7 +63,7 @@ describe('IndiceDoctoresComponent', () => {
 
     let medicos:any[]=[
         {
-            idMedico:1,
+            id:1,
             persona:personas[0],
             especialidad:especialidades[0],
             tarjetaProfesional: "No se que tiene una tarjeta profesional"
@@ -99,6 +99,7 @@ describe('IndiceDoctoresComponent', () => {
     });
 
     it('should create', () => {
+        spyOn(component, 'obtenerMedicos');
         expect(component).toBeTruthy();
     });
 
@@ -126,7 +127,7 @@ describe('IndiceDoctoresComponent', () => {
     it('should obtener listado de medicos', () =>{
         const spy = spyOn(mockMedicoService, 'obtenerListaMedico');
         spy.and.returnValue(of(medicos));
-        component.obtenerMedicos();
+        component.obtenerListaMedicos();
         expect(mockMedicoService.obtenerListaMedico).toHaveBeenCalled();
     });
 
@@ -156,6 +157,7 @@ describe('IndiceDoctoresComponent', () => {
         component.medico.persona = personas[0];
         spyOn(component, 'verificarCampos').and.returnValue(true);
         spyOn(mockMedicoService, 'createMedico').and.returnValue(of(medicos[0]));
+        spyOn(component, 'obtenerMedicos');
         component.guardarMedico();
         expect(mockMedicoService.createMedico).toHaveBeenCalled();
         expect(component.productDialog).toBeFalse();
@@ -167,6 +169,7 @@ describe('IndiceDoctoresComponent', () => {
         component.medicoEditado= medicos[0];
         spyOn(component, 'verificarCampos').and.returnValue(true);
         spyOn(mockMedicoService, 'actualizarMedico').and.returnValue(of(medicos[0]));
+        spyOn(component, 'obtenerMedicos');
         component.guardarMedico();
         expect(mockMedicoService.actualizarMedico).toHaveBeenCalled();
         expect(component.productDialog).toBeFalse();
@@ -183,8 +186,9 @@ describe('IndiceDoctoresComponent', () => {
     });
 
     it('should eliminar medico',()=>{
+        spyOn(component, 'obtenerMedicos');
         spyOn(mockMedicoService, 'eliminarMedico').and.returnValue(of(medicos[0])); 
-        component.eliminarMedico(medicos[0]);      
+        component.deleteMedico(medicos[0]);      
     });
 
     it('should hide dialog',()=>{

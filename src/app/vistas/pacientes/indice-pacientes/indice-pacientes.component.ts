@@ -84,9 +84,7 @@ export class IndicePacientesComponent implements OnInit {
             timer.textContent = `${Swal.getTimerLeft()}`;
           }
         }, 100);
-        this.pacienteService.obtenerListaPacientes().subscribe((dato) => {
-          this.pacientes = dato;
-        });
+        this.obtenerListaPacientes();
       },
       willClose: () => {
         clearInterval(timerInterval);
@@ -98,7 +96,11 @@ export class IndicePacientesComponent implements OnInit {
       }
     });
   }
-
+  obtenerListaPacientes(){
+    this.pacienteService.obtenerListaPacientes().subscribe((dato) => {
+      this.pacientes = dato;
+    });
+  }
   openNew() {
     this.editar = false;
     this.paciente = new Paciente();

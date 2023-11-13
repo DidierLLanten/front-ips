@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { of } from 'rxjs';
 import { EspecialidadService } from 'src/app/services/especialidad_medico.service';
+import { MessageService } from 'primeng/api';
+import { PrimeNGModule } from 'src/app/prime-ng/prime-ng.module';
 
 describe('EncabezadoCitasComponent', () => {
     const personas:any[] = [
@@ -55,8 +57,9 @@ describe('EncabezadoCitasComponent', () => {
     mockPacienteService = jasmine.createSpyObj('PacienteService', ['obtenerPacientePorCedula']);
     await TestBed.configureTestingModule({
       declarations: [ EncabezadoCitasComponent ],
-      imports: [HttpClientModule],
+      imports: [HttpClientModule, PrimeNGModule],
       providers: [
+        MessageService,
         {provider:PacienteService, useValue: mockPacienteService},
         {provider:EspecialidadService, useValue: mockEspecialidadesService}
       ]
@@ -84,6 +87,7 @@ describe('EncabezadoCitasComponent', () => {
            nit:"15256466564" 
         }     
     }
+    component.cedula = "123";
     spyOn(mockPacienteService, 'obtenerPacientePorCedula').and.returnValue(of(paciente));
     component.buscarPacientePorCedula();
     expect(mockPacienteService.obtenerPacientePorCedula).toHaveBeenCalled();
@@ -94,15 +98,15 @@ describe('EncabezadoCitasComponent', () => {
     const mockEspecialidades= [
         {
           id:1,
-          nombre:"ODONTOLOGIA"
+          especialidad:"ODONTOLOGIA"
         },
         {
            id:2,
-           nombre:"ORTOPEDIA"
+           especialidad:"ORTOPEDIA"
         },
         {
             id:3,
-            nombre:"MEDICINA GENERAL"
+            especialidad:"MEDICINA GENERAL"
         }
     ]
     spyOn(mockEspecialidadesService, 'obtenerListaEspecialidad').and.returnValue(of(mockEspecialidades));
@@ -114,7 +118,7 @@ describe('EncabezadoCitasComponent', () => {
   it('should filtrar por especialidad', () => {
     const especialidadSeleccionada = {
         id:1,
-        nombre:"ODONTOLOGIA"
+        especialidad:"ODONTOLOGIA"
     }
     let id = 1;
     component.especialidadSeleccionada = especialidadSeleccionada;

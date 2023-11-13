@@ -79,12 +79,7 @@ export class IndiceEncargadosComponent implements OnInit {
             timer.textContent = `${Swal.getTimerLeft()}`;
           }
         }, 100);
-        this.usuarioService.obtenerListaUsuarios().subscribe((dato) => {
-          this.usuarios = dato;
-          this.usuarios = this.usuarios.filter(
-	  	(trabajador) => trabajador.persona.rol.nombreRol.rol === 'ENCARGADO'
-      		);
-        });
+        this.obtenerListaUsuarios();
       },
       willClose: () => {
         clearInterval(timerInterval);
@@ -94,6 +89,15 @@ export class IndiceEncargadosComponent implements OnInit {
       if (result.dismiss === Swal.DismissReason.timer) {
         console.log('I was closed by the timer');
       }
+    });
+  }
+
+  obtenerListaUsuarios(){
+    this.usuarioService.obtenerListaUsuarios().subscribe((dato) => {
+      this.usuarios = dato;
+      this.usuarios = this.usuarios.filter(
+      (trabajador) => trabajador.persona.rol.nombreRol.rol === 'ENCARGADO'
+      );
     });
   }
 

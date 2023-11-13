@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PrimeNGModule } from 'src/app/prime-ng/prime-ng.module';
 import { TablaCitasComponent } from '../tabla-citas/tabla-citas.component';
 import { EncabezadoCitasComponent } from '../encabezado-citas/encabezado-citas.component';
+import { MockComponents } from 'ng-mocks';
 
 describe('IndiceCitasComponent', () => {
     let component: IndiceCitasComponent;
@@ -11,7 +12,7 @@ describe('IndiceCitasComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-        declarations: [ IndiceCitasComponent, TablaCitasComponent, EncabezadoCitasComponent ],
+        declarations: [ IndiceCitasComponent, MockComponents(TablaCitasComponent, EncabezadoCitasComponent) ],
         imports:[HttpClientModule, PrimeNGModule]
         })
         .compileComponents();
