@@ -81,8 +81,7 @@ export class IndiceDoctoresComponent implements OnInit {
   obtenerMedicos() {
     let timerInterval: any;
     Swal.fire({
-      title: 'Por favor espere mientras\n'+
-              'cargamos a los doctores',
+      title: 'Por favor espere mientras\n' + 'cargamos a los doctores',
       timer: 3000,
       timerProgressBar: true,
       didOpen: () => {
@@ -136,8 +135,10 @@ export class IndiceDoctoresComponent implements OnInit {
       this.medico = this.medicoEditado;
       const validarCampos = this.verificarCampos();
       if (validarCampos) {
+        const medicoActualizado: Medico = this.actualizarAtributosEditablesMedico(this.medico);
+        
         this.medicoService
-          .actualizarMedico(this.medico.id, this.medico)
+          .actualizarMedico(this.medico.id, medicoActualizado)
           .subscribe((dato) => {
             this.obtenerMedicos();
           });
@@ -149,8 +150,7 @@ export class IndiceDoctoresComponent implements OnInit {
       if (validarCampos) {
         if (this.medico.persona.nombre.trim()) {
           if (this.medico.id) {
-            this.medicos[this.findIndexById(this.medico.id)] =
-              this.medico;
+            this.medicos[this.findIndexById(this.medico.id)] = this.medico;
             this.messageService.add({
               severity: 'success',
               summary: 'Exitoso',
@@ -178,7 +178,19 @@ export class IndiceDoctoresComponent implements OnInit {
     }
   }
 
+  actualizarAtributosEditablesMedico(medicoOriginal: Medico): Medico {
+    const medicoActualizado: Medico = new Medico();
+    medicoActualizado.tarjetaProfesional = medicoOriginal.tarjetaProfesional;
+    medicoActualizado.persona.nombre = medicoOriginal.persona.nombre;
+    medicoActualizado.persona.apellido = medicoOriginal.persona.apellido;
+    medicoActualizado.persona.telefono = medicoOriginal.persona.telefono;
+    medicoActualizado.persona.correo = medicoOriginal.persona.correo;
+
+    return medicoActualizado;
+  }
+
   editarMedico(medico: Medico) {
+    console.log('medico actualizado: ', medico);
     this.medico = medico;
     this.medicoEditado = medico;
     this.disabledType = true;

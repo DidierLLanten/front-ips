@@ -124,8 +124,10 @@ export class IndiceEncargadosComponent implements OnInit {
       this.usuario = this.usuarioEditado;
       const validarCampos = this.verificarCampos();
       if (validarCampos) {
+        const encargadoActualizado: Usuario = this.actualizarAtributosEditablesEncargado(this.usuario);
+
         this.usuarioService
-          .actualizarUsuarios(this.usuario.id, this.usuario)
+          .actualizarUsuarios(this.usuario.id, encargadoActualizado)
           .subscribe((dato) => {
             this.obtenerUsuarios();
           });
@@ -165,6 +167,17 @@ export class IndiceEncargadosComponent implements OnInit {
         this.productDialog = false;
       }
     }
+  }
+
+  actualizarAtributosEditablesEncargado(encargadoOriginal: Usuario): Usuario {
+    const encargadoActualizado: Usuario = new Usuario();
+    encargadoActualizado.cuentaBancaria = encargadoOriginal.cuentaBancaria;
+    encargadoActualizado.persona.nombre = encargadoOriginal.persona.nombre;
+    encargadoActualizado.persona.apellido = encargadoOriginal.persona.apellido;
+    encargadoActualizado.persona.telefono = encargadoOriginal.persona.telefono;
+    encargadoActualizado.persona.correo = encargadoOriginal.persona.correo;
+
+    return encargadoActualizado;
   }
 
   editarUsuario(usuario: Usuario) {

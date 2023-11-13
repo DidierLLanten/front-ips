@@ -128,8 +128,10 @@ export class IndicePacientesComponent implements OnInit {
       this.paciente = this.pacienteEditado;
       const validarCampos = this.verificarCampos();
       if (validarCampos) {
+        const pacienteActualizado: Paciente = this.actualizarAtributosEditablesPaciente(this.paciente);
+        
         this.pacienteService
-          .actualizarPaciente(this.paciente.id, this.paciente)
+          .actualizarPaciente(this.paciente.id, pacienteActualizado)
           .subscribe((dato) => {
             this.obtenerPacientes();
           });
@@ -170,6 +172,18 @@ export class IndicePacientesComponent implements OnInit {
         this.productDialog = false;
       }
     }
+  }
+
+  actualizarAtributosEditablesPaciente(pacienteOriginal: Paciente): Paciente {
+    const pacienteActualizado: Paciente = new Paciente();    
+    pacienteActualizado.persona.nombre = pacienteOriginal.persona.nombre;
+    pacienteActualizado.persona.apellido = pacienteOriginal.persona.apellido;
+    pacienteActualizado.persona.telefono = pacienteOriginal.persona.telefono;
+    pacienteActualizado.persona.correo = pacienteOriginal.persona.correo;
+
+    pacienteActualizado.persona.tipoIdentificacion = pacienteOriginal.persona.tipoIdentificacion;
+    pacienteActualizado.eps = pacienteOriginal.eps;
+    return pacienteActualizado;
   }
 
   editarPaciente(paciente: Paciente) {
