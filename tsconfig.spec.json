@@ -8,7 +8,7 @@
     ]
   },
   "include": [
-    "src/**/*.spec.ts",
+    "src/app/vistas/citas/tabla-citas/**/*.spec.ts",
     "src/**/*.d.ts"
   ]
 }

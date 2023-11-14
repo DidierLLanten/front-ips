@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PrimeNGModule } from 'src/app/prime-ng/prime-ng.module';
 import { CitaService } from 'src/app/services/cita.service';
 import { of } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 describe('TablaCitasComponent', () => {
     const personas:any[] = [
@@ -73,16 +74,41 @@ describe('TablaCitasComponent', () => {
               nombre:"ASIGNADA"
          }   
     }
+
+    const citas:any[] = [
+        {
+        id:3,
+        paciente:paciente,
+        medico: medico,
+        fecha: new Date(),
+        estadoCita : {
+              id:1,
+              nombre:"ASIGNADA"
+          }
+        },
+        {
+          id:3,
+          paciente:paciente,
+          medico: medico,
+          fecha: new Date(),
+          estadoCita : {
+                id:1,
+                nombre:"ASIGNADA"
+            }
+        }    
+
+    ]
   let component: TablaCitasComponent;
   let fixture: ComponentFixture<TablaCitasComponent>;
   let mockCitaService: jasmine.SpyObj<CitaService>;
 
   beforeEach( () => {
-    mockCitaService = jasmine.createSpyObj('CitaService', ['actualizarEstadoCita','actualizarPacienteCita','obtenerPorMedico','obtenerPorEspecialidad']);
+    mockCitaService = jasmine.createSpyObj('CitaService', ['actualizarEstadoCita','actualizarPacienteCita','obtenerPorMedico','obtenerPorEspecialidad', 'obtenerCitasByPacienteYMedicoYEstadoCitaYFecha']);
      TestBed.configureTestingModule({
       declarations: [ TablaCitasComponent ],
       imports: [HttpClientModule, PrimeNGModule],
       providers:[
+        DatePipe,
         {provider:CitaService, useValue:mockCitaService},
       ]
     })
@@ -95,8 +121,20 @@ describe('TablaCitasComponent', () => {
   });
 
   it('should show dialog', () => {
+    spyOn(component, 'cargando');
     component.showDialog(cita);
-    expect(component.visible).toBeTrue();
+    expect(component.citaSeleccionada).toEqual(cita);
+    expect(component.cargando).toHaveBeenCalled();
+  });
+
+
+  it('should obtener coincidencias', () => {
+    component.citaSeleccionada = cita;
+    component.paciente = paciente;
+    spyOn(mockCitaService, 'obtenerCitasByPacienteYMedicoYEstadoCitaYFecha').and.returnValue(of(citas));
+    component.obtenerCoincidencias("2023-08-11");
+    expect(mockCitaService.obtenerCitasByPacienteYMedicoYEstadoCitaYFecha).toHaveBeenCalled();
+    expect(component.coincidencias).toEqual(citas);
   });
 
   it('should confirmar cita',() => {
