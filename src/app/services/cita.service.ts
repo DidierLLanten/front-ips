@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { Cita } from '../modelos/cita';
 
@@ -56,5 +56,13 @@ export class CitaService{
 
     obtenerCitasConfirmadasYAssignadasPorCedula(cedula: string):Observable<Cita[]>{
         return this.httpClient.get<Cita[]>(`${this.baseUrl}/paciente/${cedula}`);
+    }
+
+    obtenerCitasByPacienteYMedicoYEstadoCitaYFecha(idMedico: number, idPaciente:number, fecha:string):Observable<Cita[]>{
+        let params = new HttpParams();
+        params = params.set('idMedico', idMedico);
+        params = params.set('fecha', fecha);
+        console.log("Datos",params, idPaciente);
+        return this.httpClient.get<Cita[]>(`${this.baseUrl}/paciente_fecha/${idPaciente}`, { params: params });
     }
 }

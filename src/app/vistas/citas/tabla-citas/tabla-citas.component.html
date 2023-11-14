@@ -86,3 +86,36 @@
     ></p-button>
   </div>
 </p-dialog>
+
+<p-dialog
+  header="Header"
+  [(visible)]="citaAgendada"
+  [modal]="true"
+  [style]="{ width: '40rw', height: 'auto' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="header-dialog">
+      <span class="text-xl font-bold">Cita activa</span>
+    </div>
+  </ng-template>
+  <div class="titulo">
+    <p>Usted ya tiene una cita activa</p>
+  </div>
+  <br />
+  <p *ngIf="citaAgendada">
+     Con el Dr(a). <strong>{{ coincidencias[0].medico.persona.nombre| uppercase }}</strong> para el dia
+     <strong>{{ coincidencias[0].fecha| date: 'dd/MM/YYYY HH:mm' }}</strong> Si desea 
+      agendar un cita con este doctor en el mismo dia, porfavor cancele primero la cita que 
+      tiene activa.
+  </p>
+  <div class="botones">
+    <p-button
+      label="Aceptar"
+      icon="pi pi-times"
+      styleClass="p-button-info"
+      (click)="citaAgendada = false"
+    ></p-button>
+  </div>
+</p-dialog>
