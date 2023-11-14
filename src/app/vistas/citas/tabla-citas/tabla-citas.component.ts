@@ -95,8 +95,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
       }
     }).then((result) => {
       /* Read more about handling dismissals below */
-      if (result.dismiss === Swal.DismissReason.timer) {
-        console.log("I was closed by the timer");
+      if (result.dismiss === Swal.DismissReason.timer) {        
       }
     });
   }
@@ -124,8 +123,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
       this.historialCita.horaModificacion = '';
       this.historialCitaService
         .crearHistorialCita(this.historialCita)
-        .subscribe((dato) => {
-          console.log('Me registro el historial', dato);
+        .subscribe((dato) => {          
         });
       this.citaService
         .actualizarEstadoCita(this.citaSeleccionada.id, 3)
@@ -158,8 +156,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
       didOpen: () => {
         Swal.showLoading();
         const timer = Swal.getPopup()!.querySelector('b');
-        if (this.nombreMedico != '' && this.nombreMedico != undefined) {
-          console.log(this.nombreMedico);
+        if (this.nombreMedico != '' && this.nombreMedico != undefined) {          
           this.obtenerMedico();
         } else {
           this.cargarTablaPorEspecialidades();
@@ -170,8 +167,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
       },
     }).then((result) => {
       /* Read more about handling dismissals below */
-      if (result.dismiss === Swal.DismissReason.timer) {
-        console.log('I was closed by the timer');
+      if (result.dismiss === Swal.DismissReason.timer) {        
       }
     });
   }
@@ -180,8 +176,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
     this.citaService
             .obtenerPorMedico(this.idEspecialidad, this.nombreMedico)
             .subscribe((dato) => {
-              this.citas = dato;
-              console.log(this.citas);
+              this.citas = dato;              
             });
   }
 
@@ -202,7 +197,7 @@ export class TablaCitasComponent implements OnInit, OnChanges {
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
-        console.log('I was closed by the timer');
+        
       }
     });
   }

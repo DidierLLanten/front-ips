@@ -85,8 +85,7 @@ export class EncabezadoCrearCitasComponent {
           this.medicoSeleccionado.id,
           dateIsoString
         )
-        .subscribe((dato) => {
-          console.log('Citas Api: ', dato);
+        .subscribe((dato) => {          
           if (dato === null) {
             this.citasCargadas = [];
           } else {

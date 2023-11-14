@@ -41,8 +41,7 @@ export class SeguridadService {
       numberDocument: username,
       password: password,
     };
-    this.numeroDocumento = username;
-    console.log(this.numeroDocumento);
+    this.numeroDocumento = username;    
     return this.httpClient.post<RespuestaToken>(
       `${this.baseUrl}/login`,
       credenciales
@@ -66,10 +65,8 @@ export class SeguridadService {
       return '';
     }
 
-    const dataToken = JSON.parse(atob(token.split('.')[1]));
-    console.log('Data token: ', dataToken);
-    if (campo === 'rol' && token) {
-      console.log('Data tokken: ', dataToken[campo][0].authority);
+    const dataToken = JSON.parse(atob(token.split('.')[1]));    
+    if (campo === 'rol' && token) {    
       return dataToken[campo][0].authority;
     }
     if(campo === 'sub' && token){
