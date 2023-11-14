@@ -61,8 +61,7 @@ export class CitaService{
     obtenerCitasByPacienteYMedicoYEstadoCitaYFecha(idMedico: number, idPaciente:number, fecha:string):Observable<Cita[]>{
         let params = new HttpParams();
         params = params.set('idMedico', idMedico);
-        params = params.set('fecha', fecha);
-        console.log("Datos",params, idPaciente);
+        params = params.set('fecha', fecha);        
         return this.httpClient.get<Cita[]>(`${this.baseUrl}/paciente_fecha/${idPaciente}`, { params: params });
     }
 }

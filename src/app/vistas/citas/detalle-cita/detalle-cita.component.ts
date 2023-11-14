@@ -74,8 +74,7 @@ export class DetalleCitaComponent implements OnInit {
     this.historialCita.horaModificacion = '';
     this.historialCitaService
       .crearHistorialCita(this.historialCita)
-      .subscribe((dato) => {
-        console.log('Me registro el historial', dato);
+      .subscribe((dato) => {        
       });
   }
 
@@ -113,7 +112,7 @@ export class DetalleCitaComponent implements OnInit {
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
-        console.log('I was closed by the timer');
+        
       }
     });
   }

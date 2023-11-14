@@ -1,18 +1,7 @@
+<p-toast></p-toast>
+
 <div class="row">
     <h2 class="titulo">Perfil</h2>
-</div>
-
-<div class="flex-container">
-    <div class="flex-items">
-        <span class="p-float-label margin-cedula">
-            <p-inputNumber type="number" id="inputCedula" [(ngModel)]="cedula" [min]="0" [maxlength]="11">
-            </p-inputNumber>
-            <label htmlFor="inputCedula">Número de documento</label>
-        </span>
-    </div>
-    <div class="flex-items margin-boton">
-        <p-button label="Buscar" styleClass="p-button-raised" icon="pi pi-search"></p-button>
-    </div>
 </div>
 
 <div class="flex-container2">
@@ -26,8 +15,8 @@
 
     <div class="field">
         <span class="p-float-label form">
-            <input class="input" pInputText id="nombre" [(ngModel)]="persona.apellido" required autofocus />
-            <label htmlFor="nombre">Apellido</label>
+            <input class="input" pInputText id="apellido" [(ngModel)]="persona.apellido" required autofocus />
+            <label htmlFor="apellido">Apellido</label>
             <small class="p-error" *ngIf="submitted && !persona.apellido">El Apellido es requerido</small>
         </span>
     </div>
@@ -76,18 +65,19 @@
 </div>
 
 <div class="container-contraseña">
-    <div class="row">
-        <h4 class="titulo2">Cambiar contraseña</h4>
-    </div>
-    <div class="row">
-        <div class="col-1">
-        </div>
-        <div class="col-11">
-            <button pButton pRipple label="Cambiar contraseña" icon="pi pi-pencil" class="p-button-warning"></button>
-            <button pButton pRipple label="ocultar" icon="pi pi-eye" class="p-button-danger"></button>
-        </div>
-    </div>
     <div class="flex-container2">
+        <div class="row">        
+            <div class="col">
+                <button pButton pRipple label="Cambiar contraseña" icon="pi pi-pencil" class="p-button-warning" (click)="mostrarFormulario()"></button>
+                <!-- <button pButton pRipple label="ocultar" icon="pi pi-eye" class="p-button-danger"></button> -->
+            </div>
+        </div>
+    </div>
+
+<!-- Formulario cambiar contraseña -->
+    <div 
+    *ngIf="showFormulario"
+    class="flex-container2" >
         <div class="field">
             <span class="p-float-label form">
                 <input class="input" pInputText type="password" id="contrasenaActual" [(ngModel)]="contrasenaActual" required autofocus />
@@ -97,8 +87,8 @@
     
         <div class="field">
             <span class="p-float-label form">
-                <input class="input" pInputText type="password" id="nombre" [(ngModel)]="contrasenaNueva" required autofocus />
-                <label htmlFor="nombre">Contraseña Nueva</label>
+                <input class="input" pInputText type="password" id="newPassword" [(ngModel)]="contrasenaNueva" required autofocus />
+                <label htmlFor="newPassword">Contraseña Nueva</label>
             </span>
         </div>
     
